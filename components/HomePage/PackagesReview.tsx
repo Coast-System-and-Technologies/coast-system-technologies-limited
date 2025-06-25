@@ -54,7 +54,8 @@ const PackagesPreview = () => {
             Our Packages
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Tailored solutions for every stage of your venture's growth journey.
+            Tailored solutions for every stage of your venture{"'"}s growth
+            journey.
           </p>
         </div>
 

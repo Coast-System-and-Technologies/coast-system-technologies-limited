@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { INavLinks } from "@/lib/data";
+// import { INavLinks } from "@/lib/data";
 import { disableHeaderWithFooter } from "@/utils/disableHeaderWithFooter";
 import { usePathname } from "next/navigation";
 import { Input } from "./ui/input";

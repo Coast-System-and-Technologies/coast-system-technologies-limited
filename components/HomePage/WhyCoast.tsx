@@ -23,8 +23,8 @@ const WhyCoast = () => {
               Why Our Articles of Association Are Different
             </h2>
             <p className="text-lg text-gray-600 mb-8">
-              We understand that your company's foundation is more than just
-              legal documents. It's about protecting your vision, enabling
+              We understand that your company{"'"}s foundation is more than just
+              legal documents. It{"'"}s about protecting your vision, enabling
               growth, and ensuring founder control while maintaining compliance.
             </p>
             <div className="space-y-4">

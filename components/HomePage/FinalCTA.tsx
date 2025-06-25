@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { Mail, Phone, MessageCircle } from "lucide-react";
 import Image from "next/image";
 
 const FinalCTA = () => {
@@ -14,7 +13,7 @@ const FinalCTA = () => {
             Ready to Build?
           </h2>
           <p className="text-lg text-gray-200 mb-12 max-w-2xl mx-auto">
-            Let's bring structure to your startup, shield your vision, and
+            Let{"'"}s bring structure to your startup, shield your vision, and
             unlock growth with legal-tech precision.
           </p>
 

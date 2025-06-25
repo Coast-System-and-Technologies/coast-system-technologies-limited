@@ -32,9 +32,9 @@ const FeaturedCase = () => {
               </div>
               <div className="w-full md:w-2/3">
                 <blockquote className="text-xl md:text-2xl font-serif italic text-gray-900 mb-6">
-                  "Legacy isn't just what we leave behind — it's what we build
-                  with intention. At Coast System, we help founders own the
-                  future they envision."
+                  {'"'}Legacy isn{"'"}t just what we leave behind — it{"'"}s
+                  what we build with intention. At Coast System, we help
+                  founders own the future they envision.{'"'}
                 </blockquote>
                 <div className="flex items-center justify-between">
                   <div>
