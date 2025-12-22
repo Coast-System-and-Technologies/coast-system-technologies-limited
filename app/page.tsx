@@ -13,7 +13,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-[--background] text-[--foreground]">
       <HeroSection />
       <WhatWeDo />
-      <PackagesPreview />
+      {/* <PackagesPreview /> */}
       <WhyCoast />
       <FeaturedCase />
       <FinalCTA />
