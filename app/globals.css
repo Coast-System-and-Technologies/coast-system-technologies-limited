@@ -1,83 +1,211 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import "tw-animate-css";
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-}
+@custom-variant dark (&:is(.dark *));
 
-p {
-  font-size: 1rem;
-  font-family: "Rubik", sans-serif;
-  font-optical-sizing: auto;
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #0057ff;
-  --secondary: #ffd700;
-  --primary-accent: #002b80;
-  --secondary-accent: #ffa600;
-  --gray-warm: #cbcbcb;
-}
-
+/* Tailwind v4 CSS-first theme bridge (shadcn expects these tokens) */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Fonts */
+  --font-sans: var(--font-body);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  /* Core tokens */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Chart tokens (safe defaults; can be customized later) */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar tokens (kept for shadcn compatibility) */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius scale */
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 3px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* =========================
+   CSTL BRAND TOKENS
+   Palette:
+   Primary:   #1e1b4b
+   Gold:      #C9A227
+   Background:#F7F7F2
+   Border:    #E5E7EB
+   ========================= */
+
+:root {
+  --radius: 0.875rem; /* 14px */
+
+  /* Base */
+  --background: #f7f7f2;
+  --foreground: #0f172a;
+
+  /* Surfaces */
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+
+  /* Brand */
+  --primary: #1e1b4b;
+  --primary-foreground: #ffffff;
+
+  --accent: #c9a227;
+  --accent-foreground: #1e1b4b;
+
+  /* Supporting */
+  --secondary: #efefe9;
+  --secondary-foreground: #1e1b4b;
+
+  --muted: #efefe9;
+  --muted-foreground: #475569;
+
+  --destructive: #dc2626;
+
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+
+  --ring: #1e1b4b;
+
+  /* Charts (safe defaults) */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  /* Sidebar (kept consistent with site theme) */
+  --sidebar: #f7f7f2;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #1e1b4b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #efefe9;
+  --sidebar-accent-foreground: #1e1b4b;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #1e1b4b;
+}
+
+.dark {
+  /* Optional: CSTL dark mode */
+  --background: #0b0a1f;
+  --foreground: #f8fafc;
+
+  --card: #111033;
+  --card-foreground: #f8fafc;
+
+  --popover: #111033;
+  --popover-foreground: #f8fafc;
+
+  --primary: #f8fafc;
+  --primary-foreground: #0b0a1f;
+
+  --accent: #c9a227;
+  --accent-foreground: #0b0a1f;
+
+  --secondary: #14133a;
+  --secondary-foreground: #f8fafc;
+
+  --muted: #14133a;
+  --muted-foreground: #cbd5e1;
+
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.14);
+  --ring: #f8fafc;
+
+  --sidebar: #111033;
+  --sidebar-foreground: #f8fafc;
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+}
+
+/* Base styles */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* =========================
+   CSTL X-FACTOR UTILITIES
+   ========================= */
+@layer utilities {
+  /* For consistent page width */
+  .cstl-container {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
 
-.primary-cta {
-  background-color: var(--primary);
-  color: var(--foreground);
-  padding: 0.75rem 1.5rem;
-}
+  /* Subtle executive glow */
+  .cstl-hero-bg {
+    background-image:
+      radial-gradient(900px circle at 20% 10%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 55%),
+      radial-gradient(900px circle at 80% 20%, color-mix(in oklab, var(--primary) 14%, transparent), transparent 55%),
+      linear-gradient(to bottom, color-mix(in oklab, var(--primary) 6%, transparent), transparent 45%);
+  }
 
-.secondary-cta {
-  background-color: var(--secondary);
-  color: var(--background);
-  padding: 0.75rem 1.5rem;
-}
+  /* Governance grid (quiet, not loud) */
+  .cstl-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--primary) 10%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--primary) 10%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  }
 
-.ghost-cta {
-  border: 2px #ffffff solid;
-  background-color: transparent;
-  padding: 0.75rem 1.5rem; 
-}
+  /* Seal divider line */
+  .cstl-seal-line {
+    background: linear-gradient(
+      to right,
+      transparent,
+      color-mix(in oklab, var(--accent) 60%, transparent),
+      transparent
+    );
+  }
 
-.secondary-cta:hover {
-  background-color: var(--secondary-accent);
-}
-
-.bg-primary {
-  background-color: var(--primary);
-}
-
-.bg-gray-warm {
-  background-color: var(--gray-warm);
-}
-
-.text-primary {
-  color: var(--primary);
+  /* Headings font helper (Cormorant) */
+  .font-heading {
+    font-family: var(--font-heading);
+  }
 }
