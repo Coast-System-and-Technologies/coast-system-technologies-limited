@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, ArrowUpRight } from "lucide-react";
 
@@ -60,14 +61,14 @@ export default function Navbar() {
       <div className="cstl-container h-16 flex items-center justify-between gap-3">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3">
-          <div className="flex flex-col leading-tight">
-            <span className="font-heading text-base sm:text-lg text-[color:var(--primary)] tracking-wide">
-              {SITE.shortName}
-            </span>
-            <span className="hidden sm:inline text-[11px] text-muted-foreground tracking-wider">
-              {SITE.signature}
-            </span>
-          </div>
+          <Image
+            src="/logo.png"
+            alt={SITE.shortName}
+            width={180}
+            height={60}
+            className="h-12 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -143,12 +144,13 @@ export default function Navbar() {
 
             <SheetContent side="right" className="w-[340px]">
               <div className="space-y-1">
-                <div className="font-heading text-lg text-[color:var(--primary)]">
-                  {SITE.shortName}
-                </div>
-                <div className="text-xs text-muted-foreground tracking-wider">
-                  {SITE.signature}
-                </div>
+                <Image
+                  src="/logo.png"
+                  alt={SITE.shortName}
+                  width={150}
+                  height={50}
+                  className="h-10 w-auto"
+                />
               </div>
 
               <Separator className="my-4" />
