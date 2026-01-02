@@ -77,4 +77,5 @@ coast-system-technologies-limited/
 ├── package.json                          # Dependencies + scripts
 ├── tailwind.config.ts                    # Tailwind config
 ├── tsconfig.json                         # TypeScript config
+├── .env.local                            # Enviroment variable
 └── README.md                             # Project documentation
