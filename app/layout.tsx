@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 const manrope = Manrope({
   variable: "--font-body",
@@ -18,8 +19,7 @@ export const metadata: Metadata = {
     default: "Coast System & Technologies Limited (CSTL)",
     template: "%s | Coast System & Technologies Limited",
   },
-  description:
-    "ORDER • STRATEGY • LEGACY — The Structure Behind Great Companies.",
+  description: "ORDER • STRATEGY • LEGACY — The Structure Behind Great Companies.",
   metadataBase: new URL("https://coastsystemtechnologies.com.ng"),
 };
 
@@ -27,8 +27,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${cormorant.variable}`}>
-      <body className="antialiased">{children}</body>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${manrope.variable} ${cormorant.variable}`}
+    >
+      <body className="antialiased">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

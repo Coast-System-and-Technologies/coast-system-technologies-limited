@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, ArrowUpRight, X } from "lucide-react";
+import { Menu, ArrowUpRight, X, ChevronDown } from "lucide-react";
 
 import { SITE } from "@/content/site";
 import { NAV, type NavLink } from "@/content/nav";
@@ -21,6 +21,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+
+import ModeToggle from "@/components/theme/mode-toggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -60,12 +62,80 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = React.useState(false);
 
   React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Mobile accordion state (only one open at a time)
+  const [open, setOpen] = React.useState<
+    "services" | "companies" | "insights" | "company" | null
+  >(null);
+
+  function toggle(key: typeof open) {
+    setOpen((prev) => (prev === key ? null : key));
+  }
+
+  function MobileSection({
+    k,
+    title,
+    items,
+  }: {
+    k: NonNullable<typeof open>;
+    title: string;
+    items: NavLink[];
+  }) {
+    const isOpen = open === k;
+
+    return (
+      <div className="border-b border-border/60 py-2">
+        <button
+          type="button"
+          onClick={() => toggle(k)}
+          className="flex w-full items-center justify-between rounded-xl px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-muted/40"
+          aria-expanded={isOpen}
+        >
+          <span className="uppercase tracking-wide">{title}</span>
+          <ChevronDown
+            className={[
+              "h-4 w-4 text-muted-foreground transition-transform",
+              isOpen ? "rotate-180" : "rotate-0",
+            ].join(" ")}
+          />
+        </button>
+
+        <div
+          className={[
+            "grid transition-[grid-template-rows] duration-200 ease-out",
+            isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+          ].join(" ")}
+        >
+          <div className="overflow-hidden">
+            <nav className="space-y-1 px-2 pb-3">
+              {items.map((x) => (
+                <SheetClose asChild key={x.href}>
+                  <Link
+                    href={x.href}
+                    className={[
+                      "flex items-start justify-between gap-3 rounded-xl px-3 py-3 text-sm transition-colors",
+                      isActive(pathname, x.href)
+                        ? "bg-muted/60 text-[color:var(--primary)] font-medium"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/30",
+                    ].join(" ")}
+                  >
+                    <span>{x.label}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {x.description ? "→" : ""}
+                    </span>
+                  </Link>
+                </SheetClose>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <header
@@ -77,12 +147,9 @@ export default function Navbar() {
       ].join(" ")}
     >
       <div className="cstl-container">
-        <div className="flex h-16 lg:h-20 items-center justify-between gap-4">
+        <div className="flex h-16 items-center justify-between gap-4 lg:h-20">
           {/* Brand */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
-          >
+          <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <Image
               src="/LOGO.png"
               alt={SITE.shortName}
@@ -94,12 +161,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden items-center gap-1 lg:flex">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
                 {/* Services */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 px-4 text-sm font-medium bg-transparent hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 bg-transparent px-4 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -109,7 +176,7 @@ export default function Navbar() {
 
                 {/* Companies */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 px-4 text-sm font-medium bg-transparent hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 bg-transparent px-4 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Companies
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -119,7 +186,7 @@ export default function Navbar() {
 
                 {/* Insights */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 px-4 text-sm font-medium bg-transparent hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 bg-transparent px-4 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Insights
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -136,9 +203,9 @@ export default function Navbar() {
                         <Link
                           href={item.href}
                           className={[
-                            "h-9 px-4 text-sm font-medium rounded-md transition-all duration-200",
+                            "h-9 rounded-md px-4 text-sm font-medium transition-all duration-200",
                             active
-                              ? "text-[color:var(--primary)] bg-muted/50"
+                              ? "bg-muted/50 text-[color:var(--primary)]"
                               : "text-foreground hover:bg-muted/50",
                           ].join(" ")}
                         >
@@ -151,33 +218,33 @@ export default function Navbar() {
               </NavigationMenuList>
             </NavigationMenu>
 
-            {/* CTA */}
-            <Button
-              asChild
-              className="ml-2 h-9 bg-[color:var(--primary)] text-white hover:bg-[color:var(--primary)]/90 transition-all duration-200 shadow-sm hover:shadow-md"
-            >
-              <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
-            </Button>
+            {/* Theme + CTA */}
+            <div className="ml-2 flex items-center gap-2">
+              <ModeToggle />
+              <Button
+                asChild
+                className="h-9 bg-[color:var(--primary)] text-white shadow-sm transition-all duration-200 hover:bg-[color:var(--primary)]/90 hover:shadow-md"
+              >
+                <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
+              </Button>
+            </div>
           </nav>
 
           {/* Mobile */}
-          <div className="lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
+            <ModeToggle />
+
             <Sheet>
               <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9"
-                  aria-label="Open menu"
-                >
+                <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
 
               <SheetContent side="right" className="w-[85vw] sm:w-[400px]">
-                <div className="flex flex-col h-full">
+                <div className="flex h-full flex-col">
                   {/* Mobile Header */}
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="mb-6 flex items-center justify-between">
                     <Image
                       src="/LOGO.png"
                       alt={SITE.shortName}
@@ -186,125 +253,52 @@ export default function Navbar() {
                       className="h-10 w-auto"
                     />
                     <SheetClose asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8"
-                        aria-label="Close menu"
-                      >
+                      <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Close menu">
                         <X className="h-5 w-5" />
                       </Button>
                     </SheetClose>
                   </div>
 
-                  <Separator className="mb-6" />
+                  <Separator className="mb-4" />
 
-                  {/* Mobile Navigation */}
-                  <div className="flex-1 overflow-y-auto space-y-8">
-                    {/* Services */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
-                        Services
-                      </h3>
-                      <nav className="space-y-2">
-                        {(NAV.dropdowns.services as unknown as NavLink[]).map((x) => (
-                          <Link
-                            key={x.href}
-                            href={x.href}
-                            className={[
-                              "block py-2 text-sm rounded-md transition-colors duration-200",
-                              isActive(pathname, x.href)
-                                ? "text-[color:var(--primary)] font-medium bg-muted/50 pl-3"
-                                : "text-muted-foreground hover:text-foreground hover:bg-muted/30 pl-3",
-                            ].join(" ")}
-                          >
-                            {x.label}
-                          </Link>
-                        ))}
-                      </nav>
-                    </div>
-
-                    {/* Companies */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
-                        Companies
-                      </h3>
-                      <nav className="space-y-2">
-                        {(NAV.dropdowns.companies as unknown as NavLink[]).map((x) => (
-                          <Link
-                            key={x.href}
-                            href={x.href}
-                            className={[
-                              "block py-2 text-sm rounded-md transition-colors duration-200",
-                              isActive(pathname, x.href)
-                                ? "text-[color:var(--primary)] font-medium bg-muted/50 pl-3"
-                                : "text-muted-foreground hover:text-foreground hover:bg-muted/30 pl-3",
-                            ].join(" ")}
-                          >
-                            {x.label}
-                          </Link>
-                        ))}
-                      </nav>
-                    </div>
-
-                    {/* Insights */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
-                        Insights
-                      </h3>
-                      <nav className="space-y-2">
-                        {(NAV.dropdowns.insights as unknown as NavLink[]).map((x) => (
-                          <Link
-                            key={x.href}
-                            href={x.href}
-                            className={[
-                              "block py-2 text-sm rounded-md transition-colors duration-200",
-                              isActive(pathname, x.href)
-                                ? "text-[color:var(--primary)] font-medium bg-muted/50 pl-3"
-                                : "text-muted-foreground hover:text-foreground hover:bg-muted/30 pl-3",
-                            ].join(" ")}
-                          >
-                            {x.label}
-                          </Link>
-                        ))}
-                      </nav>
-                    </div>
-
-                    {/* Primary Links */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
-                        Company
-                      </h3>
-                      <nav className="space-y-2">
-                        {NAV.primary.map((x) => (
-                          <Link
-                            key={x.href}
-                            href={x.href}
-                            className={[
-                              "block py-2 text-sm rounded-md transition-colors duration-200",
-                              isActive(pathname, x.href)
-                                ? "text-[color:var(--primary)] font-medium bg-muted/50 pl-3"
-                                : "text-muted-foreground hover:text-foreground hover:bg-muted/30 pl-3",
-                            ].join(" ")}
-                          >
-                            {x.label}
-                          </Link>
-                        ))}
-                      </nav>
+                  {/* Mobile Navigation (Accordion) */}
+                  <div className="flex-1 overflow-y-auto">
+                    <div className="space-y-2">
+                      <MobileSection
+                        k="services"
+                        title="Services"
+                        items={NAV.dropdowns.services as unknown as NavLink[]}
+                      />
+                      <MobileSection
+                        k="companies"
+                        title="Companies"
+                        items={NAV.dropdowns.companies as unknown as NavLink[]}
+                      />
+                      <MobileSection
+                        k="insights"
+                        title="Insights"
+                        items={NAV.dropdowns.insights as unknown as NavLink[]}
+                      />
+                      <MobileSection
+                        k="company"
+                        title="Company"
+                        items={NAV.primary as unknown as NavLink[]}
+                      />
                     </div>
                   </div>
 
                   {/* Mobile Footer */}
-                  <div className="mt-8 pt-6 border-t space-y-4">
-                    <Button
-                      asChild
-                      className="w-full h-10 bg-[color:var(--primary)] text-white hover:bg-[color:var(--primary)]/90 transition-all duration-200"
-                    >
-                      <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
-                    </Button>
-                    <div className="text-center text-xs text-muted-foreground">
-                      RC: {SITE.trust.rc}
-                    </div>
+                  <div className="mt-6 space-y-4 border-t pt-6">
+                    <SheetClose asChild>
+                      <Button
+                        asChild
+                        className="h-10 w-full bg-[color:var(--primary)] text-white transition-all duration-200 hover:bg-[color:var(--primary)]/90"
+                      >
+                        <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
+                      </Button>
+                    </SheetClose>
+
+                    <div className="text-center text-xs text-muted-foreground">RC: {SITE.trust.rc}</div>
                   </div>
                 </div>
               </SheetContent>
