@@ -10,7 +10,7 @@ const PAGE_URL = `${BASE_URL}/insights/faqs`;
 const OG_IMAGE = `${BASE_URL}/assets/og/faqs.jpg`;
 
 export const metadata: Metadata = {
-  title: "FAQs | CSTL Insights",
+  title: "FAQs | Coast System & Technologies Limited Insights",
   description:
     "Answers to common questions on governance, compliance systems, privacy readiness (Nigeria), trademark/IP protection (NIPO), and CAC registry services—built for clarity and continuity.",
   alternates: { canonical: PAGE_URL },

@@ -16,7 +16,7 @@ async function unwrapSearchParams(sp?: PageProps["searchParams"]) {
 }
 
 export const metadata: Metadata = {
-  title: "Founder’s Corner | Coast System & Technologies Limited Insights",
+  title: "Founder’s Corner",
   description:
     "Executive notes from Coast System & Technologies Limited on governance, continuity, structure, and serious operating systems for companies.",
   alternates: { canonical: `${BASE_URL}/insights/founders-corner` },

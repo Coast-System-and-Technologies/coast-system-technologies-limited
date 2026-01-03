@@ -16,7 +16,7 @@ async function unwrapSearchParams(sp?: PageProps["searchParams"]) {
 }
 
 export const metadata: Metadata = {
-  title: "Articles | Coast System & Technologies Limited Insights",
+  title: "Articles",
   description:
     "Practical guides, checklists, and Nigeria-grounded implementation notes from Coast System & Technologies Limited.",
   alternates: { canonical: `${BASE_URL}/insights/articles` },

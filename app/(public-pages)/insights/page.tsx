@@ -22,7 +22,7 @@ async function unwrapSearchParams(sp?: PageProps["searchParams"]) {
 }
 
 export const metadata: Metadata = {
-  title: "Insights | Coast System & Technologies Limited — The Structure Behind Great Companies",
+  title: "Insights",
   description:
     "Executive notes and practical guides on governance, compliance systems, privacy readiness (Nigeria), trademark/IP protection (NIPO), and CAC registry execution—built for clarity, control, and continuity.",
   alternates: { canonical: PAGE_URL },

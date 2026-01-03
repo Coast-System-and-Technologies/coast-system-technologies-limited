@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = post.ogImageUrl || `${BASE_URL}/assets/og/articles.jpg`;
 
   return {
-    title: `${post.title} | Articles | CSTL`,
+    title: `${post.title} | Articles`,
     description: post.excerpt,
     alternates: { canonical: url },
     openGraph: {

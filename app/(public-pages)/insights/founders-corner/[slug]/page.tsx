@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImage = post.ogImageUrl || `${BASE_URL}/assets/og/founders-corner.jpg`;
 
   return {
-    title: `${post.title} | Founder’s Corner | Coast System & Technologies Limited`,
+    title: `${post.title} | Founder’s Corner`,
     description: post.excerpt,
     alternates: { canonical: url },
     openGraph: {
