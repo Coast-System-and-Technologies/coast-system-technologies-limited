@@ -8,7 +8,7 @@ import { BASE_URL } from "@/lib/site-url";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import StartProjectForm from "./start-project-form";
+import StartProjectForm from "@/components/forms/start-project-form";
 
 
 const whatsappLink = `https://wa.me/${SITE.contact.phoneTel.replace(/\D/g, "")}`;
