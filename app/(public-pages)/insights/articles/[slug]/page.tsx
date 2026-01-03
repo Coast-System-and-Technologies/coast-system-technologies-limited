@@ -1,29 +1,38 @@
-// app/insights/articles/[slug]/page.tsx
+// app/(public-pages)/insights/articles/[slug]/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
 import JsonLd from "@/components/insights/JsonLd";
 import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
 import { BASE_URL } from "@/lib/site-url";
 import { getPostBySlug, getPostsByType, formatDate } from "@/lib/insights/content";
 
+type ParamsShape = { slug: string };
+type PageProps = {
+  params: ParamsShape | Promise<ParamsShape>;
+};
+
+async function unwrapParams(params: PageProps["params"]) {
+  return await Promise.resolve(params);
+}
+
 export async function generateStaticParams() {
+  // ✅ content.ts uses "article" (singular)
   return getPostsByType("article").map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}): Promise<Metadata> {
-  const post = getPostBySlug("article", params.slug);
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await unwrapParams(params);
+
+  const post = getPostBySlug("article", slug);
   if (!post || post.type !== "article") return {};
 
   const url = `${BASE_URL}/insights/articles/${post.slug}`;
   const ogImage = post.ogImageUrl || `${BASE_URL}/assets/og/articles.jpg`;
 
   return {
-    title: `${post.title} | Coast System & Technologies Limited Articles`,
+    title: `${post.title} | Articles | CSTL`,
     description: post.excerpt,
     alternates: { canonical: url },
     openGraph: {
@@ -43,25 +52,28 @@ export async function generateMetadata({
   };
 }
 
-export default function ArticlePostPage({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug("article", params.slug);
+export default async function ArticlePostPage({ params }: PageProps) {
+  const { slug } = await unwrapParams(params);
+
+  const post = getPostBySlug("article", slug);
   if (!post || post.type !== "article") notFound();
 
   const url = `${BASE_URL}/insights/articles/${post.slug}`;
   const ogImage = post.ogImageUrl || `${BASE_URL}/assets/og/articles.jpg`;
 
-  const related = getPostsByType("article").filter((p) => p.slug !== post.slug).slice(0, 3);
-
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     headline: post.title,
     description: post.excerpt,
     inLanguage: "en-NG",
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     datePublished: post.publishedAtISO,
     dateModified: post.updatedAtISO || post.publishedAtISO,
-    author: { "@type": "Organization", name: "Coast System & Technologies Limited" },
+    author: {
+      "@type": "Organization",
+      name: "Coast System & Technologies Limited",
+    },
     publisher: {
       "@type": "Organization",
       name: "Coast System & Technologies Limited",
@@ -72,99 +84,118 @@ export default function ArticlePostPage({ params }: { params: { slug: string } }
     articleSection: post.pillarTags,
   };
 
+  const more = getPostsByType("article")
+    .filter((p) => p.slug !== post.slug)
+    .slice(0, 3);
+
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-14">
       <JsonLd data={jsonLd} />
 
       <header className="space-y-3">
-        <div className="text-xs font-medium text-gray-500">Article</div>
+        <div className="text-xs font-medium text-muted-foreground">Articles</div>
+
         <div className="flex flex-wrap gap-2">
           {post.pillarTags.map((t) => (
-            <span key={t} className="rounded-full border border-gray-200 px-3 py-1 text-xs">
+            <span key={t} className="rounded-full border border-border px-3 py-1 text-xs">
               {t}
             </span>
           ))}
         </div>
 
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900">{post.title}</h1>
+        <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
+        <p className="text-base leading-relaxed text-muted-foreground">{post.excerpt}</p>
 
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-muted-foreground">
           {formatDate(post.publishedAtISO)} • {post.readingTimeMins} min read
         </div>
       </header>
 
+      {/* Article Body (matches your ArticlePost structure) */}
       <article className="mt-10 space-y-10">
-        <section>
-          <h2 className="text-sm font-semibold text-gray-900">Problem statement</h2>
-          <p className="mt-2 text-sm leading-relaxed text-gray-700">{post.problemStatement}</p>
+        {/* Problem statement */}
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold text-foreground">Problem statement</h2>
+          <p className="text-sm leading-relaxed text-foreground/90">{post.problemStatement}</p>
         </section>
 
-        <section>
-          <h2 className="text-sm font-semibold text-gray-900">What you need to know</h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-700">
+        {/* What you need to know */}
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold text-foreground">What you need to know</h2>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-foreground/90">
             {post.whatYouNeedToKnow.map((x) => (
               <li key={x}>{x}</li>
             ))}
           </ul>
         </section>
 
-        <section>
-          <h2 className="text-sm font-semibold text-gray-900">Step-by-step / checklist</h2>
-          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-gray-700">
+        {/* Step-by-step */}
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold text-foreground">Step-by-step</h2>
+          <ol className="list-decimal space-y-2 pl-5 text-sm text-foreground/90">
             {post.steps.map((x) => (
               <li key={x}>{x}</li>
             ))}
           </ol>
         </section>
 
-        <section>
-          <h2 className="text-sm font-semibold text-gray-900">Common mistakes</h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-700">
+        {/* Common mistakes */}
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold text-foreground">Common mistakes</h2>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-foreground/90">
             {post.commonMistakes.map((x) => (
               <li key={x}>{x}</li>
             ))}
           </ul>
         </section>
 
-        <section className="rounded-2xl bg-gray-50 p-7">
-          <h2 className="text-lg font-semibold text-gray-900">What CSTL can deliver</h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-gray-700">
+        {/* What CSTL can deliver */}
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold text-foreground">What CSTL can deliver</h2>
+          <ul className="list-disc space-y-2 pl-5 text-sm text-foreground/90">
             {post.whatCstlDelivers.map((x) => (
               <li key={x}>{x}</li>
             ))}
           </ul>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link
-              href="/start"
-              className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white"
-            >
-              Request a Quote
-            </Link>
-            <Link
-              href="/start"
-              className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 hover:border-gray-900"
-            >
-              Start a Project
-            </Link>
-          </div>
         </section>
       </article>
 
-      {related.length ? (
-        <section aria-labelledby="related" className="mt-12">
-          <h2 id="related" className="text-lg font-semibold text-gray-900">
-            Related articles
-          </h2>
+      {/* CTA */}
+      <section className="mt-12 rounded-2xl border border-border p-7">
+        <h2 className="text-lg font-semibold">Ready for implementation?</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Send a brief and we’ll route you to the right pillar, checklist, and delivery path.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link
+            href="/start"
+            className="rounded-xl bg-primary px-5 py-3 text-sm font-medium text-primary-foreground"
+          >
+            Start a Project
+          </Link>
+          <Link
+            href="/contact"
+            className="rounded-xl border border-border px-5 py-3 text-sm font-medium hover:border-foreground"
+          >
+            Book a Strategy Call
+          </Link>
+        </div>
+      </section>
 
+      {/* More */}
+      {more.length ? (
+        <section aria-labelledby="more" className="mt-12">
+          <h2 id="more" className="text-lg font-semibold">
+            More Articles
+          </h2>
           <ul role="list" className="mt-4 grid gap-4 md:grid-cols-3">
-            {related.map((p) => (
-              <li key={p.slug} className="rounded-2xl border border-gray-200 p-5">
-                <div className="text-sm font-semibold text-gray-900">{p.title}</div>
-                <div className="mt-2 text-xs text-gray-500">{formatDate(p.publishedAtISO)}</div>
+            {more.map((p) => (
+              <li key={p.slug} className="rounded-2xl border border-border p-5">
+                <div className="text-sm font-semibold">{p.title}</div>
+                <div className="mt-2 text-xs text-muted-foreground">{formatDate(p.publishedAtISO)}</div>
                 <Link
                   href={`/insights/articles/${p.slug}`}
-                  className="mt-4 inline-flex rounded-xl border border-gray-200 px-4 py-2 text-sm text-gray-900 hover:border-gray-900"
+                  className="mt-4 inline-flex rounded-xl border border-border px-4 py-2 text-sm hover:border-foreground"
                 >
                   Read
                 </Link>

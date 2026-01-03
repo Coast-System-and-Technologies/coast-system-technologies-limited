@@ -1,96 +1,72 @@
-// app/insights/founders-corner/page.tsx
+// app/(public-pages)/insights/founders-corner/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
+
 import JsonLd from "@/components/insights/JsonLd";
 import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
-import PillarChips from "@/components/insights/PillarChips";
 import { BASE_URL } from "@/lib/site-url";
 import { getPostsByType, formatDate } from "@/lib/insights/content";
+import type { PillarTag } from "@/components/insights/PillarChips";
 
-const PAGE_URL = `${BASE_URL}/insights/founders-corner`;
-const OG_IMAGE = `${BASE_URL}/assets/og/founders-corner.jpg`;
+type SearchParamsShape = { tag?: string };
+type PageProps = { searchParams?: SearchParamsShape | Promise<SearchParamsShape> };
+
+async function unwrapSearchParams(sp?: PageProps["searchParams"]) {
+  return await Promise.resolve(sp ?? {});
+}
 
 export const metadata: Metadata = {
-  title: "Founder’s Corner | CSTL Insights",
+  title: "Founder’s Corner | Coast System & Technologies Limited Insights",
   description:
-    "Short executive columns on control, continuity, risk, and disciplined execution—built for founders and decision-makers.",
-  alternates: { canonical: PAGE_URL },
+    "Executive notes from Coast System & Technologies Limited on governance, continuity, structure, and serious operating systems for companies.",
+  alternates: { canonical: `${BASE_URL}/insights/founders-corner` },
   openGraph: {
     type: "website",
     siteName: "Coast System & Technologies Limited",
-    title: "Founder’s Corner | Coast System & Technologies Limited",
+    title: "Founder’s Corner | Coast System & Technologies Limited Insights",
     description:
-      "Founder-first notes on control, continuity, risk, and disciplined execution—built for decision-making.",
-    url: PAGE_URL,
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "Founder’s Corner | Coast System & Technologies Limited" }],
+      "Executive notes from Coast System & Technologies Limited on governance, continuity, structure, and serious operating systems for companies.",
+    url: `${BASE_URL}/insights/founders-corner`,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Founder’s Corner | Coast System & Technologies Limited",
+    title: "Founder’s Corner | Coast System & Technologies Limited Insights",
     description:
-      "Short executive columns on control, continuity, risk, and disciplined execution—built for founders.",
-    images: [OG_IMAGE],
+      "Executive notes from Coast System & Technologies Limited on governance, continuity, structure, and serious operating systems for companies.",
   },
 };
 
-export default function FoundersCornerIndex({
-  searchParams,
-}: {
-  searchParams?: { tag?: string };
-}) {
-  const activeTag = searchParams?.tag;
-  const posts = getPostsByType("founders-corner");
-  const filtered = activeTag ? posts.filter((p) => p.pillarTags.includes(activeTag as any)) : posts;
+export default async function FoundersCornerIndex({ searchParams }: PageProps) {
+  const { tag } = await unwrapSearchParams(searchParams);
 
-  const featured = filtered[0];
-  const list = filtered;
+  const posts = getPostsByType("founders-corner");
+  const allTags = Array.from(new Set(posts.flatMap((p) => p.pillarTags))).sort();
+  const activeTag = (tag || "").trim();
+
+  const filtered = activeTag
+    ? posts.filter((p) => p.pillarTags.includes(activeTag as PillarTag))
+    : posts;
+
+  const url = `${BASE_URL}/insights/founders-corner${activeTag ? `?tag=${encodeURIComponent(activeTag)}` : ""}`;
 
   const jsonLd = [
     {
       "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": `${BASE_URL}/#website`,
-      name: "Coast System & Technologies Limited",
-      url: `${BASE_URL}/`,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": `${BASE_URL}/#organization`,
-      name: "Coast System & Technologies Limited",
-      url: `${BASE_URL}/`,
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/assets/logo.png` },
-      email: "executive.office@coastsystemtechnologies.com.ng",
-      telephone: "+2349136860226",
-      sameAs: ["https://www.facebook.com/profile.php?id=61576938838523"],
-    },
-    {
-      "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "@id": `${PAGE_URL}/#webpage`,
-      url: PAGE_URL,
-      name: "Founder’s Corner | Coast System & Technologies Limited",
+      "@id": `${BASE_URL}/insights/founders-corner/#collection`,
+      url,
+      name: "Founder’s Corner | Coast System & Technologies Limited Insights",
       description:
-        "Short executive columns on control, continuity, risk, and disciplined execution—built for founders and decision-makers.",
+        "Executive notes from Coast System & Technologies Limited on governance, continuity, structure, and serious operating systems for companies.",
       isPartOf: { "@id": `${BASE_URL}/#website` },
-      about: { "@id": `${BASE_URL}/#organization` },
-      mainEntity: {
-        "@type": "ItemList",
-        itemListElement: list.slice(0, 12).map((p, idx) => ({
-          "@type": "ListItem",
-          position: idx + 1,
-          url: `${BASE_URL}/insights/founders-corner/${p.slug}`,
-          name: p.title,
-        })),
-      },
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+        { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
         { "@type": "ListItem", position: 2, name: "Insights", item: `${BASE_URL}/insights` },
-        { "@type": "ListItem", position: 3, name: "Founder’s Corner", item: PAGE_URL },
+        { "@type": "ListItem", position: 3, name: "Founder’s Corner", item: `${BASE_URL}/insights/founders-corner` },
       ],
     },
   ];
@@ -99,110 +75,88 @@ export default function FoundersCornerIndex({
     <main className="mx-auto w-full max-w-6xl px-4 py-14">
       <JsonLd data={jsonLd} />
 
-      <header className="space-y-4">
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900">Founder’s Corner</h1>
-        <p className="max-w-3xl text-base leading-relaxed text-gray-700">
-          Short executive columns on control, continuity, risk, and disciplined execution.
+      <header className="max-w-3xl space-y-3">
+        <p className="text-xs font-medium text-muted-foreground">Insights</p>
+        <h1 className="text-4xl font-semibold tracking-tight">Founder’s Corner</h1>
+        <p className="text-base leading-relaxed text-muted-foreground">
+          Short, executive notes on governance, continuity, and structure — written for operators.
         </p>
-
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/start?intent=strategy-call"
-            className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white"
-          >
-            Book a Strategy Call
-          </Link>
-          <Link
-            href="/start"
-            className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 hover:border-gray-900"
-          >
-            Start a Project
-          </Link>
-        </div>
-
-        <p className="text-xs text-gray-500">Direct • Practical • Built for decision-making</p>
       </header>
 
-      <section aria-labelledby="filters" className="mt-10">
-        <h2 id="filters" className="text-lg font-semibold text-gray-900">
-          Filter by pillar
-        </h2>
-        <div className="mt-4">
-          <PillarChips basePath="/insights/founders-corner" activeTag={activeTag} />
+      {/* Filters */}
+      <section className="mt-10" aria-label="Filter posts by pillar tag">
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/insights/founders-corner"
+            className={[
+              "rounded-full border px-3 py-1 text-xs",
+              !activeTag ? "border-foreground text-foreground" : "border-border text-muted-foreground hover:text-foreground",
+            ].join(" ")}
+            aria-current={!activeTag ? "page" : undefined}
+          >
+            All
+          </Link>
+
+          {allTags.map((t) => {
+            const isActive = t === activeTag;
+            return (
+              <Link
+                key={t}
+                href={`/insights/founders-corner?tag=${encodeURIComponent(t)}`}
+                className={[
+                  "rounded-full border px-3 py-1 text-xs",
+                  isActive ? "border-foreground text-foreground" : "border-border text-muted-foreground hover:text-foreground",
+                ].join(" ")}
+                aria-current={isActive ? "page" : undefined}
+              >
+                {t}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      {featured ? (
-        <section aria-labelledby="featured" className="mt-12">
-          <h2 id="featured" className="text-lg font-semibold text-gray-900">
-            Featured
-          </h2>
+      {/* List */}
+      <section className="mt-8" aria-label="Founder’s Corner posts">
+        <ul role="list" className="grid gap-4 md:grid-cols-3">
+          {filtered.map((p) => (
+            <li key={p.slug} className="rounded-2xl border border-border p-6">
+              <article aria-label={p.title} className="space-y-3">
+                <div className="text-xs text-muted-foreground">{formatDate(p.publishedAtISO)}</div>
 
-          <div className="mt-4 rounded-2xl border border-gray-200 p-6">
-            <div className="text-xs font-medium text-gray-500">Featured Post</div>
-            <div className="mt-2 text-2xl font-semibold text-gray-900">{featured.title}</div>
-            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-700">
-              {featured.excerpt}
-            </p>
-            <div className="mt-3 text-xs text-gray-500">{formatDate(featured.publishedAtISO)}</div>
+                <h2 className="text-lg font-semibold leading-snug">{p.title}</h2>
+                <p className="text-sm text-muted-foreground">{p.excerpt}</p>
 
-            <Link
-              href={`/insights/founders-corner/${featured.slug}`}
-              className="mt-5 inline-flex rounded-xl border border-gray-200 px-4 py-2 text-sm text-gray-900 hover:border-gray-900"
-            >
-              Read
-            </Link>
-          </div>
-        </section>
-      ) : null}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {p.pillarTags.map((t) => (
+                    <span key={t} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+                      {t}
+                    </span>
+                  ))}
+                </div>
 
-      <section aria-labelledby="all" className="mt-12">
-        <h2 id="all" className="text-lg font-semibold text-gray-900">
-          All posts
-        </h2>
-
-        <ul role="list" className="mt-4 grid gap-4 md:grid-cols-2">
-          {list.map((p) => (
-            <li key={p.slug} className="rounded-2xl border border-gray-200 p-6">
-              <div className="text-xs font-medium text-gray-500">{p.pillarTags[0]}</div>
-              <div className="mt-2 text-lg font-semibold text-gray-900">{p.title}</div>
-              <div className="mt-2 text-xs text-gray-500">{formatDate(p.publishedAtISO)}</div>
-
-              <Link
-                href={`/insights/founders-corner/${p.slug}`}
-                className="mt-4 inline-flex rounded-xl border border-gray-200 px-4 py-2 text-sm text-gray-900 hover:border-gray-900"
-              >
-                Read
-              </Link>
+                <Link
+                  href={`/insights/founders-corner/${p.slug}`}
+                  className="inline-flex rounded-xl border border-border px-4 py-2 text-sm hover:border-foreground"
+                  aria-label={`Read: ${p.title}`}
+                >
+                  Read
+                </Link>
+              </article>
             </li>
           ))}
         </ul>
+
+        {!filtered.length ? (
+          <p className="mt-6 text-sm text-muted-foreground">
+            No posts found for this tag.
+          </p>
+        ) : null}
       </section>
 
-      <section className="mt-14 rounded-2xl bg-gray-50 p-8">
-        <h2 className="text-xl font-semibold text-gray-900">
-        Want Coast System & Technologies Limited to install the structure behind the ideas?
-        </h2>
-        <p className="mt-2 text-sm text-gray-700">
-          Book a strategy call or send a brief. We’ll tell you what needs to be installed first.
-        </p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <Link
-            href="/start?intent=strategy-call"
-            className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white"
-          >
-            Book a Strategy Call
-          </Link>
-          <Link
-            href="/start"
-            className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 hover:border-gray-900"
-          >
-            Start a Project
-          </Link>
-        </div>
-      </section>
-
-      <MicroDisclaimer />
+      <div className="mt-12">
+        <MicroDisclaimer />
+      </div>
     </main>
   );
 }
