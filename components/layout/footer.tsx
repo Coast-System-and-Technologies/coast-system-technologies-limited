@@ -1,7 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
+import { Mail, Phone, Facebook, Linkedin, Twitter, Instagram } from "lucide-react";
 import { SITE } from "@/content/site";
 import { NAV, type NavLink } from "@/content/nav";
-import { Separator } from "@/components/ui/separator";
 
 function FooterSection({
   title,
@@ -12,18 +13,20 @@ function FooterSection({
 }) {
   return (
     <div>
-      <div className="text-sm font-medium text-foreground">{title}</div>
-      <div className="mt-3 space-y-2 text-sm">
+      <h3 className="text-sm font-semibold text-white uppercase tracking-wide mb-5">
+        {title}
+      </h3>
+      <nav className="space-y-3">
         {links.map((x) => (
           <Link
             key={x.href}
             href={x.href}
-            className="block text-muted-foreground hover:text-[color:var(--primary)] transition"
+            className="block text-sm text-white/70 hover:text-white transition-colors duration-200"
           >
             {x.label}
           </Link>
         ))}
-      </div>
+      </nav>
     </div>
   );
 }
@@ -34,77 +37,143 @@ export default function Footer() {
   const insightLinks = NAV.dropdowns.insights as unknown as NavLink[];
 
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="cstl-container py-14">
-        {/* Top seal divider */}
-        <div className="h-px w-full cstl-seal-line opacity-70" />
-
-        <div className="mt-10 grid gap-10 md:grid-cols-4">
-          {/* Brand */}
-          <div className="space-y-3">
-            <div className="font-heading text-lg text-[color:var(--primary)]">
-              {SITE.name}
+    <footer className="bg-[color:var(--primary)] text-white">
+      <div className="cstl-container">
+        {/* Top section: Brand and Navigation */}
+        <div className="py-12 sm:py-14 lg:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
+            {/* Brand Section */}
+            <div className="sm:col-span-2 lg:col-span-2 space-y-6">
+              <Image
+                src="/LOGO DARK.png"
+                alt={SITE.name}
+                width={200}
+                height={60}
+                className="h-auto w-auto"
+                priority
+              />
+              <p className="font-heading text-xl lg:text-2xl text-white leading-relaxed max-w-md">
+                {SITE.positioningLine}
+              </p>
+              <p className="text-sm text-white/60 tracking-wider">
+                {SITE.signature}
+              </p>
             </div>
-            <div className="text-sm text-muted-foreground">
-              {SITE.positioningLine}
-            </div>
-            <div className="text-xs text-muted-foreground tracking-wider">
-              {SITE.signature}
+
+            {/* Navigation Links */}
+            <div>
+              <FooterSection title="Services" links={serviceLinks} />
             </div>
 
-            <div className="pt-3 text-sm space-y-1">
-              <a
-                className="block text-muted-foreground hover:text-[color:var(--primary)] transition"
-                href={`mailto:${SITE.contact.email}`}
-              >
-                {SITE.contact.email}
-              </a>
-              <a
-                className="block text-muted-foreground hover:text-[color:var(--primary)] transition"
-                href={`tel:${SITE.contact.phoneTel}`}
-              >
-                {SITE.contact.phoneDisplay}
-              </a>
+            <div>
+              <FooterSection title="Companies" links={companyLinks} />
+            </div>
 
-              <div className="pt-2 text-xs text-muted-foreground">
-                RC: {SITE.trust.rc}
+            <div>
+              <FooterSection title="Insights" links={insightLinks} />
+            </div>
+          </div>
+        </div>
+
+        {/* Middle section: Contact and Social */}
+        <div className="border-t border-white/10 py-8 lg:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Contact Information */}
+            <div>
+              <h3 className="text-sm font-semibold text-white uppercase tracking-wide mb-5">
+                Contact Information
+              </h3>
+              <div className="space-y-4">
+                <a
+                  href={`mailto:${SITE.contact.email}`}
+                  className="flex items-start gap-3 text-sm text-white/70 hover:text-white transition-colors duration-200 group"
+                >
+                  <Mail className="w-5 h-5 text-[color:var(--accent)] flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                  <span className="break-all">{SITE.contact.email}</span>
+                </a>
+                <a
+                  href={`tel:${SITE.contact.phoneTel}`}
+                  className="flex items-center gap-3 text-sm text-white/70 hover:text-white transition-colors duration-200 group"
+                >
+                  <Phone className="w-5 h-5 text-[color:var(--accent)] flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <span>{SITE.contact.phoneDisplay}</span>
+                </a>
               </div>
             </div>
 
-            <div className="pt-2">
-              <a
-                href={SITE.socials.facebook}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-muted-foreground hover:text-[color:var(--primary)] transition"
-              >
-                Facebook
-              </a>
+            {/* Social Media */}
+            <div>
+              <h3 className="text-sm font-semibold text-white uppercase tracking-wide mb-5">
+                Follow Us
+              </h3>
+              <div className="flex items-center gap-3">
+                <a
+                  href={SITE.socials.facebook}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200 group"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200 group"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200 group"
+                  aria-label="X (Twitter)"
+                >
+                  <Twitter className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all duration-200 group"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </a>
+              </div>
             </div>
           </div>
-
-          <FooterSection title="Services" links={serviceLinks} />
-          <FooterSection title="Our Companies" links={companyLinks} />
-          <FooterSection title="Insights" links={insightLinks} />
         </div>
 
-        <Separator className="my-10" />
-
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between text-xs text-muted-foreground">
-          <div>
-            © {new Date().getFullYear()} {SITE.shortName}. All rights reserved.
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            <Link href="/privacy" className="hover:text-[color:var(--primary)] transition">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-[color:var(--primary)] transition">
-              Terms
-            </Link>
-            <Link href="/cookies" className="hover:text-[color:var(--primary)] transition">
-              Cookies
-            </Link>
+        {/* Bottom section: Copyright and Legal */}
+        <div className="border-t border-white/10 py-6 lg:py-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-white/60">
+            <div>
+              © {new Date().getFullYear()} {SITE.name}. All Rights Reserved.
+            </div>
+            <nav className="flex flex-wrap items-center gap-6">
+              <Link
+                href="/privacy"
+                className="hover:text-white transition-colors duration-200"
+              >
+                Privacy
+              </Link>
+              <Link
+                href="/terms"
+                className="hover:text-white transition-colors duration-200"
+              >
+                Terms & Condition
+              </Link>
+              <Link
+                href="/cookies"
+                className="hover:text-white transition-colors duration-200"
+              >
+                Cookies
+              </Link>
+            </nav>
           </div>
         </div>
       </div>
