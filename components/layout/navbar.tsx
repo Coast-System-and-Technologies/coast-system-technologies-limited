@@ -288,7 +288,7 @@ export default function Navbar() {
                   </div>
 
                   {/* Mobile Footer */}
-                  <div className="mt-6 space-y-4 border-t pt-6">
+                  <div className="mt-6 space-y-4 border-t pt-6 px-2">
                     <SheetClose asChild>
                       <Button
                         asChild
