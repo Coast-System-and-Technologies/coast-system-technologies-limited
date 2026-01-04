@@ -26,7 +26,7 @@ export default function MicroDisclaimer({
       role="note"
       aria-label="Disclaimer"
       className={[
-        "mt-10 rounded-2xl border p-4 sm:p-5",
+        "mt-6 rounded-2xl border p-4 sm:p-5",
         "bg-card/70 border-border",
         "backdrop-blur-sm",
         isNotice ? "shadow-sm" : "",
