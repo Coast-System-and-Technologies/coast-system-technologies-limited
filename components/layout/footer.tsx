@@ -37,7 +37,7 @@ export default function Footer() {
   const insightLinks = NAV.dropdowns.insights as unknown as NavLink[];
 
   return (
-    <footer className="bg-[color:var(--primary)] text-white">
+    <footer className="bg-[color:var(--footer-bg)] text-white">
       <div className="cstl-container">
         {/* Top section: Brand and Navigation */}
         <div className="py-12 sm:py-14 lg:py-16">

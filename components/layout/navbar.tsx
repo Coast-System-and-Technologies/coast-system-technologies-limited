@@ -252,11 +252,11 @@ export default function Navbar() {
                       height={50}
                       className="h-10 w-auto"
                     />
-                    <SheetClose asChild>
+                    {/* <SheetClose asChild>
                       <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Close menu">
                         <X className="h-5 w-5" />
                       </Button>
-                    </SheetClose>
+                    </SheetClose> */}
                   </div>
 
                   <Separator className="mb-4" />
