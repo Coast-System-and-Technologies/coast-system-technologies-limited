@@ -15,6 +15,7 @@ import {
   ExternalLink,
   Users,
   ClipboardCheck,
+  School,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -22,47 +23,34 @@ import { Separator } from "@/components/ui/separator";
 import { SITE } from "@/content/site";
 import { BASE_URL } from "@/lib/site-url";
 import JsonLd from "@/components/insights/JsonLd";
-import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
 
 const PAGE_URL = `${BASE_URL}/companies/coast-research-technology`;
 const OG_IMAGE = `${BASE_URL}/assets/og/companies-crt.jpg`;
 const CRT_SITE_URL = "https://coastresearchtechnology.com/";
 
+// Suggested constants (keep them near your other URL constants)
+const CSTL_SITE_URL = BASE_URL; // https://coastsystemtechnologies.com.ng
+
+// IMPORTANT: this must be a PUBLIC URL that loads in the browser.
+// Put crt_logo.webp in the CRT site's /public/assets/ folder so it becomes /assets/crt_logo.webp
+const CRT_LOGO_URL = `${CRT_SITE_URL}_next/image?url=%2FlogoCoast.png`;
+
+// Use CRT domain for CRT org identity
+const CRT_ORG_ID = `${CRT_SITE_URL}/#organization`;
+
+
 export const metadata: Metadata = {
   title: "Coast Research Technology (CRT)",
   description:
-    "Software engineering, tech training, product delivery, and app maintenance—building real-world systems and developing talent with disciplined execution.",
-  keywords: [
-    "Coast Research Technology",
-    "CRT",
-    "software engineering Nigeria",
-    "tech training",
-    "product delivery",
-    "application maintenance",
-    "backend development",
-    "frontend development",
-    "CSTL",
-  ],
+    "Software engineering, product delivery, app maintenance, and tech training—building real-world systems and supporting them for continuity.",
   alternates: { canonical: PAGE_URL },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
   openGraph: {
     type: "website",
     siteName: "Coast System & Technologies Limited",
     title: "Coast Research Technology (CRT) | Coast System & Technologies Limited",
     description:
-      "Software engineering, tech training, product delivery, and app maintenance—built under CSTL governance.",
+      "Software engineering, product delivery, app maintenance, and tech training—built under CSTL governance.",
     url: PAGE_URL,
-    locale: "en_NG",
     images: [
       {
         url: OG_IMAGE,
@@ -76,7 +64,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Coast Research Technology (CRT)",
     description:
-      "Software engineering, tech training, product delivery, and app maintenance—built under CSTL governance.",
+      "Software engineering, product delivery, app maintenance, and tech training—built under CSTL governance.",
     images: [OG_IMAGE],
   },
 };
@@ -89,64 +77,69 @@ const CAPABILITIES = [
     icon: Boxes,
   },
   {
-    title: "Tech Training",
-    description:
-      "Structured training programs with mentorship and practical projects—focused on competence and delivery habits.",
-    icon: GraduationCap,
-  },
-  {
     title: "Product Delivery",
     description:
-      "From idea → MVP → production—delivery discipline, QA, documentation, and launch support.",
+      "From idea to MVP to production—delivery discipline, QA, and launch support.",
     icon: Sparkles,
   },
   {
     title: "App Maintenance & Support",
     description:
-      "Ongoing support for continuity—bug fixes, upgrades, monitoring, performance tuning, and improvements.",
+      "Ongoing support for stability and continuity—bug fixes, upgrades, monitoring, and improvements.",
     icon: Wrench,
   },
-];
+  {
+    title: "Tech Training",
+    description:
+      "Structured training programs with mentorship and practical projects—designed to build real industry capacity.",
+    icon: GraduationCap,
+  },
+] as const;
 
 const WHAT_WE_DO = [
   "Web and mobile product development",
   "Backend architecture & integrations",
   "Fintech and lending infrastructure support",
-  "App maintenance contracts and continuity support",
-  "Tech training programs (beginner → job-ready tracks)",
-  "Mentorship and project-based coaching",
-  "Corporate/team upskilling (workshops where needed)",
-];
+  "Operations tooling (workflows, admin systems)",
+  "Maintenance contracts and continuity support",
+  "Tech training programs and capacity building",
+] as const;
 
 const WHY_CRT = [
-  "Training is core: structured programs built around mentorship and real project output.",
-  "Delivery discipline: clean handoffs, documentation, and consistent execution.",
-  "Engineering depth: practical architecture for real operations and constraints.",
-  "Continuity mindset: we don’t just build—we support, stabilize, and upgrade.",
-];
+  "Delivery discipline: clean handoffs, documentation, and consistency.",
+  "Engineering depth: practical architecture for real operations.",
+  "Continuity mindset: we don’t just build—we support and stabilize.",
+  "Training culture: structured learning guided by experienced instructors.",
+] as const;
 
 const TRAINING_TRACKS = [
   {
-    title: "Career Tracks (Beginner → Job-Ready)",
+    title: "Full-Stack Development",
     description:
-      "Structured programs that build fundamentals, portfolio projects, and practical delivery habits.",
-    icon: Users,
+      "Build modern web apps end-to-end: frontend, backend, database, and deployment fundamentals.",
+    icon: Boxes,
   },
   {
-    title: "Mentorship & Project Coaching",
+    title: "Backend Engineering",
     description:
-      "Guided delivery with reviews, checkpoints, and feedback—so learners build real competence and output.",
+      "APIs, authentication, integrations, databases, architecture patterns, and reliability basics.",
+    icon: Cpu,
+  },
+  {
+    title: "Data Analysis Foundations",
+    description:
+      "Data cleaning, analysis workflows, dashboards, and practical reporting for real use-cases.",
     icon: ClipboardCheck,
   },
   {
-    title: "Team Upskilling",
+    title: "Career-Ready Project Practice",
     description:
-      "Workshops for teams and organizations—focused on delivery patterns, tooling, and modern workflows.",
-    icon: GraduationCap,
+      "Guided projects that reinforce delivery discipline—requirements, iteration, QA, and handoffs.",
+    icon: Sparkles,
   },
-];
+] as const;
 
-function PageHeading({
+function SectionHeading({
   kicker,
   title,
   description,
@@ -158,13 +151,16 @@ function PageHeading({
   return (
     <div className="max-w-2xl">
       {kicker ? (
-        <p className="text-xs tracking-widest text-muted-foreground uppercase">
+        <div className="text-xs tracking-widest text-muted-foreground uppercase">
           {kicker}
-        </p>
+        </div>
       ) : null}
+
+      {/* Page H1 */}
       <h1 className="mt-2 font-heading text-3xl sm:text-4xl text-[color:var(--primary)]">
         {title}
       </h1>
+
       {description ? (
         <p className="mt-3 text-muted-foreground leading-relaxed">
           {description}
@@ -175,155 +171,143 @@ function PageHeading({
 }
 
 export default function CoastResearchTechnologyPage() {
-  const crtOrgId = `${PAGE_URL}/#crt`;
-  const crtOfferCatalogId = `${PAGE_URL}/#crt-offer-catalog`;
-  const primaryImageId = `${PAGE_URL}/#primaryimage`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      // CSTL website entity (host site)
+      {
+        "@type": "WebSite",
+        "@id": `${CSTL_SITE_URL}/#website`,
+        name: SITE.name,
+        alternateName: SITE.shortName,
+        url: `${CSTL_SITE_URL}/`,
+        publisher: { "@id": `${CSTL_SITE_URL}/#organization` },
+        inLanguage: "en-NG",
+      },
 
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": `${BASE_URL}/#website`,
-      name: "Coast System & Technologies Limited",
-      url: `${BASE_URL}/`,
-      inLanguage: "en-NG",
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": `${BASE_URL}/#organization`,
-      name: "Coast System & Technologies Limited",
-      url: `${BASE_URL}/`,
-      logo: {
-        "@type": "ImageObject",
-        url: `${BASE_URL}/assets/logo.png`,
+      // CSTL organization entity
+      {
+        "@type": "Organization",
+        "@id": `${CSTL_SITE_URL}/#organization`,
+        name: SITE.name,
+        legalName: SITE.name,
+        alternateName: SITE.shortName,
+        url: `${CSTL_SITE_URL}/`,
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${CSTL_SITE_URL}/#logo`,
+          url: `${CSTL_SITE_URL}/assets/logo.png`,
+        },
+        email: SITE.contact.email,
+        telephone: SITE.contact.phoneTel,
+        identifier: {
+          "@type": "PropertyValue",
+          name: "RC Number",
+          value: SITE.trust.rc,
+        },
+        sameAs: [SITE.socials.facebook],
       },
-      email: "executive.office@coastsystemtechnologies.com.ng",
-      telephone: "+2349136860226",
-      sameAs: ["https://www.facebook.com/profile.php?id=61576938838523"],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": crtOrgId,
-      name: "Coast Research Technology",
-      url: CRT_SITE_URL,
-      parentOrganization: { "@id": `${BASE_URL}/#organization` },
-      description:
-        "Software engineering, tech training, product delivery, and app maintenance—building real-world systems and developing talent with disciplined execution.",
-      hasOfferCatalog: { "@id": crtOfferCatalogId },
-      knowsAbout: [
-        "Software development",
-        "Tech training",
-        "Product delivery",
-        "Application maintenance",
-        "Systems engineering",
-        "Team upskilling",
-      ],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "OfferCatalog",
-      "@id": crtOfferCatalogId,
-      name: "Coast Research Technology services",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Software Engineering",
-            description:
-              "Backend + frontend engineering for stable, secure, scalable products.",
-          },
+
+      // CRT organization entity (canonical: CRT domain)
+      {
+        "@type": "Organization",
+        "@id": CRT_ORG_ID,
+        name: "Coast Research Technology",
+        alternateName: "CRT",
+        url: CRT_SITE_URL,
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${CRT_SITE_URL}/#logo`,
+          url: CRT_LOGO_URL,
         },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Tech Training",
-            description:
-              "Structured training programs with mentorship and practical projects.",
-          },
+
+        // Relationship to CSTL (use this only if CSTL is truly the holding/governance parent)
+        parentOrganization: { "@id": `${CSTL_SITE_URL}/#organization` },
+
+        description:
+          "Software engineering, product delivery, app maintenance, and tech training—building real-world systems and supporting them for continuity.",
+
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "CRT Services",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Software Engineering & Product Delivery",
+                description:
+                  "Design and build stable software products with disciplined delivery and clean architecture.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "App Maintenance & Support",
+                description:
+                  "Ongoing support for stability: upgrades, fixes, monitoring, and continuity improvements.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Tech Training",
+                description:
+                  "Structured training programs with mentorship and practical projects—delivered in serene, well-paced classrooms with small cohorts and industry-expert instructors.",
+              },
+            },
+          ],
         },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Product Delivery",
-            description:
-              "Delivery discipline from idea → MVP → production with QA and documentation.",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "App Maintenance & Support",
-            description:
-              "Continuity support: upgrades, fixes, monitoring, performance improvements.",
-          },
-        },
-      ],
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "ImageObject",
-      "@id": primaryImageId,
-      url: OG_IMAGE,
-      width: 1200,
-      height: 630,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": `${PAGE_URL}/#webpage`,
-      url: PAGE_URL,
-      name: "Coast Research Technology (CRT) | Coast System & Technologies Limited",
-      description:
-        "Software engineering, tech training, product delivery, and app maintenance—built under CSTL governance.",
-      isPartOf: { "@id": `${BASE_URL}/#website` },
-      about: { "@id": crtOrgId },
-      mainEntity: { "@id": crtOrgId },
-      breadcrumb: { "@id": `${PAGE_URL}/#breadcrumb` },
-      primaryImageOfPage: { "@id": primaryImageId },
-      inLanguage: "en-NG",
-      potentialAction: {
-        "@type": "ReadAction",
-        target: [PAGE_URL],
       },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "@id": `${PAGE_URL}/#breadcrumb`,
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Companies",
-          item: `${BASE_URL}/companies`,
-        },
-        { "@type": "ListItem", position: 3, name: "Coast Research Technology", item: PAGE_URL },
-      ],
-    },
-  ];
+
+      // The CSTL "company profile" webpage (this page)
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}/#webpage`,
+        url: PAGE_URL,
+        name: "Coast Research Technology (CRT) | Coast System & Technologies Limited",
+        description:
+          "Software engineering, product delivery, app maintenance, and tech training—built under CSTL governance.",
+        isPartOf: { "@id": `${CSTL_SITE_URL}/#website` },
+        mainEntity: { "@id": CRT_ORG_ID },
+        breadcrumb: { "@id": `${PAGE_URL}/#breadcrumb` },
+        primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE }, // ensure OG_IMAGE is absolute
+        inLanguage: "en-NG",
+      },
+
+      // Breadcrumbs
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}/#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: `${CSTL_SITE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Companies", item: `${CSTL_SITE_URL}/companies` },
+          { "@type": "ListItem", position: 3, name: "Coast Research Technology", item: PAGE_URL },
+        ],
+      },
+    ],
+  };
+
 
   return (
-    <main>
+    <main id="main-content">
       <JsonLd data={jsonLd} />
 
       {/* HERO */}
-      <header className="relative overflow-hidden border-b border-border">
+      <section
+        className="relative overflow-hidden border-b border-border"
+        aria-labelledby="crt-hero-title"
+      >
         <div className="absolute inset-0 cstl-hero-bg opacity-80" aria-hidden="true" />
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
         <div className="relative cstl-container py-16 sm:py-20">
-          <PageHeading
-            kicker="Operating Company"
-            title="Coast Research Technology (CRT)"
-            description="We build real-world software systems, run structured tech training, and support products for long-term stability and continuity."
-          />
+          <div className="max-w-2xl">
+            <div className="text-xs tracking-widest text-muted-foreground uppercase">
+              Operating Company
+            </div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
           <Button asChild variant="cta">
@@ -333,7 +317,9 @@ export default function CoastResearchTechnologyPage() {
             </Button>
 
             <Button asChild variant="outline">
-              <Link href="/contact">Contact CSTL</Link>
+              <Link href="/contact" aria-label="Contact CSTL">
+                Contact CSTL
+              </Link>
             </Button>
 
             <div className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
@@ -343,7 +329,11 @@ export default function CoastResearchTechnologyPage() {
           </div>
 
           {/* Premium external link strip */}
-          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-[color:var(--accent)]/35 bg-[color:var(--accent)]/10 px-4 py-2 text-xs text-foreground/80">
+          <div
+            className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full border border-[color:var(--accent)]/35 bg-[color:var(--accent)]/10 px-4 py-2 text-xs text-foreground/80"
+            role="note"
+            aria-label="Official CRT website"
+          >
             <ExternalLink className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
             <span className="font-medium">Official CRT website:</span>
             <a
@@ -353,59 +343,62 @@ export default function CoastResearchTechnologyPage() {
               className="inline-flex items-center gap-1 font-medium text-[color:var(--primary)] hover:underline underline-offset-4"
               aria-label="Visit Coast Research Technology website (opens in a new tab)"
             >
-              coastresearchtechnology.com <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              www.coastresearchtechnology.com <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           </div>
 
           <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
         </div>
-      </header>
+      </section>
 
       {/* SUMMARY */}
       <section className="cstl-container py-14 sm:py-16" aria-labelledby="crt-summary-title">
         <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
           <div className="lg:col-span-7">
-            <p className="text-xs tracking-widest text-muted-foreground uppercase">
+            <div className="text-xs tracking-widest text-muted-foreground uppercase">
               What CRT does
-            </p>
+            </div>
 
             <h2
               id="crt-summary-title"
               className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
             >
-              Engineering + Training—built with delivery discipline
+              Engineering teams trust for delivery—and continuity
             </h2>
 
             <p className="mt-3 text-muted-foreground leading-relaxed">
-              CRT is the Coast Group’s software engineering and tech training company. We design, build, and
-              maintain products across fintech, internal operations, and digital platforms—while also running
-              structured training programs that develop competent, delivery-ready talent.
+              Coast Research Technology (CRT) is the Coast Group’s software engineering arm: we design, build, and maintain products
+              across fintech, internal operations, and digital platforms. Alongside delivery, we run
+              structured training designed to help people gain real, practical competence.
             </p>
 
-            <ul className="mt-6 space-y-2" aria-label="Why teams choose CRT">
+            <ul className="mt-6 space-y-2" aria-label="Why teams choose CRT" role="list">
               {WHY_CRT.map((x) => (
-                <li key={x} className="flex gap-2 text-sm text-muted-foreground">
+                <li key={x} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
                   <span>{x}</span>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+            <div className="mt-8 flex flex-col sm:flex-row gap-3" role="group" aria-label="Navigation actions">
               <Button asChild variant="outline">
-                <Link href="/services">Explore CSTL Services</Link>
+                <Link href="/services" aria-label="Explore CSTL services">
+                  Explore CSTL Services
+                </Link>
               </Button>
 
               <Button asChild variant="ghost">
-                <Link href="/companies" className="text-[color:var(--primary)]">
+                <Link href="/companies" className="text-[color:var(--primary)]" aria-label="Back to companies page">
                   Back to Companies
                 </Link>
               </Button>
             </div>
           </div>
 
-          <div className="lg:col-span-5">
-            <aside className="rounded-2xl border border-border bg-card p-6 shadow-sm" aria-label="CRT overview">
+          {/* Sidebar */}
+          <aside className="lg:col-span-5" aria-label="CRT summary card">
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background">
                   <Cpu className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
@@ -415,7 +408,7 @@ export default function CoastResearchTechnologyPage() {
                     CRT at a glance
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    Engineering • Training • Delivery • Maintenance
+                    Engineering • Product • Maintenance • Training
                   </div>
                 </div>
               </div>
@@ -423,11 +416,12 @@ export default function CoastResearchTechnologyPage() {
               <Separator className="my-6" />
 
               <div className="text-xs tracking-widest text-muted-foreground uppercase">
-                Core services
+                Core work
               </div>
-              <ul className="mt-4 space-y-3" aria-label="CRT core services list">
+
+              <ul className="mt-4 space-y-3" aria-label="CRT core work areas" role="list">
                 {WHAT_WE_DO.map((x) => (
-                  <li key={x} className="flex gap-2 text-sm text-muted-foreground">
+                  <li key={x} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
                     <div className="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]" aria-hidden="true" />
                     <span>{x}</span>
                   </li>
@@ -436,13 +430,18 @@ export default function CoastResearchTechnologyPage() {
 
               <Separator className="my-6" />
 
-              <div className="rounded-2xl border border-[color:var(--accent)]/30 bg-[color:var(--accent)]/10 p-4">
+              {/* Premium external CTA */}
+              <div
+                className="rounded-2xl border border-[color:var(--accent)]/30 bg-[color:var(--accent)]/10 p-4"
+                role="note"
+                aria-label="Official CRT website callout"
+              >
                 <div className="text-xs tracking-widest text-muted-foreground uppercase">
                   Official website
                 </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  For training schedules, service details, and updates directly from CRT.
-                </p>
+                <div className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                  For services, training updates, and announcements directly from CRT.
+                </div>
 
                 <Button
                   asChild
@@ -460,50 +459,62 @@ export default function CoastResearchTechnologyPage() {
                   </a>
                 </Button>
 
-                <p className="mt-2 text-[11px] text-muted-foreground">Opens in a new tab.</p>
+                <div className="mt-2 text-[11px] text-muted-foreground">
+                  Opens in a new tab.
+                </div>
               </div>
 
               <Separator className="my-6" />
 
-              <p className="text-xs text-muted-foreground leading-relaxed">
+              <div className="text-xs text-muted-foreground leading-relaxed">
                 Mission-aligned delivery under CSTL’s governance and shared services.
-              </p>
-            </aside>
-          </div>
+              </div>
+            </div>
+          </aside>
         </div>
       </section>
 
-      {/* TRAINING */}
-      <section className="border-y border-border bg-card/40" aria-labelledby="crt-training-title">
+      {/* CAPABILITIES */}
+      <section
+        className="border-y border-border bg-card/40"
+        aria-labelledby="crt-capabilities-title"
+      >
         <div className="cstl-container py-14 sm:py-16">
-          <p className="text-xs tracking-widest text-muted-foreground uppercase">
-            Training
-          </p>
+          <div className="max-w-2xl">
+            <div className="text-xs tracking-widest text-muted-foreground uppercase">
+              Capabilities
+            </div>
 
-          <h2
-            id="crt-training-title"
-            className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
-          >
-            Training designed for output—not noise
-          </h2>
+            <h2
+              id="crt-capabilities-title"
+              className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
+            >
+              Built for real-world systems
+            </h2>
 
-          <p className="mt-3 text-muted-foreground leading-relaxed max-w-2xl">
-            Structured programs built around mentorship, projects, and delivery habits—so learning translates into competence.
-          </p>
+            <p className="mt-3 text-muted-foreground leading-relaxed">
+              Coast Research Technology builds and supports software that must work under real operating conditions—and trains
+              people to become effective in real delivery environments.
+            </p>
+          </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {TRAINING_TRACKS.map((t) => {
-              const Icon = t.icon;
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list" aria-label="CRT capabilities">
+            {CAPABILITIES.map((c) => {
+              const Icon = c.icon;
               return (
-                <div key={t.title} className="rounded-2xl border border-border bg-card p-6">
+                <div
+                  key={c.title}
+                  role="listitem"
+                  className="rounded-2xl border border-border bg-card p-6"
+                >
                   <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
                     <Icon className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
                   </div>
                   <div className="mt-4 font-heading text-lg text-[color:var(--primary)]">
-                    {t.title}
+                    {c.title}
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {t.description}
+                    {c.description}
                   </p>
                 </div>
               );
@@ -530,61 +541,129 @@ export default function CoastResearchTechnologyPage() {
         </div>
       </section>
 
-      {/* CAPABILITIES */}
-      <section className="cstl-container py-14 sm:py-16" aria-labelledby="crt-capabilities-title">
-        <p className="text-xs tracking-widest text-muted-foreground uppercase">
-          Capabilities
-        </p>
+      {/* TRAINING */}
+      <section className="cstl-container py-14 sm:py-16" aria-labelledby="crt-training-title">
+        <div className="max-w-2xl">
+          <div className="text-xs tracking-widest text-muted-foreground uppercase">
+            Tech Training
+          </div>
 
-        <h2
-          id="crt-capabilities-title"
-          className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
-        >
-          Built for real-world systems
-        </h2>
+          <h2
+            id="crt-training-title"
+            className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
+          >
+            Structured learning with real delivery discipline
+          </h2>
 
-        <p className="mt-3 text-muted-foreground leading-relaxed max-w-2xl">
-          CRT builds and supports software—and develops talent—under real operating conditions.
-        </p>
+          <p className="mt-3 text-muted-foreground leading-relaxed">
+            Training at Coast Research Technology is practical: structured curriculum, mentorship, projects, and guidance
+            designed to build competence—not just theory.
+          </p>
+        </div>
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list">
-          {CAPABILITIES.map((c) => {
-            const Icon = c.icon;
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" role="list" aria-label="Training tracks">
+          {TRAINING_TRACKS.map((t) => {
+            const Icon = t.icon;
             return (
-              <div key={c.title} className="rounded-2xl border border-border bg-card p-6" role="listitem">
+              <div
+                key={t.title}
+                role="listitem"
+                className="rounded-2xl border border-border bg-card p-6"
+              >
                 <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
                   <Icon className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
                 </div>
                 <div className="mt-4 font-heading text-lg text-[color:var(--primary)]">
-                  {c.title}
+                  {t.title}
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {c.description}
+                  {t.description}
                 </p>
               </div>
             );
           })}
         </div>
+
+        {/* Premium classroom experience callout */}
+        <div className="mt-10 rounded-2xl border border-border bg-background p-6" role="note" aria-label="Classroom experience">
+          <div className="flex items-start gap-3">
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card">
+              <School className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
+            </div>
+
+            <div className="max-w-2xl">
+              <div className="font-heading text-lg text-[color:var(--primary)]">
+                Classroom experience
+              </div>
+
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                Our classrooms are comfortable, quiet, serene, and clean—with a calm ambiance that helps
+                students concentrate and learn better. We also keep cohorts small, so instructors can pay
+                attention to each student.
+              </p>
+
+              <ul className="mt-4 space-y-2" aria-label="Training environment highlights" role="list">
+                <li className="flex gap-2 text-sm text-muted-foreground" role="listitem">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+                  <span>Comfortable, clean, serene classroom atmosphere</span>
+                </li>
+                <li className="flex gap-2 text-sm text-muted-foreground" role="listitem">
+                  <Users className="mt-0.5 h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+                  <span>Not overcrowded—better focus and instructor attention per learner</span>
+                </li>
+                <li className="flex gap-2 text-sm text-muted-foreground" role="listitem">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+                  <span>Industry-expert instructors with practical delivery experience</span>
+                </li>
+              </ul>
+
+              <div className="mt-6 flex flex-col sm:flex-row gap-3" role="group" aria-label="Training actions">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="border-[color:var(--accent)]/35 bg-background hover:bg-[color:var(--accent)]/10"
+                >
+                  <a
+                    href={CRT_SITE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="View CRT training details on the official CRT website (opens in a new tab)"
+                    className="inline-flex items-center justify-center gap-2"
+                  >
+                    View training on CRT site <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </Button>
+
+                <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+                  <Link href="/start" aria-label="Start a project or training inquiry with CSTL">
+                    Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* CTA + DISCLAIMER */}
+      {/* CTA */}
       <section className="cstl-container py-14 sm:py-16" aria-labelledby="crt-cta-title">
         <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <div className="max-w-2xl">
-              <p className="text-xs tracking-widest text-muted-foreground uppercase">
+              <div className="text-xs tracking-widest text-muted-foreground uppercase">
                 Start with a clean intake
-              </p>
+              </div>
 
-              <h3
+              <h2
                 id="crt-cta-title"
                 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
               >
-                Build software, train talent, and keep systems stable.
-              </h3>
+                Ship software with discipline—and keep it stable.
+              </h2>
 
               <p className="mt-3 text-muted-foreground leading-relaxed">
-                Tell us what you need—product build, maintenance, or training. CSTL coordinates the engagement and routes execution to CRT where appropriate.
+                Tell us what you’re building. CSTL coordinates the engagement and routes execution to CRT
+                where appropriate.
               </p>
             </div>
 
@@ -592,17 +671,20 @@ export default function CoastResearchTechnologyPage() {
             <Button asChild variant="cta">
                 <Link href="/start">Start a Project</Link>
               </Button>
+
               <Button asChild variant="outline">
-                <Link href="/contact">Contact CSTL</Link>
+                <Link href="/contact" aria-label="Contact CSTL">
+                  Contact CSTL
+                </Link>
               </Button>
             </div>
           </div>
 
           <Separator className="my-8" />
-          <p className="text-xs text-muted-foreground">{SITE.signature}</p>
+
+          <div className="text-xs text-muted-foreground">{SITE.signature}</div>
         </div>
 
-        <MicroDisclaimer />
       </section>
     </main>
   );
