@@ -49,7 +49,7 @@ export const NAV = {
       {
         label: "Coast Infrastructure Systems",
         href: "/companies/coast-infrastructure-systems",
-        description: "Infrastructure systems, power, connectivity, and installations.",
+        description: "Infrastructure systems, power, connectivity, installations and procurement.",
       },
       { label: "View All Companies", href: "/companies" },
     ] satisfies NavLink[],

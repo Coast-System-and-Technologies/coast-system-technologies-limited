@@ -12,6 +12,8 @@ import {
   Router,
   Truck,
   Wrench,
+  ArrowUpRight,
+  Globe,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -23,6 +25,8 @@ export const metadata: Metadata = {
   description:
     "Infrastructure systems delivery—solar, CCTV, networking, and procurement—executed reliably on-ground for operational continuity.",
 };
+
+const CISL_SITE_URL = "https://coastinfrastructure.com.ng";
 
 const CAPABILITIES = [
   {
@@ -123,6 +127,28 @@ export default function CoastInfrastructureSystemsPage() {
               <Link href="/contact">Contact CSTL</Link>
             </Button>
 
+            {/* Premium external link */}
+            <Button asChild variant="outline">
+              <Link
+                href={CISL_SITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Coast Infrastructure Systems website (opens in a new tab)"
+                className="group"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background">
+                    <Globe className="h-4 w-4 text-[color:var(--accent)]" />
+                  </span>
+                  Visit CISL Website
+                  <ArrowUpRight
+                    className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </span>
+              </Link>
+            </Button>
+
             <div className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
               <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" />
               Built under CSTL governance
@@ -163,10 +189,7 @@ export default function CoastInfrastructureSystemsPage() {
                 <Link href="/services">Explore CSTL Services</Link>
               </Button>
               <Button asChild variant="ghost">
-                <Link
-                  href="/companies"
-                  className="text-[color:var(--primary)]"
-                >
+                <Link href="/companies" className="text-[color:var(--primary)]">
                   Back to Companies
                 </Link>
               </Button>
@@ -196,15 +219,44 @@ export default function CoastInfrastructureSystemsPage() {
               </div>
               <ul className="mt-4 space-y-3">
                 {WHAT_WE_DO.map((x) => (
-                  <li
-                    key={x}
-                    className="flex gap-2 text-sm text-muted-foreground"
-                  >
+                  <li key={x} className="flex gap-2 text-sm text-muted-foreground">
                     <div className="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]" />
                     <span>{x}</span>
                   </li>
                 ))}
               </ul>
+
+              <Separator className="my-6" />
+
+              {/* Premium “Official website” strip */}
+              <div className="rounded-xl border border-border bg-background/60 p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <div className="text-xs tracking-widest text-muted-foreground uppercase">
+                      Official website
+                    </div>
+                    <div className="mt-1 text-sm font-medium text-[color:var(--primary)]">
+                      www.coastinfrastructure.com.ng
+                    </div>
+                  </div>
+
+                  <Link
+                    href={CISL_SITE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground hover:border-[color:var(--accent)]/60 hover:bg-accent/5 transition"
+                    aria-label="Open CISL official website in a new tab"
+                  >
+                    Visit <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Link>
+                </div>
+
+                <div className="mt-3 h-px w-full cstl-seal-line opacity-60" />
+
+                <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
+                  For detailed catalog, field updates, and infrastructure-specific enquiries, use the CISL site.
+                </p>
+              </div>
 
               <Separator className="my-6" />
 
