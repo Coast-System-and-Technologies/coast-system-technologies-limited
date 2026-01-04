@@ -137,49 +137,38 @@ function HeroHeading({
 }
 
 export default function AboutPage() {
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": `${BASE_URL}/#website`,
-      name: `About ${SITE.name}`,
-      url: `${BASE_URL}/`,
+  const jsonLd = {
+    "@type": "Organization",
+    "@id": `${BASE_URL}/#organization`,
+    name: SITE.name,
+    legalName: SITE.name,
+    alternateName: SITE.shortName,
+    url: `${BASE_URL}/`,
+    logo: {
+      "@type": "ImageObject",
+      "@id": `${BASE_URL}/#logo`,
+      url: `${BASE_URL}/assets/logo.png`,
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": `${BASE_URL}/#organization`,
-      name: `About ${SITE.name}`,
-      url: `${BASE_URL}/`,
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/assets/logo.png` },
-      email: SITE.contact.email,
-      telephone: SITE.contact.phoneTel,
-      sameAs: [SITE.socials.facebook],
+    image: { "@id": `${BASE_URL}/#logo` },
+    email: SITE.contact.email,
+    telephone: SITE.contact.phoneTel,
+    identifier: {
+      "@type": "PropertyValue",
+      name: "RC Number",
+      value: SITE.trust.rc,
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "@id": `${PAGE_URL}/#webpage`,
-      url: PAGE_URL,
-      name: `About ${SITE.name}`,
-      description:
-        "Coast System & Technologies Limited (CSTL) is the governance and shared services layer behind the Coast Group—built for order, strategic control, and continuity.",
-      isPartOf: { "@id": `${BASE_URL}/#website` },
-      about: { "@id": `${BASE_URL}/#organization` },
-      primaryImageOfPage: {
-        "@type": "ImageObject",
-        url: OG_IMAGE,
+    sameAs: [SITE.socials.facebook],
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        contactType: "business inquiries",
+        email: SITE.contact.email,
+        telephone: SITE.contact.phoneTel,
+        areaServed: "NG",
+        availableLanguage: ["en"],
       },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
-        { "@type": "ListItem", position: 2, name: "About", item: PAGE_URL },
-      ],
-    },
-  ];
+    ],
+  }
 
   return (
     <main aria-labelledby="about-title">
