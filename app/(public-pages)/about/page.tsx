@@ -18,7 +18,7 @@ import { SITE } from "@/content/site";
 import { BASE_URL } from "@/lib/site-url";
 
 const PAGE_URL = `${BASE_URL}/about`;
-const OG_IMAGE = `${BASE_URL}/assets/og/insights.jpg`; // safe fallback (already exists)
+const OG_IMAGE = `${BASE_URL}/assets/og/about.webp`; // safe fallback (already exists)
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -142,14 +142,14 @@ export default function AboutPage() {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "@id": `${BASE_URL}/#website`,
-      name: SITE.name,
+      name: `About ${SITE.name}`,
       url: `${BASE_URL}/`,
     },
     {
       "@context": "https://schema.org",
       "@type": "Organization",
       "@id": `${BASE_URL}/#organization`,
-      name: SITE.name,
+      name: `About ${SITE.name}`,
       url: `${BASE_URL}/`,
       logo: { "@type": "ImageObject", url: `${BASE_URL}/assets/logo.png` },
       email: SITE.contact.email,
@@ -161,7 +161,7 @@ export default function AboutPage() {
       "@type": "AboutPage",
       "@id": `${PAGE_URL}/#webpage`,
       url: PAGE_URL,
-      name: "About Coast System & Technologies Limited",
+      name: `About ${SITE.name}`,
       description:
         "Coast System & Technologies Limited (CSTL) is the governance and shared services layer behind the Coast Group—built for order, strategic control, and continuity.",
       isPartOf: { "@id": `${BASE_URL}/#website` },
@@ -247,7 +247,7 @@ export default function AboutPage() {
 
             <ul className="mt-6 space-y-2" role="list">
               {WHY_EXIST.map((x) => (
-                <li key={x} className="flex gap-2 text-sm text-muted-foreground">
+                <li key={x} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
                   <span>{x}</span>
                 </li>
@@ -260,20 +260,20 @@ export default function AboutPage() {
               </Button>
               <Button asChild variant="ghost">
                 <Link href="/services" className="text-[color:var(--primary)]">
-                  Explore Services
+                  Explore Our Services
                 </Link>
               </Button>
             </div>
           </div>
 
-          <aside className="lg:col-span-5" aria-label="What CSTL does">
+          <aside className="lg:col-span-5" aria-label="What Coast System & Technologies Limited does">
             <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
               <p className="text-xs tracking-widest text-muted-foreground uppercase">
                 What CSTL does
               </p>
               <ul className="mt-4 space-y-3" role="list">
                 {WHAT_WE_DO.map((x) => (
-                  <li key={x} className="flex gap-2 text-sm text-muted-foreground">
+                  <li key={x} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
                     <span
                       className="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]"
                       aria-hidden="true"
@@ -374,22 +374,6 @@ export default function AboutPage() {
           ))}
         </div>
 
-        <div className="mt-10 rounded-2xl border border-border bg-card p-6">
-          <div className="flex items-start gap-3">
-            <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background">
-              <Building2 className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
-            </div>
-            <div className="max-w-2xl">
-              <h3 className="font-heading text-lg text-[color:var(--primary)]">
-                Built for governance, not noise
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                The Coast System & Technologies Limited (CSTL) vibe is executive, minimal, and premium—clear typography, warm paper background,
-                white “document” cards, and subtle system cues (grid + seal lines) that signal structure.
-              </p>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* CTA */}
@@ -428,11 +412,14 @@ export default function AboutPage() {
             <Separator className="my-8" />
             <p className="text-xs text-muted-foreground">{SITE.signature}</p>
 
-            {/* Disclaimer */}
-            <MicroDisclaimer />
           </div>
         </div>
       </section>
+
+      {/* Disclaimer */}
+      <div className="cstl-container py-10">
+        <MicroDisclaimer />
+      </div>
     </main>
   );
 }

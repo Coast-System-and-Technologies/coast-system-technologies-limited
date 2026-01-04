@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: {
     default: "Coast System & Technologies Limited (CSTL)",
-    template: "%s | Coast System & Technologies Limited",
+    template: "%s | Coast System and Technologies Limited",
   },
   description: "ORDER • STRATEGY • LEGACY — The Structure Behind Great Companies.",
   metadataBase: new URL("https://coastsystemtechnologies.com.ng"),

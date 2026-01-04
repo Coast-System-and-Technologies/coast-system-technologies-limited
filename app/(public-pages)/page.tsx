@@ -17,17 +17,17 @@ import { SITE } from "@/content/site";
 import { BASE_URL } from "@/lib/site-url";
 
 const PAGE_URL = `${BASE_URL}/`;
-const OG_IMAGE = `${BASE_URL}/assets/og/home.jpg`;
+const OG_IMAGE = `${BASE_URL}/assets/og/home.webp`;
 
 export const metadata: Metadata = {
-  title: "Coast System & Technologies Limited (CSTL) — The Structure Behind Great Companies",
+  title: "Home | Coast System and Technologies Limited (CSTL) — The Structure Behind Great Companies",
   description:
     "ORDER • STRATEGY • LEGACY. Governance-led shared services across structuring, compliance systems, privacy (Nigeria), trademark/IP (NIPO), and CAC registry execution—built for clarity, control, and continuity.",
   alternates: { canonical: PAGE_URL },
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: "Coast System & Technologies Limited (CSTL)",
+    title: "Coast System and Technologies Limited (CSTL)",
     description:
       "Governance-led shared services and operational discipline—so companies execute faster while staying aligned.",
     url: PAGE_URL,
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Coast System & Technologies Limited (CSTL)",
+    title: "Coast System and Technologies Limited (CSTL)",
     description:
       "Governance-led shared services and operational discipline—so companies execute faster while staying aligned.",
     images: [OG_IMAGE],
@@ -87,17 +87,17 @@ const COMPANIES = [
   {
     title: "Coast Research Technology",
     href: "/companies/coast-research-technology",
-    subtitle: "Software engineering • product delivery • maintenance",
+    subtitle: "Software engineering • Product delivery • Maintenance • Talent development",
   },
   {
     title: "CoastLink24",
     href: "/companies/coastlink24",
-    subtitle: "Fintech infrastructure • integrated lending systems",
+    subtitle: "Fintech infrastructure • Integrated lending systems • Financial analysis",
   },
   {
     title: "Coast Infrastructure Systems",
     href: "/companies/coast-infrastructure-systems",
-    subtitle: "Infrastructure systems • power • connectivity",
+    subtitle: "Infrastructure systems • Power • Connectivity • Procurement",
   },
 ] as const;
 
@@ -304,10 +304,6 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-
-              <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
-                Built to feel like an executive brief: calm, structured, premium—never loud.
-              </p>
             </aside>
           </div>
         </div>
@@ -356,7 +352,7 @@ export default function HomePage() {
             <Link href="/start">Start a Project</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/services">Explore Services</Link>
+            <Link href="/services">Explore Our Services</Link>
           </Button>
         </div>
       </section>
@@ -463,8 +459,6 @@ export default function HomePage() {
       {/* Disclaimer */}
       <div className="cstl-container py-10">
         <MicroDisclaimer />
-        {/* <MicroDisclaimer variant="notice" /> */}
-
       </div>
     </main>
   );

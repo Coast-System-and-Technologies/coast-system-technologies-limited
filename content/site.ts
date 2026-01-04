@@ -1,5 +1,5 @@
 export const SITE = {
-  name: "Coast System & Technologies Limited",
+  name: "Coast System and Technologies Limited",
   shortName: "CSTL",
   signature: "ORDER • STRATEGY • LEGACY",
   positioningLine: "The Structure Behind Great Companies.",
