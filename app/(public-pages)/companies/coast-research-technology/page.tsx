@@ -326,7 +326,7 @@ export default function CoastResearchTechnologyPage() {
           />
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+          <Button asChild variant="cta">
               <Link href="/start">
                 Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
@@ -511,7 +511,7 @@ export default function CoastResearchTechnologyPage() {
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
-            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+          <Button asChild variant="cta">
               <Link href="/start">Request Training Intake</Link>
             </Button>
 
@@ -589,7 +589,7 @@ export default function CoastResearchTechnologyPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+            <Button asChild variant="cta">
                 <Link href="/start">Start a Project</Link>
               </Button>
               <Button asChild variant="outline">

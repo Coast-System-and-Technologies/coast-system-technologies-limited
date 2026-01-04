@@ -221,10 +221,8 @@ export default function Navbar() {
             {/* Theme + CTA */}
             <div className="ml-2 flex items-center gap-2">
               <ModeToggle />
-              <Button
-                asChild
-                className="h-9 bg-[color:var(--primary)] text-white shadow-sm transition-all duration-200 hover:bg-[color:var(--primary)]/90 hover:shadow-md"
-              >
+              <Button asChild variant="cta" className="h-9 shadow-sm">
+
                 <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
               </Button>
             </div>
@@ -246,7 +244,7 @@ export default function Navbar() {
                   {/* Mobile Header */}
                   <div className="mb-6 flex items-center justify-between">
                     <Image
-                      src="/LOGO.png"
+                      src="/assets/brand/logos/cstl-logo.png"
                       alt={SITE.shortName}
                       width={150}
                       height={50}
@@ -290,10 +288,8 @@ export default function Navbar() {
                   {/* Mobile Footer */}
                   <div className="mt-6 space-y-4 border-t pt-6 px-2">
                     <SheetClose asChild>
-                      <Button
-                        asChild
-                        className="h-10 w-full bg-[color:var(--primary)] text-white transition-all duration-200 hover:bg-[color:var(--primary)]/90"
-                      >
+                    <Button asChild variant="cta" className="h-10 w-full">
+
                         <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
                       </Button>
                     </SheetClose>
