@@ -1,7 +1,50 @@
+// app/page.tsx
+import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Sparkles, Building2, Layers3, Workflow } from "lucide-react";
+import {
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  Building2,
+  Layers3,
+  Workflow,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import JsonLd from "@/components/insights/JsonLd";
+import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
 import { SITE } from "@/content/site";
+import { BASE_URL } from "@/lib/site-url";
+
+const PAGE_URL = `${BASE_URL}/`;
+const OG_IMAGE = `${BASE_URL}/assets/og/home.jpg`;
+
+export const metadata: Metadata = {
+  title: "Coast System & Technologies Limited (CSTL) — The Structure Behind Great Companies",
+  description:
+    "ORDER • STRATEGY • LEGACY. Governance-led shared services across structuring, compliance systems, privacy (Nigeria), trademark/IP (NIPO), and CAC registry execution—built for clarity, control, and continuity.",
+  alternates: { canonical: PAGE_URL },
+  openGraph: {
+    type: "website",
+    siteName: SITE.name,
+    title: "Coast System & Technologies Limited (CSTL)",
+    description:
+      "Governance-led shared services and operational discipline—so companies execute faster while staying aligned.",
+    url: PAGE_URL,
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: "CSTL — Order • Strategy • Legacy" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Coast System & Technologies Limited (CSTL)",
+    description:
+      "Governance-led shared services and operational discipline—so companies execute faster while staying aligned.",
+    images: [OG_IMAGE],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 const PILLARS = [
   {
@@ -22,8 +65,7 @@ const PILLARS = [
     title: "Data Protection & Privacy",
     href: "/services/data-protection-privacy",
     icon: ShieldCheck,
-    description:
-      "Nigeria-focused privacy and data governance practice built for real operations.",
+    description: "Nigeria-focused privacy and data governance practice built for real operations.",
   },
   {
     title: "Trademark & IP",
@@ -39,7 +81,7 @@ const PILLARS = [
     description:
       "Registrations, filings, and compliance coordination with clean documentation standards.",
   },
-];
+] as const;
 
 const COMPANIES = [
   {
@@ -57,7 +99,7 @@ const COMPANIES = [
     href: "/companies/coast-infrastructure-systems",
     subtitle: "Infrastructure systems • power • connectivity",
   },
-];
+] as const;
 
 const STEPS = [
   {
@@ -80,13 +122,15 @@ const STEPS = [
     description:
       "We keep systems maintained: governance routines, updates, and shared-services support when needed.",
   },
-];
+] as const;
 
 function SectionHeading({
   kicker,
   title,
   description,
+  id,
 }: {
+  id: string;
   kicker?: string;
   title: string;
   description?: string;
@@ -94,9 +138,9 @@ function SectionHeading({
   return (
     <div className="max-w-2xl">
       {kicker ? (
-        <div className="text-xs tracking-widest text-muted-foreground uppercase">{kicker}</div>
+        <p className="text-xs tracking-widest text-muted-foreground uppercase">{kicker}</p>
       ) : null}
-      <h2 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+      <h2 id={id} className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
         {title}
       </h2>
       {description ? (
@@ -107,10 +151,49 @@ function SectionHeading({
 }
 
 export default function HomePage() {
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": `${BASE_URL}/#website`,
+      name: SITE.name,
+      url: `${BASE_URL}/`,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${BASE_URL}/#organization`,
+      name: SITE.name,
+      url: `${BASE_URL}/`,
+      logo: { "@type": "ImageObject", url: `${BASE_URL}/assets/logo.png` },
+      email: SITE.contact.email,
+      telephone: SITE.contact.phoneTel,
+      sameAs: [SITE.socials.facebook],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": `${BASE_URL}/#webpage`,
+      url: `${BASE_URL}/`,
+      name: `${SITE.shortName} — ${SITE.positioningLine}`,
+      description:
+        "Governance-led shared services across structuring, compliance systems, privacy (Nigeria), trademark/IP (NIPO), and CAC registry execution.",
+      isPartOf: { "@id": `${BASE_URL}/#website` },
+      about: { "@id": `${BASE_URL}/#organization` },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` }],
+    },
+  ];
+
   return (
-    <main>
+    <main id="content">
+      <JsonLd data={jsonLd} />
+
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section aria-labelledby="hero-title" className="relative overflow-hidden">
         <div className="absolute inset-0 cstl-hero-bg" />
         <div className="absolute inset-0 cstl-grid opacity-35" />
 
@@ -123,28 +206,37 @@ export default function HomePage() {
 
           <div className="mt-6 grid gap-10 lg:grid-cols-12 lg:items-start">
             <div className="lg:col-span-7">
-              <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl leading-[1.06] text-[color:var(--primary)]">
+              <h1
+                id="hero-title"
+                className="font-heading text-4xl sm:text-5xl md:text-6xl leading-[1.06] text-[color:var(--primary)]"
+              >
                 The structure behind companies that execute, scale, and endure.
               </h1>
 
               <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Coast System & Technologies Limited provides group-level governance, operational discipline,
-                and shared services—so operating companies move faster while staying aligned.
+                {SITE.name} provides group-level governance, operational discipline, and shared
+                services—so operating companies move faster while staying aligned.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-                  <Link href="/start">
-                    Start a Project <ArrowRight className="ml-2 h-4 w-4" />
+                  <Link href="/start" aria-label="Start a project with CSTL">
+                    Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
 
                 <Button asChild variant="outline">
-                  <Link href="/contact">Contact CSTL</Link>
+                  <Link href="/contact" aria-label="Contact Coast System & Technologies Limited">
+                    Contact CSTL
+                  </Link>
                 </Button>
 
                 <Button asChild variant="ghost" className="sm:ml-2">
-                  <Link href="/companies" className="text-[color:var(--primary)]">
+                  <Link
+                    href="/companies"
+                    className="text-[color:var(--primary)]"
+                    aria-label="Explore CSTL operating companies"
+                  >
                     Explore Our Companies
                   </Link>
                 </Button>
@@ -153,8 +245,8 @@ export default function HomePage() {
               {/* Trust row */}
               <div className="mt-10 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1">
-                  <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" />
-                  RC: {SITE.trust.rc}
+                  <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+                  <span>RC: {SITE.trust.rc}</span>
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1">
                   Documentation-first delivery
@@ -165,50 +257,49 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right panel: “Executive card” */}
-            <div className="lg:col-span-5">
+            {/* Right panel: Executive card */}
+            <aside className="lg:col-span-5" aria-label="CSTL operating focus">
               <div className="rounded-2xl border border-border bg-card shadow-sm">
                 <div className="p-6">
-                  <div className="text-xs tracking-widest text-muted-foreground uppercase">
+                  <p className="text-xs tracking-widest text-muted-foreground uppercase">
                     CSTL Operating Focus
-                  </div>
-                  <div className="mt-3 space-y-3">
-                    <div className="flex items-start gap-3">
-                      <div className="mt-1 h-2 w-2 rounded-full bg-[color:var(--accent)]" />
-                      <div>
-                        <div className="text-sm font-medium">Order</div>
-                        <div className="text-sm text-muted-foreground">
-                          Clear roles, clean documentation, and traceable decisions.
-                        </div>
-                      </div>
-                    </div>
+                  </p>
 
-                    <div className="flex items-start gap-3">
-                      <div className="mt-1 h-2 w-2 rounded-full bg-[color:var(--accent)]" />
-                      <div>
-                        <div className="text-sm font-medium">Strategy</div>
-                        <div className="text-sm text-muted-foreground">
-                          Structures that keep products and teams aligned as complexity grows.
+                  <ul className="mt-3 space-y-3">
+                    {[
+                      {
+                        title: "Order",
+                        body: "Clear roles, clean documentation, and traceable decisions.",
+                      },
+                      {
+                        title: "Strategy",
+                        body: "Structures that keep products and teams aligned as complexity grows.",
+                      },
+                      {
+                        title: "Legacy",
+                        body: "Continuity frameworks that outlive individuals and preserve intent.",
+                      },
+                    ].map((x) => (
+                      <li key={x.title} className="flex items-start gap-3">
+                        <span
+                          className="mt-2 h-2 w-2 rounded-full bg-[color:var(--accent)]"
+                          aria-hidden="true"
+                        />
+                        <div>
+                          <p className="text-sm font-medium">{x.title}</p>
+                          <p className="text-sm text-muted-foreground">{x.body}</p>
                         </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="mt-1 h-2 w-2 rounded-full bg-[color:var(--accent)]" />
-                      <div>
-                        <div className="text-sm font-medium">Legacy</div>
-                        <div className="text-sm text-muted-foreground">
-                          Continuity frameworks that outlive individuals and preserve intent.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                      </li>
+                    ))}
+                  </ul>
 
                   <div className="mt-6 h-px w-full cstl-seal-line opacity-70" />
 
                   <div className="mt-6">
                     <Button asChild variant="outline" className="w-full">
-                      <Link href="/services">View Services Overview</Link>
+                      <Link href="/services" aria-label="View CSTL services overview">
+                        View Services Overview
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -217,47 +308,48 @@ export default function HomePage() {
               <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
                 Built to feel like an executive brief: calm, structured, premium—never loud.
               </p>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
       {/* PILLARS */}
-      <section className="cstl-container py-16 sm:py-20">
+      <section aria-labelledby="pillars-title" className="cstl-container py-16 sm:py-20">
         <SectionHeading
+          id="pillars-title"
           kicker="What we do"
           title="Governance-led services built for real operations"
           description="We don’t just advise. We build the structure, systems, and documentation standards that make execution consistent."
         />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul role="list" className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {PILLARS.map((p) => {
             const Icon = p.icon;
             return (
-              <Link
-                key={p.href}
-                href={p.href}
-                className="group rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
-                    <Icon className="h-5 w-5 text-[color:var(--primary)]" />
+              <li key={p.href}>
+                <Link
+                  href={p.href}
+                  className="group block rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  aria-label={`Open service: ${p.title}`}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
+                      <Icon className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
+                    </div>
+                    <span className="text-xs text-muted-foreground group-hover:text-[color:var(--accent)] transition">
+                      View <span aria-hidden="true">→</span>
+                    </span>
                   </div>
-                  <span className="text-xs text-muted-foreground group-hover:text-[color:var(--accent)] transition">
-                    View →
-                  </span>
-                </div>
 
-                <div className="mt-4 font-heading text-xl text-[color:var(--primary)]">
-                  {p.title}
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {p.description}
-                </p>
-              </Link>
+                  <h3 className="mt-4 font-heading text-xl text-[color:var(--primary)]">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                </Link>
+              </li>
             );
           })}
-        </div>
+        </ul>
 
         <div className="mt-10 flex flex-col sm:flex-row gap-3">
           <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
@@ -270,32 +362,33 @@ export default function HomePage() {
       </section>
 
       {/* COMPANIES */}
-      <section className="border-y border-border bg-card/40">
+      <section aria-labelledby="companies-title" className="border-y border-border bg-card/40">
         <div className="cstl-container py-16 sm:py-20">
           <SectionHeading
+            id="companies-title"
             kicker="Coast Group"
             title="Operating companies built to deliver"
             description="CSTL provides the governance layer. The operating companies execute across software, fintech infrastructure, and physical systems."
           />
 
-          <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          <ul role="list" className="mt-10 grid gap-4 lg:grid-cols-3">
             {COMPANIES.map((c) => (
-              <Link
-                key={c.href}
-                href={c.href}
-                className="rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm"
-              >
-                <div className="font-heading text-xl text-[color:var(--primary)]">
-                  {c.title}
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground">{c.subtitle}</p>
-                <div className="mt-6 h-px w-full cstl-seal-line opacity-60" />
-                <div className="mt-4 text-sm text-[color:var(--primary)]">
-                  View profile <span aria-hidden>→</span>
-                </div>
-              </Link>
+              <li key={c.href}>
+                <Link
+                  href={c.href}
+                  className="block rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  aria-label={`View company profile: ${c.title}`}
+                >
+                  <h3 className="font-heading text-xl text-[color:var(--primary)]">{c.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{c.subtitle}</p>
+                  <div className="mt-6 h-px w-full cstl-seal-line opacity-60" />
+                  <p className="mt-4 text-sm text-[color:var(--primary)]">
+                    View profile <span aria-hidden="true">→</span>
+                  </p>
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
 
           <div className="mt-10">
             <Button asChild variant="outline">
@@ -306,53 +399,50 @@ export default function HomePage() {
       </section>
 
       {/* HOW WE WORK */}
-      <section className="cstl-container py-16 sm:py-20">
+      <section aria-labelledby="workflow-title" className="cstl-container py-16 sm:py-20">
         <SectionHeading
+          id="workflow-title"
           kicker="Operating rhythm"
           title="A disciplined workflow—built for clarity"
           description="Structured delivery is the product. We build systems that remain stable even as teams change."
         />
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((s, idx) => (
-            <div
-              key={s.title}
-              className="rounded-2xl border border-border bg-card p-6"
-            >
+            <li key={s.title} className="rounded-2xl border border-border bg-card p-6">
               <div className="flex items-center justify-between">
-                <div className="text-xs tracking-widest text-muted-foreground uppercase">
+                <p className="text-xs tracking-widest text-muted-foreground uppercase">
                   Step {idx + 1}
-                </div>
-                <div className="h-2 w-2 rounded-full bg-[color:var(--accent)]" />
+                </p>
+                <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" aria-hidden="true" />
               </div>
-              <div className="mt-3 font-heading text-lg text-[color:var(--primary)]">
-                {s.title}
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                {s.description}
-              </p>
-            </div>
+              <h3 className="mt-3 font-heading text-lg text-[color:var(--primary)]">{s.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.description}</p>
+            </li>
           ))}
-        </div>
+        </ol>
       </section>
 
       {/* FINAL CTA */}
-      <section className="relative overflow-hidden">
+      <section aria-labelledby="cta-title" className="relative overflow-hidden">
         <div className="absolute inset-0 cstl-hero-bg opacity-70" />
         <div className="absolute inset-0 cstl-grid opacity-25" />
 
         <div className="relative cstl-container py-16 sm:py-20">
           <div className="rounded-3xl border border-border bg-card/70 backdrop-blur p-8 sm:p-10">
             <div className="max-w-2xl">
-              <div className="text-xs tracking-widest text-muted-foreground uppercase">
+              <p className="text-xs tracking-widest text-muted-foreground uppercase">
                 Ready when you are
-              </div>
-              <h3 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+              </p>
+              <h2
+                id="cta-title"
+                className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
+              >
                 Bring the vision. We’ll bring the structure.
-              </h3>
+              </h2>
               <p className="mt-3 text-muted-foreground leading-relaxed">
-                If you’re building something serious—systems, governance, or filings—start with a clean intake so we can
-                deliver with discipline from day one.
+                If you’re building something serious—systems, governance, or filings—start with a
+                clean intake so we can deliver with discipline from day one.
               </p>
 
               <div className="mt-7 flex flex-col sm:flex-row gap-3">
@@ -366,11 +456,14 @@ export default function HomePage() {
             </div>
           </div>
 
-          <p className="mt-6 text-xs text-muted-foreground">
-            {SITE.signature}
-          </p>
+          <p className="mt-6 text-xs text-muted-foreground">{SITE.signature}</p>
         </div>
       </section>
+
+      {/* Disclaimer */}
+      <div className="cstl-container py-10">
+        <MicroDisclaimer />
+      </div>
     </main>
   );
 }
