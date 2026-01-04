@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   description:
     "Fintech infrastructure for lenders and operators—mandates, repayment workflows, automation, and integrations built for disciplined lending operations.",
   alternates: {
-    canonical: PAGE_PATH,
+    canonical: PAGE_URL,
   },
   openGraph: {
     title: "CoastLink24 Integrated Systems | Coast System & Technologies Limited",
