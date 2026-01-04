@@ -45,7 +45,7 @@ export default function Footer() {
             {/* Brand Section */}
             <div className="sm:col-span-2 lg:col-span-2 space-y-6">
               <Image
-                src="/LOGO DARK.png"
+                src="/assets/brand/logos/cstl-logo-dark.png"
                 alt={SITE.name}
                 width={200}
                 height={60}

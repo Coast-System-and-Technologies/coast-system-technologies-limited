@@ -151,7 +151,7 @@ export default function Navbar() {
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <Image
-              src="/LOGO.png"
+              src="/assets/brand/logos/cstl-logo.png"
               alt={SITE.shortName}
               width={180}
               height={60}
