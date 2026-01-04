@@ -79,7 +79,6 @@
   /* Base */
   --background: #f7f7f2;
   --foreground: #0f172a;
-
   /* Surfaces */
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -101,6 +100,8 @@
   --muted-foreground: #475569;
 
   --destructive: #dc2626;
+
+  --footer-bg: #1e1b4b;
 
   --border: #e5e7eb;
   --input: #e5e7eb;
@@ -147,6 +148,8 @@
 
   --muted: #14133a;
   --muted-foreground: #cbd5e1;
+
+  --footer-bg: #000000;
 
   --border: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.14);

@@ -259,7 +259,7 @@ export default function HomePage() {
 
             {/* Right panel: Executive card */}
             <aside className="lg:col-span-5" aria-label="CSTL operating focus">
-              <div className="rounded-2xlCSTL border border-border bg-card shadow-sm">
+              <div className="rounded-2xl border border-border bg-card shadow-sm">
                 <div className="p-6">
                   <p className="text-xs tracking-widest text-muted-foreground uppercase">
                     Operating Focus
