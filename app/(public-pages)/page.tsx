@@ -463,6 +463,8 @@ export default function HomePage() {
       {/* Disclaimer */}
       <div className="cstl-container py-10">
         <MicroDisclaimer />
+        {/* <MicroDisclaimer variant="notice" /> */}
+
       </div>
     </main>
   );
