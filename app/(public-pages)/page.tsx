@@ -214,19 +214,19 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-5 text-base sm:text-lg text-muted-foreground leading-relaxed">
-                {SITE.name} provides group-level governance, operational discipline, and shared
+                {SITE.name} (CSTL) provides group-level governance, operational discipline, and shared
                 services—so operating companies move faster while staying aligned.
               </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-                  <Link href="/start" aria-label="Start a project with CSTL">
+                  <Link href="/start" aria-label="Start a project with Coast System & Technologies Limited">
                     Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                   </Link>
                 </Button>
 
                 <Button asChild variant="outline">
-                  <Link href="/contact" aria-label="Contact Coast System & Technologies Limited">
+                  <Link href="/contact" aria-label="Contact us">
                     Contact CSTL
                   </Link>
                 </Button>
@@ -237,7 +237,7 @@ export default function HomePage() {
                     className="text-[color:var(--primary)]"
                     aria-label="Explore CSTL operating companies"
                   >
-                    Explore Our Companies
+                    Explore CSTL Companies
                   </Link>
                 </Button>
               </div>
@@ -259,10 +259,10 @@ export default function HomePage() {
 
             {/* Right panel: Executive card */}
             <aside className="lg:col-span-5" aria-label="CSTL operating focus">
-              <div className="rounded-2xl border border-border bg-card shadow-sm">
+              <div className="rounded-2xlCSTL border border-border bg-card shadow-sm">
                 <div className="p-6">
                   <p className="text-xs tracking-widest text-muted-foreground uppercase">
-                    CSTL Operating Focus
+                    Operating Focus
                   </p>
 
                   <ul className="mt-3 space-y-3">
@@ -368,7 +368,7 @@ export default function HomePage() {
             id="companies-title"
             kicker="Coast Group"
             title="Operating companies built to deliver"
-            description="CSTL provides the governance layer. The operating companies execute across software, fintech infrastructure, and physical systems."
+            description="Coast System & Technologies Limited provides the governance layer. The operating companies execute across software, fintech infrastructure, and physical systems."
           />
 
           <ul role="list" className="mt-10 grid gap-4 lg:grid-cols-3">
@@ -450,7 +450,7 @@ export default function HomePage() {
                   <Link href="/start">Start a Project</Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href="/contact">Talk to CSTL</Link>
+                  <Link href="/contact">Talk to Us</Link>
                 </Button>
               </div>
             </div>
