@@ -84,7 +84,18 @@ cstl-website/
 ├── public/                               # Static assets (favicons, images, OG images)
 │   ├── favicon.ico
 │   ├── assets/
-│   │   └── logo.png                      # Main logo (and variants)
+│   │   ├────brand/
+|   |   |    └──logos/                      # Main logo (and variants)
+|   |   |       ├──cstl-logo.png                      # Main logo (and variants)
+|   |   |       └──cstl-logo-dark.png                      # Main logo (and variants)
+│   │   ├────icons/
+│   │   └────images/
+|   |        ├──home/
+|   |        ├──about/
+|   |        ├──services/
+|   |        ├──packages/
+|   |        └──insights/
+|   |
 │   └── og/                               # (optional) social share images
 ├── docs/                                 # Documentation
 │   └── PROJECT_STRUCTURE.md              # This file
