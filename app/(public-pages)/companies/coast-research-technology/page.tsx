@@ -407,10 +407,10 @@ export default function CoastResearchTechnologyPage() {
           <div
             className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full border border-[color:var(--accent)]/35 bg-[color:var(--accent)]/10 px-4 py-2 text-xs text-foreground/80"
             role="note"
-            aria-label="Official CoastLink24 website"
+            aria-label="Official Coast Research Technology website"
           >
             <ExternalLink className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
-            <span className="font-medium">Official CoastLink24 website:</span>
+            <span className="font-medium">Official CRT website:</span>
             <a
               href={CRT_SITE_URL}
               target="_blank"
