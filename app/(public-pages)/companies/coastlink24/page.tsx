@@ -502,7 +502,7 @@ export default function CoastLink24Page() {
               <Separator className="my-6" />
 
               <div className="text-xs text-muted-foreground leading-relaxed">
-                Infrastructure-led execution under CSTL’s governance and shared services.
+                Fintech infrastructure-led execution under CSTL’s governance and shared services.
               </div>
             </aside>
           </div>
@@ -528,7 +528,7 @@ export default function CoastLink24Page() {
             </h2>
 
             <p className="mt-3 text-muted-foreground leading-relaxed">
-              We design lending infrastructure with control points, reliability patterns, and traceability baked in.
+              Coastlinik24 design lending infrastructure with control points, reliability patterns, and traceability baked in.
             </p>
           </div>
 

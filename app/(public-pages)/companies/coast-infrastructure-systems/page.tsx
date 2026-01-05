@@ -315,7 +315,7 @@ export default function CoastInfrastructureSystemsPage() {
             kicker="Operating Company"
             title="Coast Infrastructure Systems Limited (CISL)"
             titleId="coast-infrastructure-systems-limited-title"
-            description="We deliver infrastructure systems that power operations—solar, CCTV, networking, and procurement—with reliable on-ground execution."
+            description="CISL deliver infrastructure systems that power operations—solar, CCTV, networking, and procurement—with reliable on-ground execution."
           />
 
           <div
@@ -569,7 +569,7 @@ export default function CoastInfrastructureSystemsPage() {
                   Continuity matters
                 </h3>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  We emphasize documentation, handoffs, and support so installed systems remain
+                  CISL emphasize documentation, handoffs, and support so installed systems remain
                   maintainable—especially for growing teams and shared facilities.
                 </p>
               </div>

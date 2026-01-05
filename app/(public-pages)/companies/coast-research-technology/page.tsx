@@ -375,9 +375,9 @@ export default function CoastResearchTechnologyPage() {
 
           <SectionHeading
             kicker="Operating Company"
-            title="Coast Research Technology"
+            title="Coast Research Technology (CRT)"
             titleId="coast-research-technology-title"
-            description="We build real-world software products and systems—and provide ongoing application support for stability and continuity."
+            description="CRT build real-world software products and systems—and provide ongoing application support for stability and continuity."
           />
 
           <div
@@ -672,7 +672,7 @@ export default function CoastResearchTechnologyPage() {
               </div>
 
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Our classrooms are comfortable, quiet, serene, and clean—with a calm ambiance that helps
+                CRT classrooms are comfortable, quiet, serene, and clean—with a calm ambiance that helps
                 students concentrate and learn better. We also keep cohorts small, so instructors can pay
                 attention to each student.
               </p>
