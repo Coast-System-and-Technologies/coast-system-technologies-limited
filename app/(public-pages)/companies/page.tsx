@@ -103,14 +103,14 @@ const COMPANIES: readonly Company[] = [
     icon: Cpu,
     tags: ["Software engineering", "Product delivery", "App maintenance", "Tech training"],
     description:
-      "We build real-world software products and systems—and provide ongoing application support for stability and continuity. We also run structured tech training led by industry-expert instructors.",
+      "Coast Research Technology build real-world software products and systems—and provide ongoing application support for stability and continuity. We also run structured tech training led by industry-expert instructors.",
     bullets: ["Build & ship products", "Maintain & support systems", "Tech training"],
     siteUrl: "https://www.coastresearchtechnology.com",
     logoUrl: "https://www.coastresearchtechnology.com/assets/crt_logo.webp",
   },
   {
     id: "coastlink24",
-    name: "CoastLink24 Integrated Systems Limited",
+    name: "CoastLink24 Intelligent Systems Limited",
     href: "/companies/coastlink24",
     icon: Landmark,
     tags: [
@@ -135,12 +135,12 @@ const COMPANIES: readonly Company[] = [
   },
   {
     id: "cisl",
-    name: "Coast Infrastructure Systems Limited",
+    name: "Coast Infrastructure Systems Limited (CISL)",
     href: "/companies/coast-infrastructure-systems",
     icon: Network,
     tags: ["Infrastructure systems", "CCTV & networking", "Solar", "Procurement"],
     description:
-      "We deliver infrastructure systems that power operations—installation, configuration, and reliable execution on-ground.",
+      "Coast Infrastructure Systems Limited deliver infrastructure systems and facilities that power operations—installation, configuration, and reliable execution on-ground.",
     bullets: ["Solar + power systems", "CCTV + networking", "Procurement & deployment"],
     // siteUrl/logoUrl later
   },
@@ -412,7 +412,8 @@ export default function CompaniesPage() {
         Skip to company list
       </a>
 
-      <header className="relative overflow-hidden border-b border-border">
+      {/* HERO */}
+      <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 cstl-hero-bg opacity-80" aria-hidden="true" />
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
@@ -462,8 +463,9 @@ export default function CompaniesPage() {
 
           <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
         </div>
-      </header>
+      </section>
 
+      {/* COMPANIES PROFILE */}
       <section className="cstl-container py-14 sm:py-16" aria-labelledby="companies-grid-title">
         <h2 id="companies-grid-title" className="sr-only">
           Company profiles
@@ -476,6 +478,7 @@ export default function CompaniesPage() {
         </ul>
       </section>
 
+      {/* CSTL ROLE IN THE GROUP */}
       <section className="border-y border-border bg-card/40" aria-labelledby="cstl-role-title">
         <div className="cstl-container py-14 sm:py-16">
           <div className="max-w-2xl">
@@ -516,6 +519,7 @@ export default function CompaniesPage() {
         </div>
       </section>
 
+      {/* CTA */}
       <section className="cstl-container py-14 sm:py-16" aria-labelledby="companies-cta-title">
         <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
@@ -550,6 +554,7 @@ export default function CompaniesPage() {
         </div>
       </section>
 
+      {/* DISCLAIMER */}
       <footer className="cstl-container py-10" role="contentinfo" aria-label="Legal and informational notice">
         <MicroDisclaimer />
       </footer>
