@@ -67,6 +67,33 @@ export const metadata: Metadata = {
       "Software engineering, product delivery, app maintenance, and tech training—built under CSTL governance.",
     images: [OG_IMAGE],
   },
+  keywords: [
+    "Coast Research Technology",
+    "CRT",
+    "software engineering Nigeria",
+    "product delivery",
+    "application maintenance",
+    "app support",
+    "web and mobile development",
+    "backend engineering",
+    "API development",
+    "tech training Nigeria",
+    "internship programs",
+    "software development company",
+    "Coast System and Technologies Limited",
+    "CSTL",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const CAPABILITIES = [
@@ -147,6 +174,7 @@ function SectionHeading({
   kicker?: string;
   title: string;
   description?: string;
+  titleId: string;
 }) {
   return (
     <div className="max-w-2xl">
@@ -229,7 +257,12 @@ export default function CoastResearchTechnologyPage() {
 
         hasOfferCatalog: {
           "@type": "OfferCatalog",
+          "@id": `${PAGE_URL}/#crt-offers`,
           name: "CRT Services",
+          // ✅ Keywords belong nicely here too (OfferCatalog is a CreativeWork)
+          keywords:
+            "Coast Research Technology, CRT, software engineering Nigeria, product delivery, app maintenance, tech training, developer training, programming classes, backend development, frontend development, fintech systems",
+
           itemListElement: [
             {
               "@type": "Offer",
@@ -273,8 +306,20 @@ export default function CoastResearchTechnologyPage() {
         isPartOf: { "@id": `${CSTL_SITE_URL}/#website` },
         mainEntity: { "@id": CRT_ORG_ID },
         breadcrumb: { "@id": `${PAGE_URL}/#breadcrumb` },
-        primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE }, // ensure OG_IMAGE is absolute
+        primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE },
         inLanguage: "en-NG",
+
+        // ✅ Keywords (best place)
+        keywords:
+          "Coast Research Technology, CRT, software engineering, product delivery, app maintenance, tech training, programming training, developer training, Nigeria, fintech systems, web development, mobile development",
+
+        // ✅ Optional but useful semantic support for relevance
+        about: [
+          { "@id": CRT_ORG_ID },
+          { "@type": "Thing", name: "Software Engineering" },
+          { "@type": "Thing", name: "Tech Training" },
+          { "@type": "Thing", name: "Application Maintenance" },
+        ],
       },
 
       // Breadcrumbs
@@ -290,7 +335,6 @@ export default function CoastResearchTechnologyPage() {
     ],
   };
 
-
   return (
     <main id="main-content">
       <JsonLd data={jsonLd} />
@@ -298,20 +342,51 @@ export default function CoastResearchTechnologyPage() {
       {/* HERO */}
       <section
         className="relative overflow-hidden border-b border-border"
-        aria-labelledby="crt-hero-title"
+        aria-labelledby="coastlink24-title"
       >
         <div className="absolute inset-0 cstl-hero-bg opacity-80" aria-hidden="true" />
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
-        <div className="relative cstl-container py-16 sm:py-20">
-          <div className="max-w-2xl">
-            <div className="text-xs tracking-widest text-muted-foreground uppercase">
-              Operating Company
-            </div>
+        <header className="relative cstl-container py-16 sm:py-20">
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground" role="list">
+              <li role="listitem">
+                <Link
+                  href="/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li><li role="listitem">
+                <Link
+                  href="/companies/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Companies
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li>
+              <li aria-current="page" className="text-foreground/80" role="listitem">
+                Coast Research Technology
+              </li>
+            </ol>
+          </nav>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button asChild variant="cta">
-              <Link href="/start">
+          <SectionHeading
+            kicker="Operating Company"
+            title="Coast Research Technology (CRT)"
+            titleId="coast-research-technology-title"
+            description="CRT build real-world software products and systems—and provide ongoing application support for stability and continuity."
+          />
+
+          <div
+            className="mt-8 flex flex-col sm:flex-row gap-3"
+            role="group"
+            aria-label="Primary actions"
+          >
+            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+              <Link href="/start" aria-label="Start a project with CSTL">
                 Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
@@ -332,7 +407,7 @@ export default function CoastResearchTechnologyPage() {
           <div
             className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full border border-[color:var(--accent)]/35 bg-[color:var(--accent)]/10 px-4 py-2 text-xs text-foreground/80"
             role="note"
-            aria-label="Official CRT website"
+            aria-label="Official Coast Research Technology website"
           >
             <ExternalLink className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
             <span className="font-medium">Official CRT website:</span>
@@ -348,7 +423,7 @@ export default function CoastResearchTechnologyPage() {
           </div>
 
           <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
-        </div>
+        </header>
       </section>
 
       {/* SUMMARY */}
@@ -522,7 +597,7 @@ export default function CoastResearchTechnologyPage() {
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
-          <Button asChild variant="cta">
+            <Button asChild variant="cta">
               <Link href="/start">Request Training Intake</Link>
             </Button>
 
@@ -597,7 +672,7 @@ export default function CoastResearchTechnologyPage() {
               </div>
 
               <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                Our classrooms are comfortable, quiet, serene, and clean—with a calm ambiance that helps
+                CRT classrooms are comfortable, quiet, serene, and clean—with a calm ambiance that helps
                 students concentrate and learn better. We also keep cohorts small, so instructors can pay
                 attention to each student.
               </p>
@@ -668,7 +743,7 @@ export default function CoastResearchTechnologyPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-            <Button asChild variant="cta">
+              <Button asChild variant="cta">
                 <Link href="/start">Start a Project</Link>
               </Button>
 
