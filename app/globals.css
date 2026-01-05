@@ -75,6 +75,7 @@
 
 :root {
   --radius: 0.875rem; /* 14px */
+  --brand: #1e1b4b;
 
   /* Base */
   --background: #f7f7f2;
@@ -128,6 +129,7 @@
 
 .dark {
   /* Optional: CSTL dark mode */
+  --brand: #1e1b4b;
   --background: #0b0a1f;
   --foreground: #f8fafc;
 

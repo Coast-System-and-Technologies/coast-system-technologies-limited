@@ -352,23 +352,9 @@ export default function CoastResearchTechnologyPage() {
               Operating Company
             </div>
 
-            <h1
-              id="crt-hero-title"
-              className="mt-2 font-heading text-3xl sm:text-4xl text-[color:var(--primary)]"
-            >
-              Coast Research Technology (CRT)
-            </h1>
-
-            <p className="mt-3 text-muted-foreground leading-relaxed">
-              We build real-world software products and systems—and provide ongoing application support
-              for stability and continuity. We also run structured tech training programs designed for
-              real capacity building.
-            </p>
-          </div>
-
-          <div className="mt-8 flex flex-col sm:flex-row gap-3" role="group" aria-label="Primary actions">
-            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-              <Link href="/start" aria-label="Start a project with CSTL">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <Button asChild variant="cta">
+              <Link href="/start">
                 Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
@@ -577,6 +563,24 @@ export default function CoastResearchTechnologyPage() {
               );
             })}
           </div>
+
+          <div className="mt-10 flex flex-col sm:flex-row gap-3">
+          <Button asChild variant="cta">
+              <Link href="/start">Request Training Intake</Link>
+            </Button>
+
+            <Button asChild variant="outline">
+              <a
+                href={CRT_SITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Explore training and programs on the official CRT website (opens in a new tab)"
+                className="inline-flex items-center gap-2"
+              >
+                Explore CRT website <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -706,11 +710,9 @@ export default function CoastResearchTechnologyPage() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3" role="group" aria-label="Call to action buttons">
-              <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-                <Link href="/start" aria-label="Start a project with CSTL">
-                  Start a Project
-                </Link>
+            <div className="flex flex-col sm:flex-row gap-3">
+            <Button asChild variant="cta">
+                <Link href="/start">Start a Project</Link>
               </Button>
 
               <Button asChild variant="outline">
