@@ -416,9 +416,9 @@ export default function CoastResearchTechnologyPage() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 font-medium text-[color:var(--primary)] hover:underline underline-offset-4"
-              aria-label="Visit CoastLink24 website (opens in a new tab)"
+              aria-label="Visit Coast Research Technology website (opens in a new tab)"
             >
-              www.coastlink24.com.ng <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              www.coastresearchtechnology.com <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           </div>
 
