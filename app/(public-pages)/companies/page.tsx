@@ -122,7 +122,7 @@ const COMPANIES: readonly Company[] = [
       "Financial reporting",
     ],
     description:
-      "Infrastructure for lenders and operators—mandates, repayment workflows, automation, and integrations. We also deliver intelligent financial analysis and reporting services.",
+      "Fintech Infrastructure for lenders and operators—mandates, repayment workflows, automation, and integrations. We also deliver intelligent financial analysis and reporting services.",
     bullets: [
       "Asset lending infrastructure",
       "Repayment automation",
@@ -314,7 +314,7 @@ function CompanyCard({
   const tagsId = `company-${id}-tags`;
 
   return (
-    <li className="h-full" role="list">
+    <li className="h-full" role="listitem">
       <Link
         href={href}
         className="group block h-full rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
@@ -347,11 +347,12 @@ function CompanyCard({
             id={tagsId}
             className="mt-2 flex flex-wrap gap-2"
             aria-label="Company focus areas"
-          >
+            role="list">
             {tags.map((t) => (
               <li
                 key={t}
                 className="rounded-full border border-border bg-background px-2.5 py-1 text-[11px] text-muted-foreground"
+                role="listitem"
               >
                 {t}
               </li>
@@ -362,9 +363,9 @@ function CompanyCard({
             {description}
           </p>
 
-          <ul id={bulletsId} className="mt-4 space-y-2" aria-label="Key capabilities">
+          <ul id={bulletsId} className="mt-4 space-y-2" aria-label="Key capabilities" role="list">
             {bullets.map((b) => (
-              <li key={b} className="flex gap-2 text-sm text-muted-foreground">
+              <li key={b} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
                 <CheckCircle2
                   className="mt-0.5 h-4 w-4 text-[color:var(--accent)]"
                   aria-hidden="true"

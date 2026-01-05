@@ -295,6 +295,31 @@ export default function CoastLink24Page() {
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
         <header className="relative cstl-container py-16 sm:py-20">
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground" role="list">
+              <li role="listitem">
+                <Link
+                  href="/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li><li role="listitem">
+                <Link
+                  href="/companies/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Companies
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li>
+              <li aria-current="page" className="text-foreground/80" role="listitem">
+                Coastlink24
+              </li>
+            </ol>
+          </nav>
+
           <SectionHeading
             kicker="Operating Company"
             title="CoastLink24 Integrated Systems"

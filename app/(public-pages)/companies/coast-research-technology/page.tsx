@@ -174,6 +174,7 @@ function SectionHeading({
   kicker?: string;
   title: string;
   description?: string;
+  titleId: string;
 }) {
   return (
     <div className="max-w-2xl">
@@ -341,20 +342,51 @@ export default function CoastResearchTechnologyPage() {
       {/* HERO */}
       <section
         className="relative overflow-hidden border-b border-border"
-        aria-labelledby="crt-hero-title"
+        aria-labelledby="coastlink24-title"
       >
         <div className="absolute inset-0 cstl-hero-bg opacity-80" aria-hidden="true" />
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
-        <div className="relative cstl-container py-16 sm:py-20">
-          <div className="max-w-2xl">
-            <div className="text-xs tracking-widest text-muted-foreground uppercase">
-              Operating Company
-            </div>
+        <header className="relative cstl-container py-16 sm:py-20">
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground" role="list">
+              <li role="listitem">
+                <Link
+                  href="/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li><li role="listitem">
+                <Link
+                  href="/companies/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Companies
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li>
+              <li aria-current="page" className="text-foreground/80" role="listitem">
+                Coast Research Technology
+              </li>
+            </ol>
+          </nav>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-          <Button asChild variant="cta">
-              <Link href="/start">
+          <SectionHeading
+            kicker="Operating Company"
+            title="Coast Research Technology"
+            titleId="coast-research-technology-title"
+            description="We build real-world software products and systems—and provide ongoing application support for stability and continuity."
+          />
+
+          <div
+            className="mt-8 flex flex-col sm:flex-row gap-3"
+            role="group"
+            aria-label="Primary actions"
+          >
+            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+              <Link href="/start" aria-label="Start a project with CSTL">
                 Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
@@ -375,23 +407,23 @@ export default function CoastResearchTechnologyPage() {
           <div
             className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full border border-[color:var(--accent)]/35 bg-[color:var(--accent)]/10 px-4 py-2 text-xs text-foreground/80"
             role="note"
-            aria-label="Official CRT website"
+            aria-label="Official CoastLink24 website"
           >
             <ExternalLink className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
-            <span className="font-medium">Official CRT website:</span>
+            <span className="font-medium">Official CoastLink24 website:</span>
             <a
               href={CRT_SITE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 font-medium text-[color:var(--primary)] hover:underline underline-offset-4"
-              aria-label="Visit Coast Research Technology website (opens in a new tab)"
+              aria-label="Visit CoastLink24 website (opens in a new tab)"
             >
-              www.coastresearchtechnology.com <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              www.coastlink24.com.ng <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           </div>
 
           <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
-        </div>
+        </header>
       </section>
 
       {/* SUMMARY */}
@@ -565,7 +597,7 @@ export default function CoastResearchTechnologyPage() {
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
-          <Button asChild variant="cta">
+            <Button asChild variant="cta">
               <Link href="/start">Request Training Intake</Link>
             </Button>
 
@@ -711,7 +743,7 @@ export default function CoastResearchTechnologyPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3">
-            <Button asChild variant="cta">
+              <Button asChild variant="cta">
                 <Link href="/start">Start a Project</Link>
               </Button>
 

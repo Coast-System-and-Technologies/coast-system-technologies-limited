@@ -13,7 +13,7 @@ import {
   Truck,
   Wrench,
   ArrowUpRight,
-  Globe,
+  ExternalLink,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -127,12 +127,11 @@ function SectionHeading({
   kicker,
   title,
   description,
-  titleId,
 }: {
   kicker?: string;
   title: string;
   description?: string;
-  titleId?: string;
+  titleId: string;
 }) {
   return (
     <div className="max-w-2xl">
@@ -142,10 +141,8 @@ function SectionHeading({
         </div>
       ) : null}
 
-      <h1
-        id={titleId}
-        className="mt-2 font-heading text-3xl sm:text-4xl text-[color:var(--primary)]"
-      >
+      {/* Page H1 */}
+      <h1 className="mt-2 font-heading text-3xl sm:text-4xl text-[color:var(--primary)]">
         {title}
       </h1>
 
@@ -283,16 +280,41 @@ export default function CoastInfrastructureSystemsPage() {
       {/* HERO */}
       <section
         className="relative overflow-hidden border-b border-border"
-        aria-labelledby="cisl-title"
+        aria-labelledby="coastinfrastructure-limited-title"
       >
         <div className="absolute inset-0 cstl-hero-bg opacity-80" aria-hidden="true" />
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
         <header className="relative cstl-container py-16 sm:py-20">
+          <nav aria-label="Breadcrumb" className="mb-6">
+            <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground" role="list">
+              <li role="listitem">
+                <Link
+                  href="/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Home
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li><li role="listitem">
+                <Link
+                  href="/companies/"
+                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                >
+                  Companies
+                </Link>
+              </li>
+              <li aria-hidden="true" role="listitem">/</li>
+              <li aria-current="page" className="text-foreground/80" role="listitem">
+                Coast Infrastructure Systems Limited
+              </li>
+            </ol>
+          </nav>
+
           <SectionHeading
             kicker="Operating Company"
             title="Coast Infrastructure Systems Limited (CISL)"
-            titleId="cisl-title"
+            titleId="coast-infrastructure-systems-limited-title"
             description="We deliver infrastructure systems that power operations—solar, CCTV, networking, and procurement—with reliable on-ground execution."
           />
 
@@ -301,10 +323,7 @@ export default function CoastInfrastructureSystemsPage() {
             role="group"
             aria-label="Primary actions"
           >
-            <Button
-              asChild
-              className="bg-[color:var(--primary)] text-white hover:opacity-90"
-            >
+            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
               <Link href="/start" aria-label="Start a project with CSTL">
                 Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
               </Link>
@@ -316,35 +335,29 @@ export default function CoastInfrastructureSystemsPage() {
               </Link>
             </Button>
 
-            {/* External site button (use <a> for best semantics/perf) */}
-            <Button asChild variant="outline">
-              <a
-                href={CISL_SITE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Coast Infrastructure Systems website (opens in a new tab)"
-                className="group"
-              >
-                <span className="inline-flex items-center gap-2">
-                  <span
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background"
-                    aria-hidden="true"
-                  >
-                    <Globe className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
-                  </span>
-                  Visit CISL Website
-                  <ArrowUpRight
-                    className="h-4 w-4 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                </span>
-              </a>
-            </Button>
-
             <div className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
               <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
               Built under CSTL governance
             </div>
+          </div>
+
+          {/* Premium external link strip */}
+          <div
+            className="mt-4 inline-flex flex-wrap items-center gap-2 rounded-full border border-[color:var(--accent)]/35 bg-[color:var(--accent)]/10 px-4 py-2 text-xs text-foreground/80"
+            role="note"
+            aria-label="Official CoastLink24 website"
+          >
+            <ExternalLink className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+            <span className="font-medium">Official CISL website:</span>
+            <a
+              href={CISL_SITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-medium text-[color:var(--primary)] hover:underline underline-offset-4"
+              aria-label="Visit Coast Infrastructure Systems Limited website (opens in a new tab)"
+            >
+              www.coastinfrastructure.com.ng <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
           </div>
 
           <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
