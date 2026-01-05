@@ -27,6 +27,13 @@ const PAGE_URL = `${BASE_URL}${PAGE_PATH}`;
 const OG_IMAGE = `${BASE_URL}/assets/og/companies-coastlink24.jpg`;
 const COASTLINK_SITE_URL = "https://www.coastlink24.com.ng";
 
+const COASTLINK_ORG_ID = `${COASTLINK_SITE_URL}/#organization`;
+
+// Only keep this if the logo is actually publicly reachable on CoastLink24 site.
+// Put the file in the CoastLink24 site's /public/assets/ folder.
+const COASTLINK_LOGO_URL = `${COASTLINK_SITE_URL}/assets/logo.png`;
+
+
 export const metadata: Metadata = {
   title: "CoastLink24 Intelligent Systems Limited",
   description:
@@ -69,13 +76,20 @@ export const metadata: Metadata = {
   },
   keywords: [
     "CoastLink24",
+    "collections orchestration",
     "fintech infrastructure",
+    "fintech infrastructure Nigeria",
+    "fintech integrations",
+    "loan mandate systems",
     "lending infrastructure",
+    "lending operations automation",
     "mandate collections",
-    "repayment automation",
-    "payment integrations",
-    "risk controls",
     "Nigeria fintech",
+    "payment integrations",
+    "repayment automation",
+    "repayment workflows",
+    "risk controls",
+    "risk and control systems",
   ],
 };
 
@@ -157,114 +171,116 @@ function SectionHeading({
 }
 
 export default function CoastLink24Page() {
-  const jsonLd = [
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": `${BASE_URL}/#website`,
-      name: "Coast System & Technologies Limited",
-      url: `${BASE_URL}/`,
-      inLanguage: "en-NG",
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": `${BASE_URL}/#organization`,
-      name: "Coast System & Technologies Limited",
-      url: `${BASE_URL}/`,
-      logo: { "@type": "ImageObject", url: `${BASE_URL}/assets/logo.png` },
-      email: SITE?.contact?.email,
-      telephone: SITE?.contact?.phoneTel,
-      sameAs: SITE?.socials?.facebook ? [SITE.socials.facebook] : undefined,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": `${PAGE_URL}#coastlink24`,
-      name: "CoastLink24 Integrated Systems",
-      url: COASTLINK_SITE_URL,
-      parentOrganization: { "@id": `${BASE_URL}/#organization` },
-      description:
-        "Fintech infrastructure for lenders and operators—mandates, repayment workflows, automation, integrations, and controls built for disciplined lending operations.",
-      areaServed: { "@type": "Country", name: "Nigeria" },
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "CoastLink24 Capabilities",
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${BASE_URL}/#website`,
+        name: "Coast System & Technologies Limited",
+        url: `${BASE_URL}/`,
+        inLanguage: "en-NG",
+        publisher: { "@id": `${BASE_URL}/#organization` },
+      },
+      {
+        "@type": "Organization",
+        "@id": `${BASE_URL}/#organization`,
+        name: "Coast System & Technologies Limited",
+        url: `${BASE_URL}/`,
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${BASE_URL}/#logo`,
+          url: `${BASE_URL}/assets/logo.png`,
+        },
+        email: SITE?.contact?.email,
+        telephone: SITE?.contact?.phoneTel,
+        sameAs: SITE?.socials?.facebook ? [SITE.socials.facebook] : undefined,
+      },
+      {
+        "@type": "Organization",
+        "@id": COASTLINK_ORG_ID,
+        name: "CoastLink24 Integrated Systems",
+        alternateName: "CoastLink24",
+        url: COASTLINK_SITE_URL,
+        parentOrganization: { "@id": `${BASE_URL}/#organization` },
+        description:
+          "Fintech infrastructure for lenders and operators—mandates, repayment workflows, automation, integrations, and controls built for disciplined lending operations.",
+        areaServed: { "@type": "Country", name: "Nigeria" },
+
+        // ✅ Remove or keep depending on whether the public URL exists
+        logo: {
+          "@type": "ImageObject",
+          "@id": `${COASTLINK_SITE_URL}/#logo`,
+          url: COASTLINK_LOGO_URL,
+        },
+
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "CoastLink24 Capabilities",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Mandates & Collections",
+                description:
+                  "Salary and account mandate flows, collections orchestration, retries, and control handling.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Repayment Workflows",
+                description:
+                  "End-to-end repayment tracking, reconciliation, exceptions, and customer lifecycle controls.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Integrations Layer",
+                description:
+                  "Payment gateways, banks, identity tools, and third-party services—connected reliably and securely.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Risk & Control Systems",
+                description:
+                  "Guardrails for lending operations: thresholds, approvals, audit trails, and rule enforcement.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${PAGE_URL}#webpage`,
+        url: PAGE_URL,
+        name: "CoastLink24 Integrated Systems | Coast System & Technologies Limited",
+        description:
+          "Fintech infrastructure for lenders and operators—mandates, repayment workflows, automation, integrations, and controls built for disciplined lending operations.",
+        isPartOf: { "@id": `${BASE_URL}/#website` },
+        mainEntity: { "@id": COASTLINK_ORG_ID },
+        breadcrumb: { "@id": `${PAGE_URL}#breadcrumb` },
+        primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE }, // must be absolute
+        inLanguage: "en-NG",
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${PAGE_URL}#breadcrumb`,
         itemListElement: [
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Mandates & Collections",
-              description:
-                "Salary and account mandate flows, collections orchestration, retries, and control handling.",
-            },
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Repayment Workflows",
-              description:
-                "End-to-end repayment tracking, reconciliation, exceptions, and customer lifecycle controls.",
-            },
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Integrations Layer",
-              description:
-                "Payment gateways, banks, identity tools, and third-party services—connected reliably and securely.",
-            },
-          },
-          {
-            "@type": "Offer",
-            itemOffered: {
-              "@type": "Service",
-              name: "Risk & Control Systems",
-              description:
-                "Guardrails for lending operations: thresholds, approvals, audit trails, and rule enforcement.",
-            },
-          },
+          { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
+          { "@type": "ListItem", position: 2, name: "Companies", item: `${BASE_URL}/companies` },
+          { "@type": "ListItem", position: 3, name: "CoastLink24 Integrated Systems", item: PAGE_URL },
         ],
       },
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": `${PAGE_URL}#webpage`,
-      url: PAGE_URL,
-      name: "CoastLink24 Integrated Systems | Coast System & Technologies Limited",
-      description:
-        "Fintech infrastructure for lenders and operators—mandates, repayment workflows, automation, integrations, and controls built for disciplined lending operations.",
-      isPartOf: { "@id": `${BASE_URL}/#website` },
-      about: { "@id": `${PAGE_URL}#coastlink24` },
-      breadcrumb: { "@id": `${PAGE_URL}#breadcrumb` },
-      primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE },
-      inLanguage: "en-NG",
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "@id": `${PAGE_URL}#breadcrumb`,
-      itemListElement: [
-        { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Companies",
-          item: `${BASE_URL}/companies`,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: "CoastLink24 Integrated Systems",
-          item: PAGE_URL,
-        },
-      ],
-    },
-  ];
+    ],
+  };
 
   return (
     <main id="main-content">

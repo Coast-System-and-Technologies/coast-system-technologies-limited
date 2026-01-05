@@ -67,6 +67,33 @@ export const metadata: Metadata = {
       "Software engineering, product delivery, app maintenance, and tech training—built under CSTL governance.",
     images: [OG_IMAGE],
   },
+  keywords: [
+    "Coast Research Technology",
+    "CRT",
+    "software engineering Nigeria",
+    "product delivery",
+    "application maintenance",
+    "app support",
+    "web and mobile development",
+    "backend engineering",
+    "API development",
+    "tech training Nigeria",
+    "internship programs",
+    "software development company",
+    "Coast System and Technologies Limited",
+    "CSTL",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
 };
 
 const CAPABILITIES = [
@@ -229,7 +256,12 @@ export default function CoastResearchTechnologyPage() {
 
         hasOfferCatalog: {
           "@type": "OfferCatalog",
+          "@id": `${PAGE_URL}/#crt-offers`,
           name: "CRT Services",
+          // ✅ Keywords belong nicely here too (OfferCatalog is a CreativeWork)
+          keywords:
+            "Coast Research Technology, CRT, software engineering Nigeria, product delivery, app maintenance, tech training, developer training, programming classes, backend development, frontend development, fintech systems",
+
           itemListElement: [
             {
               "@type": "Offer",
@@ -273,8 +305,20 @@ export default function CoastResearchTechnologyPage() {
         isPartOf: { "@id": `${CSTL_SITE_URL}/#website` },
         mainEntity: { "@id": CRT_ORG_ID },
         breadcrumb: { "@id": `${PAGE_URL}/#breadcrumb` },
-        primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE }, // ensure OG_IMAGE is absolute
+        primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE },
         inLanguage: "en-NG",
+
+        // ✅ Keywords (best place)
+        keywords:
+          "Coast Research Technology, CRT, software engineering, product delivery, app maintenance, tech training, programming training, developer training, Nigeria, fintech systems, web development, mobile development",
+
+        // ✅ Optional but useful semantic support for relevance
+        about: [
+          { "@id": CRT_ORG_ID },
+          { "@type": "Thing", name: "Software Engineering" },
+          { "@type": "Thing", name: "Tech Training" },
+          { "@type": "Thing", name: "Application Maintenance" },
+        ],
       },
 
       // Breadcrumbs
@@ -289,7 +333,6 @@ export default function CoastResearchTechnologyPage() {
       },
     ],
   };
-
 
   return (
     <main id="main-content">
