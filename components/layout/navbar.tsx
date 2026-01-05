@@ -150,15 +150,31 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between gap-4 lg:h-20">
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <Image
-              src="/assets/brand/logos/cstl-logo.png"
-              alt={SITE.shortName}
-              width={180}
-              height={60}
-              className="h-10 w-auto lg:h-12"
-              priority
-            />
+            {/* Light mode logo */}
+            <span className="block dark:hidden">
+              <Image
+                src="/assets/brand/logos/cstl-logo-light.svg"
+                alt={SITE.shortName}
+                width={180}
+                height={60}
+                className="h-10 w-auto lg:h-12"
+                priority
+              />
+            </span>
+
+            {/* Dark mode logo */}
+            <span className="hidden dark:block">
+              <Image
+                src="/assets/brand/logos/cstl-logo-dark.svg"
+                alt={SITE.shortName}
+                width={180}
+                height={60}
+                className="h-10 w-auto lg:h-12"
+                priority
+              />
+            </span>
           </Link>
+
 
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 lg:flex">
@@ -166,7 +182,7 @@ export default function Navbar() {
               <NavigationMenuList className="gap-1">
                 {/* Services */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 bg-transparent px-4 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -176,7 +192,7 @@ export default function Navbar() {
 
                 {/* Companies */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 bg-transparent px-4 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Companies
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -186,7 +202,7 @@ export default function Navbar() {
 
                 {/* Insights */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 bg-transparent px-4 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Insights
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -203,7 +219,7 @@ export default function Navbar() {
                         <Link
                           href={item.href}
                           className={[
-                            "h-9 rounded-md px-4 text-sm font-medium transition-all duration-200",
+                            "h-9 rounded-md px-3 text-sm font-medium transition-all duration-200",
                             active
                               ? "bg-muted/50 text-[color:var(--primary)]"
                               : "text-foreground hover:bg-muted/50",
@@ -243,19 +259,29 @@ export default function Navbar() {
                 <div className="flex h-full flex-col">
                   {/* Mobile Header */}
                   <div className="mb-6 flex items-center justify-between">
-                    <Image
-                      src="/assets/brand/logos/cstl-logo.png"
-                      alt={SITE.shortName}
-                      width={150}
-                      height={50}
-                      className="h-10 w-auto"
-                    />
-                    {/* <SheetClose asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8" aria-label="Close menu">
-                        <X className="h-5 w-5" />
-                      </Button>
-                    </SheetClose> */}
+                    {/* Light mode */}
+                    <span className="block dark:hidden">
+                      <Image
+                        src="/assets/brand/logos/cstl-logo-light.svg"
+                        alt={SITE.shortName}
+                        width={150}
+                        height={50}
+                        className="h-10 w-auto"
+                      />
+                    </span>
+
+                    {/* Dark mode */}
+                    <span className="hidden dark:block">
+                      <Image
+                        src="/assets/brand/logos/cstl-logo-dark.svg"
+                        alt={SITE.shortName}
+                        width={150}
+                        height={50}
+                        className="h-10 w-auto"
+                      />
+                    </span>
                   </div>
+
 
                   <Separator className="mb-4" />
 
@@ -288,7 +314,7 @@ export default function Navbar() {
                   {/* Mobile Footer */}
                   <div className="mt-6 space-y-4 border-t pt-6 px-2">
                     <SheetClose asChild>
-                    <Button asChild variant="cta" className="h-10 w-full">
+                      <Button asChild variant="cta" className="h-10 w-full">
 
                         <Link href={NAV.ctas.start.href}>{NAV.ctas.start.label}</Link>
                       </Button>

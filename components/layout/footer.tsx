@@ -45,11 +45,11 @@ export default function Footer() {
             {/* Brand Section */}
             <div className="sm:col-span-2 lg:col-span-2 space-y-6">
               <Image
-                src="/assets/brand/logos/cstl-logo-dark.png"
+                src="/assets/brand/logos/cstl-footer-logo.svg"
                 alt={SITE.name}
                 width={200}
                 height={60}
-                className="h-auto w-auto"
+                className="h-30 w-auto"
                 priority
               />
               <p className="font-heading text-xl lg:text-2xl text-white leading-relaxed max-w-md">
