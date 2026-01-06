@@ -71,6 +71,7 @@ cstl-website/
 │   ├── forms/
 │   │   ├── contact-form.tsx              # Contact form (frontend-only / later API)
 │   │   └── start-project-form.tsx        # Optional shared form (if extracted later)
+│   ├── motion/                           # component for Reveal motions
 │   └── ui/                               # shadcn/ui components (auto-generated)
 ├── content/                              # Centralized site content configs
 │   ├── site.ts                           # Brand constants (signature, contacts, RC)
