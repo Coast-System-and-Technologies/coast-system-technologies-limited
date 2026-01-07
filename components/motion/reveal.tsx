@@ -2,112 +2,121 @@
 
 import * as React from "react";
 import {
-    motion,
-    useReducedMotion,
-    type HTMLMotionProps,
+  motion,
+  useReducedMotion,
+  type HTMLMotionProps,
 } from "motion/react";
 
-
-type Variant = "fadeBlur" | "fade" | "fadeUp" | "scale";
+type Variant = "fade" | "fade-up" | "fade-down" | "fade-left" | "fade-right" | "scale";
 
 type BaseRevealProps = {
-    delay?: number;       // seconds
-    duration?: number;    // seconds
-    y?: number;           // px (used in fadeUp)
-    once?: boolean;
-    amount?: number;      // viewport trigger amount
-    variant?: Variant;
+  delay?: number;     // seconds
+  duration?: number;  // seconds
+  y?: number;         // px
+  x?: number;         // px
+  once?: boolean;
+  amount?: number;
+  variant?: Variant;
+
+  /** Helps text stay crisp: use "fade" on headings; use small y on cards */
+  sharp?: boolean;
 };
 
-function getMotion(variant: Variant, reduce: boolean, y: number) {
-    const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
+type AsTag =
+  | "div"
+  | "section"
+  | "article"
+  | "main"
+  | "header"
+  | "footer"
+  | "ul"
+  | "ol"
+  | "li"
+  | "span";
 
-    // Sharper premium: minimal blur
-    if (variant === "fadeBlur") {
-        return {
-            initial: {
-                opacity: 0,
-                y: reduce ? 0 : 6,
-                scale: reduce ? 1 : 0.997,
-                filter: reduce ? "none" : "blur(5px)",
-            },
-            animate: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
-            ease,
-        };
-    }
+export type RevealProps<T extends AsTag = "div"> = BaseRevealProps &
+  HTMLMotionProps<T> & {
+    as?: T;
+  };
 
-    if (variant === "fade") {
-        return { initial: { opacity: 0 }, animate: { opacity: 1 }, ease };
-    }
-
-    if (variant === "scale") {
-        return {
-            initial: { opacity: 0, scale: reduce ? 1 : 0.985 },
-            animate: { opacity: 1, scale: 1 },
-            ease,
-        };
-    }
-
-    // fadeUp
-    return {
-        initial: { opacity: 0, y: reduce ? 0 : y },
+function getVariant(
+  variant: Variant,
+  reduce: boolean,
+  x: number,
+  y: number
+) {
+  switch (variant) {
+    case "fade":
+      return { initial: { opacity: 0 }, animate: { opacity: 1 } };
+    case "fade-down":
+      return {
+        initial: { opacity: 0, y: reduce ? 0 : -Math.abs(y) },
         animate: { opacity: 1, y: 0 },
-        ease,
-    };
+      };
+    case "fade-left":
+      return {
+        initial: { opacity: 0, x: reduce ? 0 : -Math.abs(x) },
+        animate: { opacity: 1, x: 0 },
+      };
+    case "fade-right":
+      return {
+        initial: { opacity: 0, x: reduce ? 0 : Math.abs(x) },
+        animate: { opacity: 1, x: 0 },
+      };
+    case "scale":
+      return {
+        initial: { opacity: 0, scale: reduce ? 1 : 0.985 },
+        animate: { opacity: 1, scale: 1 },
+      };
+    case "fade-up":
+    default:
+      return {
+        initial: { opacity: 0, y: reduce ? 0 : Math.abs(y) },
+        animate: { opacity: 1, y: 0 },
+      };
+  }
 }
 
-export type RevealProps = HTMLMotionProps<"div"> & BaseRevealProps;
+export default function Reveal<T extends AsTag = "div">({
+  as,
+  children,
+  delay = 0,
+  duration = 0.42,   // slightly faster = sharper
+  y = 8,             // smaller movement = less font “blur”
+  x = 10,
+  once = true,
+  amount = 0.2,
+  variant = "fade-up",
+  sharp = true,
+  style,
+  ...rest
+}: RevealProps<T>) {
+  const reduce = useReducedMotion();
+  const Tag = (motion as any)[as ?? "div"] as React.ElementType;
 
-export default function Reveal({
-    children,
-    delay = 0,
-    duration = 0.6,
-    y = 10,
-    once = true,
-    amount = 0.18,
-    variant = "fadeBlur",
-    ...rest
-}: RevealProps) {
-    const reduce = useReducedMotion();
-    const m = getMotion(variant, reduce, y);
+  const v = getVariant(variant, reduce, x, y);
 
-    return (
-        <motion.div
-            initial={m.initial}
-            whileInView={m.animate}
-            viewport={{ once, amount }}
-            transition={{ duration, delay, ease: m.ease }}
-            {...rest}
-        >
-            {children}
-        </motion.div>
-    );
+  return (
+    <Tag
+      initial={v.initial}
+      whileInView={v.animate}
+      viewport={{ once, amount }}
+      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
+      style={{
+        willChange: "transform, opacity",
+        backfaceVisibility: sharp ? "hidden" : undefined,
+        ...style,
+      }}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  );
 }
 
-export type RevealItemProps = HTMLMotionProps<"li"> & BaseRevealProps;
+/** Use ONLY inside ul/ol */
+export type RevealItemProps = Omit<RevealProps<"li">, "as">;
 
-export function RevealItem({
-    children,
-    delay = 0,
-    duration = 0.6,
-    y = 10,
-    once = true,
-    amount = 0.18,
-    variant = "fadeBlur",
-    ...rest
-}: RevealItemProps) {
-    const reduce = useReducedMotion();
-    const m = getMotion(variant, reduce, y);
-
-    return (
-        <motion.li
-            initial={m.initial}
-            whileInView={m.animate}
-            viewport={{ once, amount }}
-            transition={{ duration, delay, ease: m.ease }}
-            {...rest}
-        >
-            {children}
-        </motion.li>
-    );
+export function RevealItem(props: RevealItemProps) {
+  return <Reveal as="li" {...props} />;
 }

@@ -2,6 +2,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import Reveal from "@/components/motion/reveal";
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -172,135 +174,156 @@ export default function ResultsPage() {
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-border">
         <div className="absolute inset-0 pointer-events-none">
-          {/* subtle grid + glow (x-factor, restrained) */}
           <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(to_right,rgba(30,27,75,1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(30,27,75,1)_1px,transparent_1px)] bg-[size:44px_44px]" />
           <div className="absolute -top-24 left-1/2 h-72 w-[48rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(30,27,75,0.18),transparent_60%)] blur-2xl" />
         </div>
 
         <div className="relative mx-auto max-w-6xl px-4 py-14 md:py-18">
           <div className="max-w-3xl">
-            <h1 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl tracking-tight text-foreground">
-              Results that scale — delivered with structure and confidentiality.
-            </h1>
+            <Reveal variant="liftScale" duration={0.45} y={10}>
+              <h1 className="font-[family-name:var(--font-cormorant)] text-4xl md:text-5xl tracking-tight text-foreground">
+                Results that scale — delivered with structure and confidentiality.
+              </h1>
+            </Reveal>
 
-            <p className="mt-4 text-base md:text-lg text-muted-foreground">
-              CSTL supports founders and organisations with governance, compliance systems,
-              privacy readiness (Nigeria), trademark/IP protection, and CAC registry services.
-              Many engagements are confidential—so we show proof through deliverables, outcomes,
-              and anonymised snapshots.
-            </p>
+            <Reveal delay={0.06} variant="lift" duration={0.4} y={10}>
+              <p className="mt-4 text-base md:text-lg text-muted-foreground">
+                CSTL supports founders and organisations with governance, compliance systems,
+                privacy readiness (Nigeria), trademark/IP protection, and CAC registry services.
+                Many engagements are confidential—so we show proof through deliverables, outcomes,
+                and anonymised snapshots.
+              </p>
+            </Reveal>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Button asChild>
-                <Link href="/start">Start a Project</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/start">Request a Proposal</Link>
-              </Button>
+            <Reveal delay={0.1} variant="fade" duration={0.3} y={0}>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <Button asChild>
+                  <Link href="/start">Start a Project</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/start">Request a Proposal</Link>
+                </Button>
 
-              <div className="w-full" />
+                <div className="w-full" />
 
-              <div className="flex flex-wrap gap-2 pt-1">
-                <Badge variant="secondary">Discreet by design</Badge>
-                <Badge variant="secondary">Evidence-driven delivery</Badge>
-                <Badge variant="secondary">Built for continuity</Badge>
+                <div className="flex flex-wrap gap-2 pt-1">
+                  <Badge variant="secondary">Discreet by design</Badge>
+                  <Badge variant="secondary">Evidence-driven delivery</Badge>
+                  <Badge variant="secondary">Built for continuity</Badge>
+                </div>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="mt-8 h-px w-40 bg-[#C9A227]/40" />
+            <Reveal delay={0.14} variant="fade" duration={0.3} y={0}>
+              <div className="mt-8 h-px w-40 bg-[#C9A227]/40" />
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* PROOF YOU CAN VERIFY */}
       <section className="mx-auto max-w-6xl px-4 py-12">
-        <div className="max-w-3xl">
-          <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
-            How we show results without exposing clients
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            Because many engagements are private, we focus on what can be verified:
-          </p>
-        </div>
+        <Reveal variant="lift" duration={0.4} y={10}>
+          <div className="max-w-3xl">
+            <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
+              How we show results without exposing clients
+            </h2>
+            <p className="mt-2 text-muted-foreground">
+              Because many engagements are private, we focus on what can be verified:
+            </p>
+          </div>
+        </Reveal>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {proof.map((item) => (
-            <Card key={item} className="bg-card/80">
-              <CardContent className="pt-6">
-                <div className="flex gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1 inline-flex h-2 w-2 rounded-full bg-[#C9A227]"
-                  />
-                  <p className="text-sm md:text-base text-foreground">{item}</p>
-                </div>
-              </CardContent>
-            </Card>
+          {proof.map((item, idx) => (
+            <Reveal key={item} delay={0.04 + idx * 0.06} y={10} duration={0.45}>
+              <Card className="bg-card/80">
+                <CardContent className="pt-6">
+                  <div className="flex gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-1 inline-flex h-2 w-2 rounded-full bg-[#C9A227]"
+                    />
+                    <p className="text-sm md:text-base text-foreground">{item}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Reveal>
           ))}
         </div>
       </section>
 
       {/* PROBLEMS WE SOLVE */}
       <section className="mx-auto max-w-6xl px-4 pb-12">
-        <div className="max-w-3xl">
-          <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
-            The problems we’re hired to solve
-          </h2>
-        </div>
+        <Reveal variant="lift" duration={0.4} y={10}>
+          <div className="max-w-3xl">
+            <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
+              The problems we’re hired to solve
+            </h2>
+          </div>
+        </Reveal>
 
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {problems.map((p) => (
-            <Card key={p}>
-              <CardContent className="pt-6">
-                <p className="text-sm md:text-base text-foreground">{p}</p>
-              </CardContent>
-            </Card>
+          {problems.map((p, idx) => (
+            <Reveal key={p} delay={0.04 + idx * 0.055} y={10} duration={0.45}>
+              <Card>
+                <CardContent className="pt-6">
+                  <p className="text-sm md:text-base text-foreground">{p}</p>
+                </CardContent>
+              </Card>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <Separator className="mx-auto max-w-6xl" />
+      <Reveal variant="fade" duration={0.25}>
+        <Separator className="mx-auto max-w-6xl" />
+      </Reveal>
 
       {/* SNAPSHOTS */}
       <section className="mx-auto max-w-6xl px-4 py-12">
-        <div className="max-w-3xl">
-          <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
-            Engagement snapshots
-          </h2>
-          <p className="mt-2 text-muted-foreground">
-            Client identities withheld where required. Available evidence may be shared privately under NDA.
-          </p>
-        </div>
+        <Reveal variant="lift" duration={0.4} y={10}>
+          <div className="max-w-3xl">
+            <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
+              Engagement snapshots
+            </h2>
+            <p className="mt-2 text-muted-foreground">
+              Client identities withheld where required. Available evidence may be shared privately under NDA.
+            </p>
+          </div>
+        </Reveal>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">
-          {snapshots.map((s) => (
-            <Card key={s.title} className="relative overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-[#C9A227]/40" />
-              <CardHeader>
-                <CardTitle className="text-base md:text-lg">{s.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="text-sm">
-                  <p className="text-muted-foreground">Client type</p>
-                  <p className="text-foreground">{s.clientType}</p>
-                </div>
+          {snapshots.map((s, idx) => (
+            <Reveal key={s.title} delay={0.04 + idx * 0.07} y={12} duration={0.5}>
+              <Card className="relative overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-[2px] bg-[#C9A227]/40" />
+                <CardHeader>
+                  <CardTitle className="text-base md:text-lg">{s.title}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="text-sm">
+                    <p className="text-muted-foreground">Client type</p>
+                    <p className="text-foreground">{s.clientType}</p>
+                  </div>
 
-                <div className="text-sm">
-                  <p className="text-muted-foreground">Challenge</p>
-                  <p className="text-foreground">{s.challenge}</p>
-                </div>
+                  <div className="text-sm">
+                    <p className="text-muted-foreground">Challenge</p>
+                    <p className="text-foreground">{s.challenge}</p>
+                  </div>
 
-                <div className="text-sm">
-                  <p className="text-muted-foreground">What CSTL delivered</p>
-                  <p className="text-foreground">{s.delivered}</p>
-                </div>
+                  <div className="text-sm">
+                    <p className="text-muted-foreground">What CSTL delivered</p>
+                    <p className="text-foreground">{s.delivered}</p>
+                  </div>
 
-                <div className="text-sm">
-                  <p className="text-muted-foreground">Outcome</p>
-                  <p className="text-foreground">{s.outcome}</p>
-                </div>
-              </CardContent>
-            </Card>
+                  <div className="text-sm">
+                    <p className="text-muted-foreground">Outcome</p>
+                    <p className="text-foreground">{s.outcome}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -308,93 +331,105 @@ export default function ResultsPage() {
       {/* SECTORS + STANDARD */}
       <section className="mx-auto max-w-6xl px-4 pb-12">
         <div className="grid gap-6 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-[family-name:var(--font-cormorant)] text-xl">
-                Sectors we commonly support
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {sectors.map((s) => (
-                <div key={s} className="flex items-start gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="mt-2 inline-flex h-1.5 w-1.5 rounded-full bg-foreground/60"
-                  />
-                  <p className="text-sm md:text-base text-foreground">{s}</p>
-                </div>
-              ))}
-              <p className="pt-2 text-sm text-muted-foreground">
-                We prioritise “structure-first” operators: founders, directors, and teams who want discipline.
-              </p>
-            </CardContent>
-          </Card>
+          <Reveal variant="lift" duration={0.45} y={12}>
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-[family-name:var(--font-cormorant)] text-xl">
+                  Sectors we commonly support
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {sectors.map((s) => (
+                  <div key={s} className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 inline-flex h-1.5 w-1.5 rounded-full bg-foreground/60"
+                    />
+                    <p className="text-sm md:text-base text-foreground">{s}</p>
+                  </div>
+                ))}
+                <p className="pt-2 text-sm text-muted-foreground">
+                  We prioritise “structure-first” operators: founders, directors, and teams who want discipline.
+                </p>
+              </CardContent>
+            </Card>
+          </Reveal>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-[family-name:var(--font-cormorant)] text-xl">
-                Our operating standard
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {standards.map((s) => (
-                <div key={s} className="flex items-start gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="mt-2 inline-flex h-1.5 w-1.5 rounded-full bg-[#C9A227]"
-                  />
-                  <p className="text-sm md:text-base text-foreground">{s}</p>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
+          <Reveal delay={0.06} variant="lift" duration={0.45} y={12}>
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-[family-name:var(--font-cormorant)] text-xl">
+                  Our operating standard
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {standards.map((s) => (
+                  <div key={s} className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 inline-flex h-1.5 w-1.5 rounded-full bg-[#C9A227]"
+                    />
+                    <p className="text-sm md:text-base text-foreground">{s}</p>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </Reveal>
         </div>
       </section>
 
       {/* CONFIDENTIALITY */}
       <section className="mx-auto max-w-6xl px-4 pb-12">
-        <Card className="border-[#C9A227]/25">
-          <CardHeader>
-            <CardTitle className="font-[family-name:var(--font-cormorant)] text-xl">
-              Discreet by design
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm md:text-base text-muted-foreground">
-              Some client work is not published publicly. Where needed, we can share selected evidence privately under NDA—without
-              exposing sensitive company information.
-            </p>
-          </CardContent>
-        </Card>
+        <Reveal variant="lift" duration={0.45} y={12}>
+          <Card className="border-[#C9A227]/25">
+            <CardHeader>
+              <CardTitle className="font-[family-name:var(--font-cormorant)] text-xl">
+                Discreet by design
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Some client work is not published publicly. Where needed, we can share selected evidence privately under NDA—without
+                exposing sensitive company information.
+              </p>
+            </CardContent>
+          </Card>
+        </Reveal>
       </section>
 
       {/* FINAL CTA */}
       <section className="border-t border-border">
         <div className="mx-auto max-w-6xl px-4 py-12">
-          <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
-            <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
-              Want structure you can trust under pressure?
-            </h2>
-            <p className="mt-2 text-muted-foreground">
-              Start a project and we’ll route you to the right pillar and engagement path.
-            </p>
+          <Reveal variant="liftScale" duration={0.5} y={12}>
+            <div className="rounded-2xl border border-border bg-card p-6 md:p-8">
+              <h2 className="font-[family-name:var(--font-cormorant)] text-2xl md:text-3xl text-foreground">
+                Want structure you can trust under pressure?
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                Start a project and we’ll route you to the right pillar and engagement path.
+              </p>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild>
-                <Link href="/start">Start a Project</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/start">Request a Proposal</Link>
-              </Button>
-              <Button asChild variant="ghost">
-                <Link href="/start">Book a Strategy Call</Link>
-              </Button>
+              <Reveal delay={0.08} variant="fade" duration={0.3} y={0}>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button asChild>
+                    <Link href="/start">Start a Project</Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/start">Request a Proposal</Link>
+                  </Button>
+                  <Button asChild variant="ghost">
+                    <Link href="/start">Book a Strategy Call</Link>
+                  </Button>
+                </div>
+              </Reveal>
+
+              <Reveal delay={0.12} variant="fade" duration={0.3} y={0}>
+                <p className="mt-5 text-xs text-muted-foreground">
+                  We provide advisory, systems, and filing coordination services. Where legal representation is required, clients may engage licensed counsel.
+                </p>
+              </Reveal>
             </div>
-
-            <p className="mt-5 text-xs text-muted-foreground">
-              We provide advisory, systems, and filing coordination services. Where legal representation is required, clients may engage licensed counsel.
-            </p>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>

@@ -2,12 +2,22 @@
 
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Building2, ShieldCheck, Cpu, Landmark, Network, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  ShieldCheck,
+  Cpu,
+  Landmark,
+  Network,
+  CheckCircle2,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import JsonLd from "@/components/insights/JsonLd";
 import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
+
+import Reveal, { RevealItem } from "@/components/motion/reveal";
 
 import { SITE } from "@/content/site";
 import { BASE_URL } from "@/lib/site-url";
@@ -20,8 +30,6 @@ export const metadata: Metadata = {
   title: "Our Companies | Coast System & Technologies Limited",
   description:
     "Explore the Coast Group operating companies—software engineering, fintech infrastructure, and infrastructure systems—supported by CSTL’s governance and shared services.",
-
-  // ✅ optional but fine (Google mostly ignores, still ok for completeness)
   keywords: [
     "Coast Group companies",
     "Coast System and Technologies Limited",
@@ -41,9 +49,7 @@ export const metadata: Metadata = {
     "shared services",
     "governance",
   ],
-
   alternates: { canonical: PAGE_URL },
-
   robots: {
     index: true,
     follow: true,
@@ -55,7 +61,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-
   openGraph: {
     type: "website",
     siteName: SITE.name,
@@ -73,7 +78,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Our Companies | Coast System & Technologies Limited",
@@ -91,8 +95,8 @@ type Company = {
   tags: string[];
   description: string;
   bullets: string[];
-  siteUrl?: string;  // canonical identity (optional)
-  logoUrl?: string;  // must be PUBLIC absolute URL if used
+  siteUrl?: string;
+  logoUrl?: string;
 };
 
 const COMPANIES: readonly Company[] = [
@@ -131,7 +135,6 @@ const COMPANIES: readonly Company[] = [
       "Financial reporting",
     ],
     siteUrl: "https://www.coastlink24.com.ng",
-    // logoUrl: "https://www.coastlink24.com.ng/assets/logo.png", // only if it exists publicly
   },
   {
     id: "cisl",
@@ -142,7 +145,6 @@ const COMPANIES: readonly Company[] = [
     description:
       "Coast Infrastructure Systems Limited deliver infrastructure systems and facilities that power operations—installation, configuration, and reliable execution on-ground.",
     bullets: ["Solar + power systems", "CCTV + networking", "Procurement & deployment"],
-    // siteUrl/logoUrl later
   },
 ] as const;
 
@@ -152,7 +154,6 @@ const normalizeUrl = (u: string) => u.trim().replace(/\/+$/, "");
 const companyPageUrl = (c: Company) => `${BASE_URL}${c.href}`;
 const companyWebPageId = (c: Company) => `${companyPageUrl(c)}#webpage`;
 
-// Prefer company domain for Organization identity when available
 const companyOrgId = (c: Company) =>
   c.siteUrl ? `${normalizeUrl(c.siteUrl)}/#organization` : `${companyPageUrl(c)}#organization`;
 
@@ -169,12 +170,12 @@ const COMPANY_ORG_NODES = COMPANIES.map((c) => {
     parentOrganization: { "@id": `${BASE_URL}/#organization` },
     ...(c.logoUrl
       ? {
-        logo: {
-          "@type": "ImageObject",
-          "@id": `${orgUrl}/#logo`,
-          url: c.logoUrl,
-        },
-      }
+          logo: {
+            "@type": "ImageObject",
+            "@id": `${orgUrl}/#logo`,
+            url: c.logoUrl,
+          },
+        }
       : {}),
   };
 });
@@ -211,15 +212,9 @@ const jsonLd = {
         value: SITE.trust.rc,
       },
       sameAs: SITE.socials.facebook ? [SITE.socials.facebook] : undefined,
-
-      // ✅ link the operating companies
       subOrganization: COMPANIES.map((c) => ({ "@id": companyOrgId(c) })),
     },
-
-    // ✅ company org nodes (CRT/CoastLink24 canonical where available)
     ...COMPANY_ORG_NODES,
-
-    // ✅ companies index page entity
     {
       "@type": "CollectionPage",
       "@id": `${PAGE_URL}#webpage`,
@@ -232,7 +227,6 @@ const jsonLd = {
       breadcrumb: { "@id": `${PAGE_URL}#breadcrumbs` },
       primaryImageOfPage: { "@type": "ImageObject", url: OG_IMAGE },
       inLanguage: "en-NG",
-
       mainEntity: {
         "@type": "ItemList",
         name: "Coast Group operating companies",
@@ -251,10 +245,8 @@ const jsonLd = {
           },
         })),
       },
-
       hasPart: COMPANIES.map((c) => ({ "@id": companyWebPageId(c) })),
     },
-
     {
       "@type": "BreadcrumbList",
       "@id": `${PAGE_URL}#breadcrumbs`,
@@ -307,7 +299,8 @@ function CompanyCard({
   tags,
   description,
   bullets,
-}: (typeof COMPANIES)[number]) {
+  index,
+}: (typeof COMPANIES)[number] & { index: number }) {
   const titleId = `company-${id}-title`;
   const descId = `company-${id}-desc`;
   const bulletsId = `company-${id}-bullets`;
@@ -315,71 +308,119 @@ function CompanyCard({
 
   return (
     <li className="h-full" role="listitem">
-      <Link
-        href={href}
-        className="group block h-full rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-        aria-labelledby={titleId}
-        aria-describedby={`${descId} ${bulletsId}`}
-      >
-        <article className="h-full" aria-label={name}>
-          <div className="flex items-start justify-between gap-4">
-            <div
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background"
-              aria-hidden="true"
-            >
-              <Icon className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
-            </div>
-
-            <span className="text-xs text-muted-foreground group-hover:text-[color:var(--accent)] transition">
-              <span className="sr-only">View </span>
-              View <span aria-hidden="true">→</span>
-            </span>
-          </div>
-
-          <h2
-            id={titleId}
-            className="mt-4 font-heading text-xl text-[color:var(--primary)]"
-          >
-            {name}
-          </h2>
-
-          <ul
-            id={tagsId}
-            className="mt-2 flex flex-wrap gap-2"
-            aria-label="Company focus areas"
-            role="list">
-            {tags.map((t) => (
-              <li
-                key={t}
-                className="rounded-full border border-border bg-background px-2.5 py-1 text-[11px] text-muted-foreground"
-                role="listitem"
+      <Reveal delay={0.04 + index * 0.08} y={10} duration={0.5}>
+        <Link
+          href={href}
+          className={[
+            // layout (unchanged)
+            "group block h-full rounded-2xl border border-border bg-card p-6",
+            // premium hover micro-effect (no reflow)
+            "relative overflow-hidden",
+            "transition-[transform,box-shadow,border-color,background-color] duration-300 ease-out",
+            "hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            "motion-reduce:transform-none motion-reduce:transition-none",
+            // overlay glow (opacity-only)
+            "before:content-[''] before:absolute before:inset-0 before:pointer-events-none",
+            "before:bg-[radial-gradient(70%_60%_at_50%_0%,rgba(201,162,39,0.12),transparent_65%)]",
+            "before:opacity-0 before:transition-opacity before:duration-300",
+            "group-hover:before:opacity-100",
+          ].join(" ")}
+          aria-labelledby={titleId}
+          aria-describedby={`${descId} ${bulletsId}`}
+        >
+          <article className="h-full" aria-label={name}>
+            <div className="flex items-start justify-between gap-4">
+              <div
+                className={[
+                  "inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background",
+                  "transition-colors duration-300",
+                  "group-hover:border-[color:var(--accent)]/35",
+                ].join(" ")}
+                aria-hidden="true"
               >
-                {t}
-              </li>
-            ))}
-          </ul>
-
-          <p id={descId} className="mt-4 text-sm text-muted-foreground leading-relaxed">
-            {description}
-          </p>
-
-          <ul id={bulletsId} className="mt-4 space-y-2" aria-label="Key capabilities" role="list">
-            {bullets.map((b) => (
-              <li key={b} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
-                <CheckCircle2
-                  className="mt-0.5 h-4 w-4 text-[color:var(--accent)]"
+                <Icon
+                  className={[
+                    "h-5 w-5 text-[color:var(--primary)]",
+                    "transition-transform duration-300",
+                    "group-hover:scale-[1.04]",
+                    "motion-reduce:transform-none",
+                  ].join(" ")}
                   aria-hidden="true"
                 />
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      </Link>
+              </div>
+
+              <span
+                className={[
+                  "text-xs text-muted-foreground transition duration-300",
+                  "group-hover:text-[color:var(--accent)]",
+                ].join(" ")}
+              >
+                <span className="sr-only">View </span>
+                View{" "}
+                <span
+                  aria-hidden="true"
+                  className="inline-block transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:transform-none"
+                >
+                  →
+                </span>
+              </span>
+            </div>
+
+            <h2
+              id={titleId}
+              className="mt-4 font-heading text-xl text-[color:var(--primary)]"
+            >
+              {name}
+            </h2>
+
+            <ul
+              id={tagsId}
+              className="mt-2 flex flex-wrap gap-2"
+              aria-label="Company focus areas"
+              role="list"
+            >
+              {tags.map((t) => (
+                <li
+                  key={t}
+                  className={[
+                    "rounded-full border border-border bg-background px-2.5 py-1 text-[11px] text-muted-foreground",
+                    "transition-colors duration-300",
+                    "group-hover:border-[color:var(--accent)]/30",
+                  ].join(" ")}
+                  role="listitem"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+
+            <p id={descId} className="mt-4 text-sm text-muted-foreground leading-relaxed">
+              {description}
+            </p>
+
+            <ul
+              id={bulletsId}
+              className="mt-4 space-y-2"
+              aria-label="Key capabilities"
+              role="list"
+            >
+              {bullets.map((b) => (
+                <li key={b} className="flex gap-2 text-sm text-muted-foreground" role="listitem">
+                  <CheckCircle2
+                    className="mt-0.5 h-4 w-4 text-[color:var(--accent)]"
+                    aria-hidden="true"
+                  />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Link>
+      </Reveal>
     </li>
   );
 }
-
 
 const WHY_CSTL = [
   {
@@ -399,7 +440,6 @@ const WHY_CSTL = [
   },
 ] as const;
 
-
 export default function CompaniesPage() {
   return (
     <main aria-labelledby="companies-title" role="main">
@@ -418,50 +458,63 @@ export default function CompaniesPage() {
         <div className="absolute inset-0 cstl-grid opacity-25" aria-hidden="true" />
 
         <div className="relative cstl-container py-16 sm:py-20">
-          <nav aria-label="Breadcrumb" className="mb-6">
-            <ol className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground" role="list">
-              <li role="listitem">
-                <Link
-                  href="/"
-                  className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
-                >
-                  Home
+          <Reveal variant="fade" duration={0.3} y={6}>
+            <nav aria-label="Breadcrumb" className="mb-6">
+              <ol
+                className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground"
+                role="list"
+              >
+                <li role="listitem">
+                  <Link
+                    href="/"
+                    className="rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:text-foreground"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true" role="listitem">
+                  /
+                </li>
+                <li aria-current="page" className="text-foreground/80" role="listitem">
+                  Companies
+                </li>
+              </ol>
+            </nav>
+          </Reveal>
+
+          <Reveal delay={0.06} y={10} duration={0.5}>
+            <SectionHeading
+              kicker="Our Companies"
+              title="The operating companies within the Coast Group—built to execute, scale, and endure."
+              description="Coast System & Technologies Limited (CSTL) provides group-level governance, structure, and shared services across the Coast operating companies—so each company can move faster while staying aligned."
+            />
+          </Reveal>
+
+          <Reveal delay={0.12} y={10} duration={0.5}>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3" aria-describedby="companies-lead">
+              <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+                <Link href="/start">
+                  Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                 </Link>
-              </li>
-              <li aria-hidden="true" role="listitem">/</li>
-              <li aria-current="page" className="text-foreground/80" role="listitem">
-                Companies
-              </li>
-            </ol>
-          </nav>
+              </Button>
 
-          <SectionHeading
-            kicker="Our Companies"
-            title="The operating companies within the Coast Group—built to execute, scale, and endure."
-            description="Coast System & Technologies Limited (CSTL) provides group-level governance, structure, and shared services across the Coast operating companies—so each company can move faster while staying aligned."
-          />
+              <Button asChild variant="outline">
+                <Link href="/contact">Contact CSTL</Link>
+              </Button>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3" aria-describedby="companies-lead">
-            <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-              <Link href="/start">
-                Start a Project <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-              </Link>
-            </Button>
-
-            <Button asChild variant="outline">
-              <Link href="/contact">Contact CSTL</Link>
-            </Button>
-
-            <div
-              className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur"
-              aria-label={`Company registration number: ${SITE.trust.rc}`}
-            >
-              <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
-              <span>RC: {SITE.trust.rc}</span>
+              <div
+                className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur"
+                aria-label={`Company registration number: ${SITE.trust.rc}`}
+              >
+                <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" aria-hidden="true" />
+                <span>RC: {SITE.trust.rc}</span>
+              </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
+          <Reveal delay={0.16} variant="fade" duration={0.28}>
+            <div className="mt-10 h-px w-full cstl-seal-line opacity-70" aria-hidden="true" />
+          </Reveal>
         </div>
       </section>
 
@@ -471,9 +524,14 @@ export default function CompaniesPage() {
           Company profiles
         </h2>
 
-        <ul id="companies-grid" className="grid gap-4 lg:grid-cols-3" aria-label="Coast Group companies" role="list">
-          {COMPANIES.map((c) => (
-            <CompanyCard key={c.id} {...c} />
+        <ul
+          id="companies-grid"
+          className="grid gap-4 lg:grid-cols-3"
+          aria-label="Coast Group companies"
+          role="list"
+        >
+          {COMPANIES.map((c, idx) => (
+            <CompanyCard key={c.id} {...c} index={idx} />
           ))}
         </ul>
       </section>
@@ -482,38 +540,48 @@ export default function CompaniesPage() {
       <section className="border-y border-border bg-card/40" aria-labelledby="cstl-role-title">
         <div className="cstl-container py-14 sm:py-16">
           <div className="max-w-2xl">
-            <p className="text-xs tracking-widest text-muted-foreground uppercase">
-              CSTL’s role in the group
-            </p>
-            <h2
-              id="cstl-role-title"
-              className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
-            >
-              Governance + shared services that keep the group aligned
-            </h2>
-            <p className="mt-3 text-muted-foreground leading-relaxed">
-              The operating companies execute in their domains. CSTL provides the
-              structure behind them—so standards stay consistent, compliance stays
-              traceable, and continuity is protected.
-            </p>
+            <Reveal variant="fade" duration={0.28} y={6}>
+              <p className="text-xs tracking-widest text-muted-foreground uppercase">
+                CSTL’s role in the group
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.04} y={10} duration={0.5}>
+              <h2
+                id="cstl-role-title"
+                className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
+              >
+                Governance + shared services that keep the group aligned
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.08} y={10} duration={0.5}>
+              <p className="mt-3 text-muted-foreground leading-relaxed">
+                The operating companies execute in their domains. CSTL provides the
+                structure behind them—so standards stay consistent, compliance stays
+                traceable, and continuity is protected.
+              </p>
+            </Reveal>
           </div>
 
           <div className="mt-10 grid gap-4 md:grid-cols-3" role="list" aria-label="CSTL operating model">
-            {WHY_CSTL.map((x) => (
-              <div key={x.title} className="rounded-2xl border border-border bg-card p-6" role="listitem">
-                <div
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background"
-                  aria-hidden="true"
-                >
-                  <Building2 className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
+            {WHY_CSTL.map((x, idx) => (
+              <RevealItem key={x.title} delay={0.06 + idx * 0.08} y={10} duration={0.5}>
+                <div className="rounded-2xl border border-border bg-card p-6" role="listitem">
+                  <div
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background"
+                    aria-hidden="true"
+                  >
+                    <Building2 className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-4 font-heading text-lg text-[color:var(--primary)]">
+                    {x.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    {x.description}
+                  </p>
                 </div>
-                <h3 className="mt-4 font-heading text-lg text-[color:var(--primary)]">
-                  {x.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {x.description}
-                </p>
-              </div>
+              </RevealItem>
             ))}
           </div>
         </div>
@@ -521,42 +589,46 @@ export default function CompaniesPage() {
 
       {/* CTA */}
       <section className="cstl-container py-14 sm:py-16" aria-labelledby="companies-cta-title">
-        <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-            <div className="max-w-2xl">
-              <p className="text-xs tracking-widest text-muted-foreground uppercase">
-                Start here
-              </p>
-              <h2
-                id="companies-cta-title"
-                className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
-              >
-                Tell us what you’re building—and we’ll route it to the right team.
-              </h2>
-              <p className="mt-3 text-muted-foreground leading-relaxed">
-                If your work spans multiple domains, CSTL coordinates delivery and keeps governance clean.
-              </p>
+        <Reveal y={10} duration={0.55}>
+          <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+              <div className="max-w-2xl">
+                <p className="text-xs tracking-widest text-muted-foreground uppercase">
+                  Start here
+                </p>
+                <h2
+                  id="companies-cta-title"
+                  className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
+                >
+                  Tell us what you’re building—and we’ll route it to the right team.
+                </h2>
+                <p className="mt-3 text-muted-foreground leading-relaxed">
+                  If your work spans multiple domains, CSTL coordinates delivery and keeps governance clean.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+                  <Link href="/start">Start a Project</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/contact">Contact CSTL</Link>
+                </Button>
+              </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-                <Link href="/start">Start a Project</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/contact">Contact CSTL</Link>
-              </Button>
-            </div>
+            <Separator className="my-8" aria-hidden="true" />
+
+            <p className="text-xs text-muted-foreground">{SITE.signature}</p>
           </div>
-
-          <Separator className="my-8" aria-hidden="true" />
-
-          <p className="text-xs text-muted-foreground">{SITE.signature}</p>
-        </div>
+        </Reveal>
       </section>
 
       {/* DISCLAIMER */}
       <footer className="cstl-container py-10" role="contentinfo" aria-label="Legal and informational notice">
-        <MicroDisclaimer />
+        <Reveal variant="fade" duration={0.25}>
+          <MicroDisclaimer />
+        </Reveal>
       </footer>
     </main>
   );

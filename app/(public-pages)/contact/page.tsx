@@ -15,14 +15,10 @@ import { ContactForm } from "@/components/forms/contact-form";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+
+import Reveal, { RevealItem } from "@/components/motion/reveal";
 
 const whatsappLink = `https://wa.me/${SITE.contact.phoneTel.replace(/\D/g, "")}`;
 
@@ -93,12 +89,7 @@ const jsonLd = [
     "@id": `${BASE_URL}/contact/#breadcrumbs`,
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${BASE_URL}/` },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Contact",
-        item: `${BASE_URL}/contact`,
-      },
+      { "@type": "ListItem", position: 2, name: "Contact", item: `${BASE_URL}/contact` },
     ],
   },
 ];
@@ -121,59 +112,68 @@ export default function ContactPage() {
         <div className="mx-auto max-w-6xl px-4 py-14 sm:py-16">
           <div className="flex flex-col gap-6">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge
-                variant="secondary"
-                className="border border-border/60 bg-background/60"
-              >
-                Nigeria-based
-              </Badge>
-              <Badge
-                variant="secondary"
-                className="border border-border/60 bg-background/60"
-              >
-                Corporate & Technology Consultancy
-              </Badge>
-              <Badge
-                variant="secondary"
-                className="border border-border/60 bg-background/60"
-              >
-                CAC Registered (RC {SITE.trust.rc})
-              </Badge>
+              {[
+                "Nigeria-based",
+                "Corporate & Technology Consultancy",
+                `CAC Registered (RC ${SITE.trust.rc})`,
+              ].map((label, idx) => (
+                <RevealItem
+                  key={label}
+                  delay={0.02 + idx * 0.05}
+                  y={6}
+                  duration={0.35}
+                >
+                  <Badge
+                    variant="secondary"
+                    className="border border-border/60 bg-background/60"
+                  >
+                    {label}
+                  </Badge>
+                </RevealItem>
+              ))}
             </div>
 
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Let’s build the structure your organisation needs.
-            </h1>
+            <Reveal variant="fade" duration={0.32} y={6}>
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                Let’s build the structure your organisation needs.
+              </h1>
+            </Reveal>
 
-            <p className="max-w-2xl text-base text-muted-foreground">
-              Use this page to reach CSTL for enquiries, proposals, and advisory
-              engagements. If you already know what you want, start with Start a
-              Project or Request a Quote.
-            </p>
+            <Reveal delay={0.06} y={8} duration={0.45}>
+              <p className="max-w-2xl text-base text-muted-foreground">
+                Use this page to reach CSTL for enquiries, proposals, and advisory
+                engagements. If you already know what you want, start with Start a
+                Project or Request a Quote.
+              </p>
+            </Reveal>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button asChild className="gap-2">
-                <Link href="/start">
-                  Start a Project <ArrowRight className="h-4 w-4" />
+            <Reveal delay={0.1} y={8} duration={0.45}>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Button asChild className="gap-2">
+                  <Link href="/start">
+                    Start a Project <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+
+                <Button asChild variant="secondary">
+                  <Link href="/start">Request a Quote</Link>
+                </Button>
+
+                <Link
+                  href="/start"
+                  className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                >
+                  Book a Strategy Call
                 </Link>
-              </Button>
+              </div>
+            </Reveal>
 
-              <Button asChild variant="secondary">
-                <Link href="/start">Request a Quote</Link>
-              </Button>
-
-              <Link
-                href="/start"
-                className="text-sm text-muted-foreground underline underline-offset-4 hover:text-foreground"
-              >
-                Book a Strategy Call
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <ShieldCheck className="h-4 w-4 text-[color:var(--cstl-gold,#C9A227)]" />
-              <span>{SITE.signature}</span>
-            </div>
+            <Reveal delay={0.14} variant="fade" duration={0.28}>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <ShieldCheck className="h-4 w-4 text-[color:var(--cstl-gold,#C9A227)]" />
+                <span>{SITE.signature}</span>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -181,128 +181,166 @@ export default function ContactPage() {
       {/* Contact options */}
       <section className="mx-auto max-w-6xl px-4 py-10">
         <div className="grid gap-4 md:grid-cols-3">
-          <Card className="border-border/70">
-            <CardHeader>
-              <CardTitle>Start a Project (Recommended)</CardTitle>
-              <CardDescription>
-                Send a brief and we’ll respond with the right engagement path and
-                next steps.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild className="w-full">
-                <Link href="/start">Start a Project</Link>
-              </Button>
-            </CardContent>
-          </Card>
+          {[
+            {
+              title: "Start a Project (Recommended)",
+              desc:
+                "Send a brief and we’ll respond with the right engagement path and next steps.",
+              btnVariant: "default" as const,
+              btnLabel: "Start a Project",
+              href: "/start",
+              extra: null,
+            },
+            {
+              title: "Request a Quote",
+              desc: "For organisations ready for scope + pricing based on their needs.",
+              btnVariant: "secondary" as const,
+              btnLabel: "Request a Quote",
+              href: "/start",
+              extra: null,
+            },
+            {
+              title: "Call / WhatsApp",
+              desc: "For quick coordination and scheduling.",
+              btnVariant: "secondary" as const,
+              btnLabel: "",
+              href: "",
+              extra: "call-whatsapp",
+            },
+          ].map((c, idx) => (
+            <Reveal key={c.title} delay={0.04 + idx * 0.08} y={10} duration={0.5}>
+              <Card className="border-border/70">
+                <CardHeader>
+                  <CardTitle>{c.title}</CardTitle>
+                  <CardDescription>{c.desc}</CardDescription>
+                </CardHeader>
 
-          <Card className="border-border/70">
-            <CardHeader>
-              <CardTitle>Request a Quote</CardTitle>
-              <CardDescription>
-                For organisations ready for scope + pricing based on their needs.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button asChild variant="secondary" className="w-full">
-                <Link href="/start">Request a Quote</Link>
-              </Button>
-            </CardContent>
-          </Card>
+                <CardContent className={c.extra ? "space-y-2" : undefined}>
+                  {!c.extra ? (
+                    <Button
+                      asChild
+                      variant={c.btnVariant}
+                      className="w-full"
+                    >
+                      <Link href={c.href}>{c.btnLabel}</Link>
+                    </Button>
+                  ) : (
+                    <>
+                      <Button asChild variant="secondary" className="w-full gap-2">
+                        <a href={`tel:${SITE.contact.phoneTel}`}>
+                          <Phone className="h-4 w-4" />
+                          Call {SITE.contact.phoneDisplay}
+                        </a>
+                      </Button>
 
-          <Card className="border-border/70">
-            <CardHeader>
-              <CardTitle>Call / WhatsApp</CardTitle>
-              <CardDescription>
-                For quick coordination and scheduling.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Button asChild variant="secondary" className="w-full gap-2">
-                <a href={`tel:${SITE.contact.phoneTel}`}>
-                  <Phone className="h-4 w-4" />
-                  Call {SITE.contact.phoneDisplay}
-                </a>
-              </Button>
-
-              <Button asChild className="w-full gap-2">
-                <a href={whatsappLink} target="_blank" rel="noreferrer">
-                  <MessageCircle className="h-4 w-4" />
-                  WhatsApp
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
+                      <Button asChild className="w-full gap-2">
+                        <a href={whatsappLink} target="_blank" rel="noreferrer">
+                          <MessageCircle className="h-4 w-4" />
+                          WhatsApp
+                        </a>
+                      </Button>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </Reveal>
+          ))}
         </div>
       </section>
 
       {/* Form + direct contact */}
       <section className="mx-auto max-w-6xl px-4 pb-16">
         <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
-          <ContactForm />
+          <Reveal y={10} duration={0.5}>
+            <ContactForm />
+          </Reveal>
 
           <div className="space-y-6">
-            <Card className="border-border/70 bg-card/70">
-              <CardContent className="p-6">
-                <h3 className="text-sm font-semibold tracking-tight">
-                  Executive Office
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  For executive and strategic conversations:
-                </p>
+            <Reveal delay={0.06} y={10} duration={0.5}>
+              <Card className="border-border/70 bg-card/70">
+                <CardContent className="p-6">
+                  <RevealItem y={6} duration={0.35}>
+                    <h3 className="text-sm font-semibold tracking-tight">
+                      Executive Office
+                    </h3>
+                  </RevealItem>
 
-                <div className="mt-4 space-y-3 text-sm">
-                  <a
-                    className="flex items-center gap-2 underline underline-offset-4 hover:text-foreground"
-                    href={`mailto:${SITE.contact.email}`}
-                  >
-                    <Mail className="h-4 w-4" /> {SITE.contact.email}
-                  </a>
+                  <RevealItem delay={0.04} y={8} duration={0.4}>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      For executive and strategic conversations:
+                    </p>
+                  </RevealItem>
 
-                  <a
-                    className="flex items-center gap-2 underline underline-offset-4 hover:text-foreground"
-                    href={`tel:${SITE.contact.phoneTel}`}
-                  >
-                    <Phone className="h-4 w-4" /> {SITE.contact.phoneDisplay}
-                  </a>
+                  <div className="mt-4 space-y-3 text-sm">
+                    <RevealItem delay={0.06} y={8} duration={0.4}>
+                      <a
+                        className="flex items-center gap-2 underline underline-offset-4 hover:text-foreground"
+                        href={`mailto:${SITE.contact.email}`}
+                      >
+                        <Mail className="h-4 w-4" /> {SITE.contact.email}
+                      </a>
+                    </RevealItem>
 
-                  <a
-                    className="flex items-center gap-2 underline underline-offset-4 hover:text-foreground"
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <MessageCircle className="h-4 w-4" /> WhatsApp
-                  </a>
-                </div>
+                    <RevealItem delay={0.1} y={8} duration={0.4}>
+                      <a
+                        className="flex items-center gap-2 underline underline-offset-4 hover:text-foreground"
+                        href={`tel:${SITE.contact.phoneTel}`}
+                      >
+                        <Phone className="h-4 w-4" /> {SITE.contact.phoneDisplay}
+                      </a>
+                    </RevealItem>
 
-                <Separator className="my-5" />
+                    <RevealItem delay={0.14} y={8} duration={0.4}>
+                      <a
+                        className="flex items-center gap-2 underline underline-offset-4 hover:text-foreground"
+                        href={whatsappLink}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <MessageCircle className="h-4 w-4" /> WhatsApp
+                      </a>
+                    </RevealItem>
+                  </div>
 
-                <h3 className="text-sm font-semibold tracking-tight">Social</h3>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Keep it simple. One clean link.
-                </p>
+                  <Reveal delay={0.12} variant="fade" duration={0.28}>
+                    <Separator className="my-5" />
+                  </Reveal>
 
-                <div className="mt-4">
-                  <Button asChild variant="secondary" className="w-full gap-2">
-                    <a
-                      href={SITE.socials.facebook}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Facebook className="h-4 w-4" />
-                      Facebook
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  <RevealItem y={6} duration={0.35}>
+                    <h3 className="text-sm font-semibold tracking-tight">Social</h3>
+                  </RevealItem>
 
-            <p className="text-xs text-muted-foreground">
-              We provide advisory, systems, and filing coordination services.
-              Where legal representation is required, clients may engage licensed
-              counsel.
-            </p>
+                  <RevealItem delay={0.04} y={8} duration={0.4}>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Keep it simple. One clean link.
+                    </p>
+                  </RevealItem>
+
+                  <RevealItem delay={0.08} y={10} duration={0.45}>
+                    <div className="mt-4">
+                      <Button asChild variant="secondary" className="w-full gap-2">
+                        <a
+                          href={SITE.socials.facebook}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <Facebook className="h-4 w-4" />
+                          Facebook
+                        </a>
+                      </Button>
+                    </div>
+                  </RevealItem>
+                </CardContent>
+              </Card>
+            </Reveal>
+
+            <Reveal delay={0.12} variant="fade" duration={0.28} y={6}>
+              <p className="text-xs text-muted-foreground">
+                We provide advisory, systems, and filing coordination services.
+                Where legal representation is required, clients may engage licensed
+                counsel.
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>

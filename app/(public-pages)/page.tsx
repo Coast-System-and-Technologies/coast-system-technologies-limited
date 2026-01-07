@@ -323,8 +323,7 @@ export default function HomePage() {
 
       {/* PILLARS */}
       <section aria-labelledby="pillars-title" className="cstl-container py-16 sm:py-20">
-        {/* Optional: animate the heading as one block */}
-        <Reveal variant="fade" duration={0.4}>
+        <Reveal variant="fade" duration={0.32}>
           <SectionHeading
             id="pillars-title"
             kicker="What we do"
@@ -336,15 +335,8 @@ export default function HomePage() {
         <ul role="list" className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {PILLARS.map((p, idx) => {
             const Icon = p.icon;
-
             return (
-              <RevealItem
-                key={p.href}
-                // premium stagger: small, controlled
-                delay={0.06 + idx * 0.08}
-                y={8}
-                duration={0.45}
-              >
+              <RevealItem key={p.href} delay={0.04 + idx * 0.06} y={10} duration={0.45}>
                 <Link
                   href={p.href}
                   className="group block rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -359,20 +351,15 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <h3 className="mt-4 font-heading text-xl text-[color:var(--primary)]">
-                    {p.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {p.description}
-                  </p>
+                  <h3 className="mt-4 font-heading text-xl text-[color:var(--primary)]">{p.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
                 </Link>
               </RevealItem>
             );
           })}
         </ul>
 
-        {/* Optional: animate CTAs as one block */}
-        <Reveal delay={0.08} y={6} duration={0.4}>
+        <Reveal delay={0.06} y={6} variant="fade-up" duration={0.4}>
           <div className="mt-10 flex flex-col sm:flex-row gap-3">
             <Button asChild variant="cta">
               <Link href="/start">Start a Project</Link>
@@ -385,11 +372,11 @@ export default function HomePage() {
       </section>
 
 
+
       {/* COMPANIES */}
       <section aria-labelledby="companies-title" className="border-y border-border bg-card/40">
         <div className="cstl-container py-16 sm:py-20">
-          {/* Optional: animate the heading as one block */}
-          <Reveal variant="fade" duration={0.4}>
+          <Reveal variant="fade" duration={0.32}>
             <SectionHeading
               id="companies-title"
               kicker="Coast Group"
@@ -400,12 +387,7 @@ export default function HomePage() {
 
           <ul role="list" className="mt-10 grid gap-4 lg:grid-cols-3">
             {COMPANIES.map((c, idx) => (
-              <RevealItem
-                key={c.href}
-                delay={0.06 + idx * 0.08}
-                y={8}
-                duration={0.45}
-              >
+              <RevealItem key={c.href} delay={0.04 + idx * 0.07} y={10} duration={0.45}>
                 <Link
                   href={c.href}
                   className="block rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -422,8 +404,7 @@ export default function HomePage() {
             ))}
           </ul>
 
-          {/* Optional: animate the CTA button block */}
-          <Reveal delay={0.08} y={6} duration={0.4}>
+          <Reveal delay={0.06} variant="fade-up" y={6} duration={0.4}>
             <div className="mt-10">
               <Button asChild variant="outline">
                 <Link href="/companies">View All Companies</Link>
@@ -434,9 +415,10 @@ export default function HomePage() {
       </section>
 
 
+
       {/* HOW WE WORK */}
       <section aria-labelledby="workflow-title" className="cstl-container py-16 sm:py-20">
-        <Reveal variant="fade" duration={0.4}>
+        <Reveal variant="fade" duration={0.32}>
           <SectionHeading
             id="workflow-title"
             kicker="Operating rhythm"
@@ -449,31 +431,22 @@ export default function HomePage() {
           {STEPS.map((s, idx) => (
             <RevealItem
               key={s.title}
-              delay={0.06 + idx * 0.08}
-              y={8}
+              delay={0.05 + idx * 0.08}
+              y={10}
               duration={0.45}
               className="rounded-2xl border border-border bg-card p-6"
             >
               <div className="flex items-center justify-between">
-                <p className="text-xs tracking-widest text-muted-foreground uppercase">
-                  Step {idx + 1}
-                </p>
-                <span
-                  className="h-2 w-2 rounded-full bg-[color:var(--accent)]"
-                  aria-hidden="true"
-                />
+                <p className="text-xs tracking-widest text-muted-foreground uppercase">Step {idx + 1}</p>
+                <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" aria-hidden="true" />
               </div>
-
-              <h3 className="mt-3 font-heading text-lg text-[color:var(--primary)]">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                {s.description}
-              </p>
+              <h3 className="mt-3 font-heading text-lg text-[color:var(--primary)]">{s.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.description}</p>
             </RevealItem>
           ))}
         </ol>
       </section>
+
 
 
       {/* FINAL CTA */}
@@ -482,62 +455,40 @@ export default function HomePage() {
         <div className="absolute inset-0 cstl-grid opacity-25" />
 
         <div className="relative cstl-container py-16 sm:py-20">
-          {/* Card reveal */}
-          <Reveal y={10} duration={0.5} variant="fadeBlur">
+          <Reveal y={10} duration={0.5}>
             <div className="rounded-3xl border border-border bg-card/70 backdrop-blur p-8 sm:p-10">
               <div className="max-w-2xl">
-                {/* Optional: stagger inside (more premium) */}
-                <Reveal variant="fade" duration={0.35}>
-                  <p className="text-xs tracking-widest text-muted-foreground uppercase">
-                    Ready when you are
-                  </p>
-                </Reveal>
+                <p className="text-xs tracking-widest text-muted-foreground uppercase">Ready when you are</p>
+                <h2 id="cta-title" className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+                  Bring the vision. We’ll bring the structure.
+                </h2>
+                <p className="mt-3 text-muted-foreground leading-relaxed">
+                  If you’re building something serious—systems, governance, or filings—start with a clean intake so we can deliver with discipline from day one.
+                </p>
 
-                <Reveal delay={0.06} y={8} duration={0.45}>
-                  <h2
-                    id="cta-title"
-                    className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]"
-                  >
-                    Bring the vision. We’ll bring the structure.
-                  </h2>
-                </Reveal>
-
-                <Reveal delay={0.12} y={8} duration={0.45}>
-                  <p className="mt-3 text-muted-foreground leading-relaxed">
-                    If you’re building something serious—systems, governance, or filings—start with a
-                    clean intake so we can deliver with discipline from day one.
-                  </p>
-                </Reveal>
-
-                <Reveal delay={0.18} y={6} duration={0.4}>
-                  <div className="mt-7 flex flex-col sm:flex-row gap-3">
-                    <Button asChild variant="cta">
-                      <Link href="/start">Start a Project</Link>
-                    </Button>
-
-                    <Button asChild variant="outline">
-                      <Link href="/contact">Talk to Us</Link>
-                    </Button>
-                  </div>
-                </Reveal>
+                <div className="mt-7 flex flex-col sm:flex-row gap-3">
+                  <Button asChild variant="cta">
+                    <Link href="/start">Start a Project</Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/contact">Talk to Us</Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </Reveal>
 
-          {/* Signature line reveal */}
-          <Reveal delay={0.22} variant="fade" duration={0.35}>
+          <Reveal delay={0.08} variant="fade" duration={0.32}>
             <p className="mt-6 text-xs text-muted-foreground">{SITE.signature}</p>
           </Reveal>
         </div>
       </section>
 
-
       {/* Disclaimer */}
-      <div className="cstl-container py-10">
-        <Reveal variant="fade" duration={0.5} y={6}>
-          <MicroDisclaimer />
-        </Reveal>
-      </div>
+      <Reveal as="div" className="cstl-container py-10" variant="fade" duration={0.32}>
+        <MicroDisclaimer />
+      </Reveal>
+
 
 
     </main>

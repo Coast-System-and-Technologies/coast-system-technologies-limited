@@ -1,9 +1,12 @@
 // app/insights/faqs/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
+
 import JsonLd from "@/components/insights/JsonLd";
 import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
 import FaqSearch, { type FaqGroup } from "@/components/insights/FaqSearch.client";
+import Reveal from "@/components/motion/reveal";
+
 import { BASE_URL } from "@/lib/site-url";
 
 const PAGE_URL = `${BASE_URL}/insights/faqs`;
@@ -186,54 +189,74 @@ export default function FaqsPage() {
       <JsonLd data={jsonLd} />
 
       <header className="space-y-4">
-        <h1 className="text-4xl font-semibold tracking-tight text-gray-900">FAQs</h1>
-        <p className="max-w-3xl text-base leading-relaxed text-gray-700">
-          Clear answers to common questions on governance, compliance systems, privacy (Nigeria),
-          trademark/IP (NIPO), and CAC registry execution.
-        </p>
+        <Reveal variant="liftScale" duration={0.4} y={10}>
+          <h1 className="text-4xl font-semibold tracking-tight text-gray-900">FAQs</h1>
+        </Reveal>
 
-        <div className="flex flex-wrap gap-3">
-          <Link
-            href="/start"
-            className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white"
-          >
-            Start a Project
-          </Link>
-          <Link
-            href="/contact"
-            className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 hover:border-gray-900"
-          >
-            Contact CSTL
-          </Link>
-        </div>
+        <Reveal delay={0.05} variant="lift" duration={0.35} y={10}>
+          <p className="max-w-3xl text-base leading-relaxed text-gray-700">
+            Clear answers to common questions on governance, compliance systems, privacy (Nigeria),
+            trademark/IP (NIPO), and CAC registry execution.
+          </p>
+        </Reveal>
 
-        <p className="text-xs text-gray-500">Direct • Practical • Built for decision-making</p>
+        <Reveal delay={0.08} variant="fade" duration={0.25} y={0}>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/start"
+              className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-90"
+            >
+              Start a Project
+            </Link>
+            <Link
+              href="/contact"
+              className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 transition-colors duration-200 hover:border-gray-900"
+            >
+              Contact CSTL
+            </Link>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1} variant="fade" duration={0.25} y={0}>
+          <p className="text-xs text-gray-500">Direct • Practical • Built for decision-making</p>
+        </Reveal>
       </header>
 
-      <FaqSearch groups={groups} />
-
-      <section className="mt-14 rounded-2xl bg-gray-50 p-8">
-        <h2 className="text-xl font-semibold text-gray-900">Not sure which pillar applies?</h2>
-        <p className="mt-2 text-sm text-gray-700">
-          Send a short brief. We’ll route you to the right service and respond with next steps.
-        </p>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <Link
-            href="/start"
-            className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white"
-          >
-            Start a Project
-          </Link>
-          <Link
-            href="/start?intent=quote"
-            className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 hover:border-gray-900"
-          >
-            Request a Quote
-          </Link>
+      {/* IMPORTANT: animate container only so we don't interfere with FaqSearch internal layout */}
+      <Reveal delay={0.06} variant="lift" duration={0.4} y={12}>
+        <div className="mt-8">
+          <FaqSearch groups={groups} />
         </div>
-      </section>
+      </Reveal>
 
-      <MicroDisclaimer />
+      <Reveal delay={0.08} variant="liftScale" duration={0.45} y={12}>
+        <section className="mt-14 rounded-2xl bg-gray-50 p-8">
+          <h2 className="text-xl font-semibold text-gray-900">Not sure which pillar applies?</h2>
+          <p className="mt-2 text-sm text-gray-700">
+            Send a short brief. We’ll route you to the right service and respond with next steps.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link
+              href="/start"
+              className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-90"
+            >
+              Start a Project
+            </Link>
+            <Link
+              href="/start?intent=quote"
+              className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 transition-colors duration-200 hover:border-gray-900"
+            >
+              Request a Quote
+            </Link>
+          </div>
+        </section>
+      </Reveal>
+
+      <Reveal delay={0.1} variant="fade" duration={0.25} y={0}>
+        <div className="mt-10">
+          <MicroDisclaimer />
+        </div>
+      </Reveal>
     </main>
   );
 }

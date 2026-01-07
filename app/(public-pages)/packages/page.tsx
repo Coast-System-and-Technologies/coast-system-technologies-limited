@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SITE } from "@/content/site";
 
+import Reveal, { RevealItem } from "@/components/motion/reveal";
+
 export const metadata: Metadata = {
   title: "Packages",
   description:
@@ -153,12 +155,19 @@ function PackageCardView(p: PackageCard) {
       <div className="mt-5 text-xs tracking-widest text-muted-foreground uppercase">
         Includes
       </div>
+
       <ul className="mt-3 space-y-2">
-        {p.includes.map((x) => (
-          <li key={x} className="flex gap-2 text-sm text-muted-foreground">
+        {p.includes.map((x, idx) => (
+          <RevealItem
+            key={x}
+            delay={0.06 + idx * 0.05}
+            y={8}
+            duration={0.4}
+            className="flex gap-2 text-sm text-muted-foreground"
+          >
             <CheckCircle2 className="mt-0.5 h-4 w-4 text-[color:var(--accent)]" />
             <span>{x}</span>
-          </li>
+          </RevealItem>
         ))}
       </ul>
 
@@ -185,91 +194,103 @@ export default function PackagesPage() {
         <div className="absolute inset-0 cstl-grid opacity-25" />
 
         <div className="relative cstl-container py-16 sm:py-20">
-          <SectionHeading
-            kicker="Packages"
-            title="Choose a structured engagement."
-            description="CSTL packages are designed for clarity, disciplined execution, and continuity—so you get order, strategy, and legacy in practice."
-          />
+          <Reveal variant="fade" duration={0.32} y={6}>
+            <SectionHeading
+              kicker="Packages"
+              title="Choose a structured engagement."
+              description="CSTL packages are designed for clarity, disciplined execution, and continuity—so you get order, strategy, and legacy in practice."
+            />
+          </Reveal>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <Button
-              asChild
-              className="bg-[color:var(--primary)] text-white hover:opacity-90"
-            >
-              <Link href="/start">
-                Start a Project <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+          <Reveal delay={0.06} y={8} duration={0.45}>
+            <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              <Button
+                asChild
+                className="bg-[color:var(--primary)] text-white hover:opacity-90"
+              >
+                <Link href="/start">
+                  Start a Project <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
 
-            <Button asChild variant="outline">
-              <Link href="/contact">Contact CSTL</Link>
-            </Button>
+              <Button asChild variant="outline">
+                <Link href="/contact">Contact CSTL</Link>
+              </Button>
 
-            <div className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
-              <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" />
-              {SITE.signature}
+              <div className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
+                <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" />
+                {SITE.signature}
+              </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="mt-10 h-px w-full cstl-seal-line opacity-70" />
+          <Reveal delay={0.1} variant="fade" duration={0.28}>
+            <div className="mt-10 h-px w-full cstl-seal-line opacity-70" />
+          </Reveal>
         </div>
       </section>
 
       {/* PACKAGES */}
       <section className="cstl-container py-14 sm:py-16">
         <div className="grid gap-4 lg:grid-cols-3">
-          {PACKAGES.map((p) => (
-            <PackageCardView key={p.name} {...p} />
+          {PACKAGES.map((p, idx) => (
+            <Reveal key={p.name} delay={0.05 + idx * 0.08} y={10} duration={0.5}>
+              <PackageCardView {...p} />
+            </Reveal>
           ))}
         </div>
 
-        <div className="mt-10 rounded-2xl border border-border bg-card p-6">
-          <div className="text-xs tracking-widest text-muted-foreground uppercase">
-            Note
+        <Reveal delay={0.08} y={10} duration={0.45}>
+          <div className="mt-10 rounded-2xl border border-border bg-card p-6">
+            <div className="text-xs tracking-widest text-muted-foreground uppercase">
+              Note
+            </div>
+            <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              Pricing can vary based on scope, number of entities, and urgency. Use the{" "}
+              <Link href="/start" className="underline underline-offset-4">
+                Start a Project
+              </Link>{" "}
+              intake so we can propose the cleanest path.
+            </p>
           </div>
-          <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-            Pricing can vary based on scope, number of entities, and urgency. Use the{" "}
-            <Link href="/start" className="underline underline-offset-4">
-              Start a Project
-            </Link>{" "}
-            intake so we can propose the cleanest path.
-          </p>
-        </div>
+        </Reveal>
       </section>
 
       {/* WHAT YOU GET */}
       <section className="border-y border-border bg-card/40">
         <div className="cstl-container py-14 sm:py-16">
-          <div className="max-w-2xl">
-            <div className="text-xs tracking-widest text-muted-foreground uppercase">
-              What you get
+          <Reveal variant="fade" duration={0.32} y={6}>
+            <div className="max-w-2xl">
+              <div className="text-xs tracking-widest text-muted-foreground uppercase">
+                What you get
+              </div>
+              <h2 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+                {SITE.signature} — delivered as systems
+              </h2>
+              <p className="mt-3 text-muted-foreground leading-relaxed">
+                Every engagement is designed to produce artifacts your team can run on:
+                workflows, templates, registers, and a continuity plan.
+              </p>
             </div>
-            <h2 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
-              {SITE.signature} — delivered as systems
-            </h2>
-            <p className="mt-3 text-muted-foreground leading-relaxed">
-              Every engagement is designed to produce artifacts your team can run on: workflows, templates, registers, and a continuity plan.
-            </p>
-          </div>
+          </Reveal>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {WHAT_YOU_GET.map((x) => {
+            {WHAT_YOU_GET.map((x, idx) => {
               const Icon = x.icon;
               return (
-                <div
-                  key={x.title}
-                  className="rounded-2xl border border-border bg-card p-6"
-                >
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
-                    <Icon className="h-5 w-5 text-[color:var(--primary)]" />
+                <Reveal key={x.title} delay={0.05 + idx * 0.08} y={10} duration={0.5}>
+                  <div className="rounded-2xl border border-border bg-card p-6">
+                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
+                      <Icon className="h-5 w-5 text-[color:var(--primary)]" />
+                    </div>
+                    <div className="mt-4 font-heading text-xl text-[color:var(--primary)]">
+                      {x.title}
+                    </div>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                      {x.description}
+                    </p>
                   </div>
-                  <div className="mt-4 font-heading text-xl text-[color:var(--primary)]">
-                    {x.title}
-                  </div>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {x.description}
-                  </p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
@@ -278,37 +299,45 @@ export default function PackagesPage() {
 
       {/* CTA */}
       <section className="cstl-container py-14 sm:py-16">
-        <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
-            <div className="max-w-2xl">
-              <div className="text-xs tracking-widest text-muted-foreground uppercase">
-                Next step
+        <Reveal y={12} duration={0.55}>
+          <div className="rounded-3xl border border-border bg-card p-8 sm:p-10">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+              <div className="max-w-2xl">
+                <div className="text-xs tracking-widest text-muted-foreground uppercase">
+                  Next step
+                </div>
+                <h3 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+                  Start with the intake—get a structured proposal.
+                </h3>
+                <p className="mt-3 text-muted-foreground leading-relaxed">
+                  Tell us what you need. We’ll respond with a clean scope and the best package path.
+                </p>
               </div>
-              <h3 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
-                Start with the intake—get a structured proposal.
-              </h3>
-              <p className="mt-3 text-muted-foreground leading-relaxed">
-                Tell us what you need. We’ll respond with a clean scope and the best package path.
-              </p>
+
+              <Reveal delay={0.06} y={8} duration={0.45}>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button
+                    asChild
+                    className="bg-[color:var(--primary)] text-white hover:opacity-90"
+                  >
+                    <Link href="/start">Start a Project</Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/contact">Contact CSTL</Link>
+                  </Button>
+                </div>
+              </Reveal>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button
-                asChild
-                className="bg-[color:var(--primary)] text-white hover:opacity-90"
-              >
-                <Link href="/start">Start a Project</Link>
-              </Button>
-              <Button asChild variant="outline">
-                <Link href="/contact">Contact CSTL</Link>
-              </Button>
-            </div>
+            <Reveal delay={0.08} variant="fade" duration={0.28}>
+              <Separator className="my-8" />
+            </Reveal>
+
+            <Reveal delay={0.12} variant="fade" duration={0.28}>
+              <div className="text-xs text-muted-foreground">{SITE.signature}</div>
+            </Reveal>
           </div>
-
-          <Separator className="my-8" />
-
-          <div className="text-xs text-muted-foreground">{SITE.signature}</div>
-        </div>
+        </Reveal>
       </section>
     </main>
   );
