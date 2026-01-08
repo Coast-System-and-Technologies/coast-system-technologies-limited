@@ -16,9 +16,11 @@ import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
 import { SITE } from "@/content/site";
 import { BASE_URL } from "@/lib/site-url";
 import Reveal, { RevealItem } from "@/components/motion/reveal";
+import Image from "next/image";
 
 const PAGE_URL = `${BASE_URL}/`;
 const OG_IMAGE = `${BASE_URL}/assets/og/home.webp`;
+const HERO_IMAGE = "/assets/hero/hero-panel.webp";
 
 export const metadata: Metadata = {
   title: "Home | Coast System and Technologies Limited (CSTL) — The Structure Behind Great Companies",
@@ -198,6 +200,20 @@ export default function HomePage() {
         <div className="absolute inset-0 cstl-hero-bg" />
         <div className="absolute inset-0 cstl-grid opacity-35" />
 
+        {/* Right-side background image panel (desktop only) */}
+        <div className="absolute right-0 top-0 hidden h-full w-[30%] overflow-hidden lg:block">
+          <div className="relative h-full w-full">
+            <Image
+              src={HERO_IMAGE}
+              alt=""
+              fill
+              className="object-cover"
+              priority
+              aria-hidden="true"
+            />
+          </div>
+        </div>
+
         <div className="relative cstl-container py-20 sm:py-24 md:py-28">
           {/* Signature pill */}
           <Reveal variant="fade" duration={0.35}>
@@ -265,12 +281,26 @@ export default function HomePage() {
                   Governance-led systems
                 </span>
               </div>
+
             </div>
 
-            <Reveal className="lg:col-span-5" delay={0.12}>
+            <Reveal className="lg:col-span-5 relative z-10" delay={0.12}>
               {/* Right panel: Executive card */}
               <aside className="lg:col-span-5" aria-label="CSTL operating focus">
-                <div className="rounded-2xl border border-border bg-card shadow-sm">
+                <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                  {/* Mobile/Tablet hero media inside the card */}
+                  <div className="relative aspect-[4/3] w-full lg:hidden">
+                    <Image
+                      src={HERO_IMAGE}
+                      alt=""
+                      fill
+                      className="object-cover"
+                      priority
+                      aria-hidden="true"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-transparent" />
+                  </div>
+
                   <div className="p-6">
                     <p className="text-xs tracking-widest text-muted-foreground uppercase">
                       Operating Focus
