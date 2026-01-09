@@ -91,16 +91,19 @@ const COMPANIES = [
     title: "Coast Research Technology",
     href: "/companies/coast-research-technology",
     subtitle: "Software engineering • Product delivery • Maintenance • Talent development",
+    logoSrc: "/assets/companies/crt-mark.svg",
   },
   {
     title: "CoastLink24",
     href: "/companies/coastlink24",
     subtitle: "Fintech infrastructure • Integrated lending systems • Financial analysis",
+    logoSrc: "/assets/companies/coastLink24-mark.svg",
   },
   {
     title: "Coast Infrastructure Systems",
     href: "/companies/coast-infrastructure-systems",
     subtitle: "Infrastructure systems • Power • Connectivity • Procurement",
+    logoSrc: "/assets/companies/coast-Infastructure-mark.svg",
   },
 ] as const;
 
@@ -422,15 +425,38 @@ export default function HomePage() {
               <RevealItem key={c.href} delay={0.04 + idx * 0.07} y={10} duration={0.45} className="h-full">
                 <Link
                   href={c.href}
-                  className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label={`View company profile: ${c.title}`}
                 >
-                  <div className="flex flex-1 flex-col">
+                  {/* Company logo watermark */}
+                  <div className="pointer-events-none absolute bottom-0 right-0 z-0">
+                    <div className="relative h-32 w-32 sm:h-40 sm:w-40 lg:h-48 lg:w-48">
+                      <Image
+                        src={c.logoSrc}
+                        alt=""
+                        fill
+                        className="object-contain opacity-[0.03] blur-[0.5px] transition-opacity duration-200 group-hover:opacity-[0.06]"
+                        aria-hidden="true"
+                        priority={false}
+                      />
+                      {/* Fade gradient overlay - stronger fade from top-left */}
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background:
+                            "radial-gradient(ellipse at top left, color-mix(in oklab, var(--card) 100%, transparent) 0%, color-mix(in oklab, var(--card) 60%, transparent) 40%, transparent 70%)",
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Content layer */}
+                  <div className="relative z-10 flex flex-1 flex-col">
                     <h3 className="font-heading text-xl text-[color:var(--primary)]">{c.title}</h3>
                     <p className="mt-2 text-sm text-muted-foreground">{c.subtitle}</p>
                   </div>
-                  <div className="mt-6 h-px w-full cstl-seal-line opacity-60" />
-                  <p className="mt-4 text-sm text-[color:var(--primary)] transition-colors duration-200 group-hover:text-[color:var(--accent)]">
+                  <div className="relative z-10 mt-6 h-px w-full cstl-seal-line opacity-60" />
+                  <p className="relative z-10 mt-4 text-sm text-[color:var(--primary)] transition-colors duration-200 group-hover:text-[color:var(--accent)]">
                     View profile <span aria-hidden="true">→</span>
                   </p>
                 </Link>
