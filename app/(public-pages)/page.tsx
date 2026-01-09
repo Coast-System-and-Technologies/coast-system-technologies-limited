@@ -366,23 +366,25 @@ export default function HomePage() {
           {PILLARS.map((p, idx) => {
             const Icon = p.icon;
             return (
-              <RevealItem key={p.href} delay={0.04 + idx * 0.06} y={10} duration={0.45}>
+              <RevealItem key={p.href} delay={0.04 + idx * 0.06} y={10} duration={0.45} className="h-full">
                 <Link
                   href={p.href}
-                  className="group block rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label={`Open service: ${p.title}`}
                 >
                   <div className="flex items-start justify-between gap-4">
-                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
-                      <Icon className="h-5 w-5 text-[color:var(--primary)]" aria-hidden="true" />
+                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background transition-colors duration-200 group-hover:border-[color:var(--accent)]/35">
+                      <Icon className="h-5 w-5 text-[color:var(--primary)] transition-colors duration-200 group-hover:text-[color:var(--accent)]" aria-hidden="true" />
                     </div>
-                    <span className="text-xs text-muted-foreground group-hover:text-[color:var(--accent)] transition">
+                    <span className="text-xs text-muted-foreground group-hover:text-[color:var(--accent)] transition-colors duration-200">
                       View <span aria-hidden="true">→</span>
                     </span>
                   </div>
 
-                  <h3 className="mt-4 font-heading text-xl text-[color:var(--primary)]">{p.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                  <div className="mt-4 flex flex-1 flex-col">
+                    <h3 className="font-heading text-xl text-[color:var(--primary)]">{p.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                  </div>
                 </Link>
               </RevealItem>
             );
