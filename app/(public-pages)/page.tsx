@@ -419,16 +419,18 @@ export default function HomePage() {
 
           <ul role="list" className="mt-10 grid gap-4 lg:grid-cols-3">
             {COMPANIES.map((c, idx) => (
-              <RevealItem key={c.href} delay={0.04 + idx * 0.07} y={10} duration={0.45}>
+              <RevealItem key={c.href} delay={0.04 + idx * 0.07} y={10} duration={0.45} className="h-full">
                 <Link
                   href={c.href}
-                  className="block rounded-2xl border border-border bg-card p-6 transition hover:shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label={`View company profile: ${c.title}`}
                 >
-                  <h3 className="font-heading text-xl text-[color:var(--primary)]">{c.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{c.subtitle}</p>
+                  <div className="flex flex-1 flex-col">
+                    <h3 className="font-heading text-xl text-[color:var(--primary)]">{c.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{c.subtitle}</p>
+                  </div>
                   <div className="mt-6 h-px w-full cstl-seal-line opacity-60" />
-                  <p className="mt-4 text-sm text-[color:var(--primary)]">
+                  <p className="mt-4 text-sm text-[color:var(--primary)] transition-colors duration-200 group-hover:text-[color:var(--accent)]">
                     View profile <span aria-hidden="true">→</span>
                   </p>
                 </Link>
