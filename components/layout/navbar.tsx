@@ -177,12 +177,12 @@ export default function Navbar() {
 
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex lg:ml-6 xl:ml-8">
             <NavigationMenu>
               <NavigationMenuList className="gap-1">
                 {/* Services */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-2 text-xs font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -192,7 +192,7 @@ export default function Navbar() {
 
                 {/* Companies */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-2 text-xs font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Companies
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -202,7 +202,7 @@ export default function Navbar() {
 
                 {/* Insights */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-3 text-sm font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
+                  <NavigationMenuTrigger className="h-9 whitespace-nowrap bg-transparent px-2 text-xs font-medium hover:bg-muted/50 data-[state=open]:bg-muted/50 data-[state=open]:text-[color:var(--primary)]">
                     Insights
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -219,7 +219,7 @@ export default function Navbar() {
                         <Link
                           href={item.href}
                           className={[
-                            "h-9 rounded-md px-3 text-sm font-medium transition-all duration-200",
+                            "h-9 rounded-md px-2 text-xs font-medium transition-all duration-200",
                             active
                               ? "bg-muted/50 text-[color:var(--primary)]"
                               : "text-foreground hover:bg-muted/50",

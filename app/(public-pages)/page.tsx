@@ -8,6 +8,10 @@ import {
   Building2,
   Layers3,
   Workflow,
+  FileText,
+  Settings,
+  Play,
+  RefreshCw,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -49,11 +53,21 @@ export const metadata: Metadata = {
   },
 };
 
+// Pillar image mapping (placeholder - can be replaced with actual images)
+const PILLAR_IMAGES: Record<string, string> = {
+  "Governance & Structuring": "/assets/hero/hero-panel.webp", // Placeholder - replace with actual image
+  "LegalTech & Compliance Systems": "/assets/hero/hero-panel.webp",
+  "Data Protection & Privacy": "/assets/hero/hero-panel.webp",
+  "Trademark & IP": "/assets/hero/hero-panel.webp",
+  "CAC Registry": "/assets/hero/hero-panel.webp",
+};
+
 const PILLARS = [
   {
     title: "Governance & Structuring",
     href: "/services/governance-structuring",
     icon: Layers3,
+    category: "SERVICE ONE",
     description:
       "Group structure, internal discipline, and continuity frameworks that keep execution aligned.",
   },
@@ -61,6 +75,7 @@ const PILLARS = [
     title: "LegalTech & Compliance Systems",
     href: "/services/legaltech-compliance-systems",
     icon: Workflow,
+    category: "SERVICE TWO",
     description:
       "Operational workflows, audit trails, and compliance tooling that makes governance measurable.",
   },
@@ -68,12 +83,14 @@ const PILLARS = [
     title: "Data Protection & Privacy",
     href: "/services/data-protection-privacy",
     icon: ShieldCheck,
+    category: "SERVICE THREE",
     description: "Nigeria-focused privacy and data governance practice built for real operations.",
   },
   {
     title: "Trademark & IP",
     href: "/services/trademark-ip",
     icon: Sparkles,
+    category: "SERVICE FOUR",
     description:
       "Brand protection and IP discipline—so what you build stays protected as you scale.",
   },
@@ -81,6 +98,7 @@ const PILLARS = [
     title: "CAC Registry",
     href: "/services/cac-registry",
     icon: Building2,
+    category: "SERVICE FIVE",
     description:
       "Registrations, filings, and compliance coordination with clean documentation standards.",
   },
@@ -112,21 +130,25 @@ const STEPS = [
     title: "Intake",
     description:
       "You submit a clear request. We classify the work, define constraints, and align on outcomes.",
+    icon: FileText,
   },
   {
     title: "Scope & Controls",
     description:
       "We create a structured scope: deliverables, owners, timelines, checkpoints, and documentation standards.",
+    icon: Settings,
   },
   {
     title: "Execution",
     description:
       "We deliver with operational discipline—clean handoffs, traceable decisions, and stable rollout.",
+    icon: Play,
   },
   {
     title: "Continuity",
     description:
       "We keep systems maintained: governance routines, updates, and shared-services support when needed.",
+    icon: RefreshCw,
   },
 ] as const;
 
@@ -144,13 +166,13 @@ function SectionHeading({
   return (
     <div className="max-w-2xl">
       {kicker ? (
-        <p className="text-xs tracking-widest text-muted-foreground uppercase">{kicker}</p>
+        <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">{kicker}</p>
       ) : null}
-      <h2 id={id} className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+      <h2 id={id} className="mt-3 font-heading text-3xl sm:text-4xl md:text-5xl leading-tight text-[color:var(--primary)]">
         {title}
       </h2>
       {description ? (
-        <p className="mt-3 text-muted-foreground leading-relaxed">{description}</p>
+        <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">{description}</p>
       ) : null}
     </div>
   );
@@ -355,8 +377,12 @@ export default function HomePage() {
       </section>
 
       {/* PILLARS */}
-      <section aria-labelledby="pillars-title" className="cstl-container py-16 sm:py-20">
-        <Reveal variant="fade" duration={0.32}>
+      <section aria-labelledby="pillars-title" className="relative overflow-hidden cstl-container py-20 sm:py-24 md:py-28">
+        {/* Subtle background decorative pattern */}
+        <div className="absolute inset-0 cstl-grid opacity-5" aria-hidden="true" />
+        
+        <div className="relative">
+          <Reveal variant="fade" duration={0.32}>
           <SectionHeading
             id="pillars-title"
             kicker="What we do"
@@ -365,28 +391,84 @@ export default function HomePage() {
           />
         </Reveal>
 
-        <ul role="list" className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul role="list" className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {PILLARS.map((p, idx) => {
             const Icon = p.icon;
+            const imageSrc = PILLAR_IMAGES[p.title] || "/assets/hero/hero-panel.webp";
             return (
               <RevealItem key={p.href} delay={0.04 + idx * 0.06} y={10} duration={0.45} className="h-full">
                 <Link
                   href={p.href}
-                  className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className={[
+                    "group relative flex h-full flex-col overflow-hidden rounded-2xl",
+                    "bg-[color:var(--card)] shadow-md",
+                    "transition-[transform,box-shadow,border-color] duration-300 ease-out",
+                    "hover:-translate-y-1 hover:shadow-xl hover:shadow-[color:var(--accent)]/10",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "motion-reduce:transform-none motion-reduce:transition-none",
+                  ].join(" ")}
                   aria-label={`Open service: ${p.title}`}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background transition-colors duration-200 group-hover:border-[color:var(--accent)]/35">
-                      <Icon className="h-5 w-5 text-[color:var(--primary)] transition-colors duration-200 group-hover:text-[color:var(--accent)]" aria-hidden="true" />
+                  {/* Top Image Panel */}
+                  <div className="relative aspect-[16/10] w-full bg-[color:var(--muted)]">
+                    <div className="absolute inset-0 overflow-hidden rounded-t-2xl">
+                      <Image
+                        src={imageSrc}
+                        alt=""
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        aria-hidden="true"
+                        priority={idx < 3}
+                      />
+                      {/* Subtle overlay gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[color:var(--card)]/10" />
                     </div>
-                    <span className="text-xs text-muted-foreground group-hover:text-[color:var(--accent)] transition-colors duration-200">
-                      View <span aria-hidden="true">→</span>
-                    </span>
+                    
+                    {/* Floating Circular Badge */}
+                    <div className={[
+                      "absolute bottom-4 right-5 z-10",
+                      "flex h-14 w-14 items-center justify-center rounded-full",
+                      "bg-[color:var(--accent)] shadow-lg border-2 border-[color:var(--card)]",
+                      "transition-all duration-300",
+                      "group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-[color:var(--accent)]/40",
+                    ].join(" ")}>
+                      <Icon className={[
+                        "h-6 w-6 text-[color:var(--primary-foreground)]",
+                        "transition-all duration-300",
+                        "group-hover:drop-shadow-[0_0_6px_color-mix(in_oklab,var(--accent)_70%,transparent)]",
+                      ].join(" ")} aria-hidden="true" />
+                    </div>
                   </div>
 
-                  <div className="mt-4 flex flex-1 flex-col">
-                    <h3 className="font-heading text-xl text-[color:var(--primary)]">{p.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                  {/* Bottom Info Panel */}
+                  <div className="relative flex flex-1 flex-col rounded-b-2xl bg-[color:var(--card)] p-6 pt-10">
+                    {/* Category Label */}
+                    <p className="text-xs font-semibold tracking-widest uppercase text-[color:var(--accent)] mb-2">
+                      {(p as typeof PILLARS[number] & { category: string }).category}
+                    </p>
+                    
+                    {/* Title */}
+                    <h3 className="font-heading text-xl sm:text-2xl font-bold text-[color:var(--primary)] transition-colors duration-300 group-hover:text-[color:var(--primary)]/95">
+                      {p.title}
+                    </h3>
+                    
+                    {/* Description */}
+                    <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed transition-opacity duration-300 group-hover:opacity-90 line-clamp-3">
+                      {p.description}
+                    </p>
+                    
+                    {/* Read More Button */}
+                    <div className="mt-6">
+                      <span className={[
+                        "inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium",
+                        "bg-[color:var(--accent)]/10 text-[color:var(--accent)]",
+                        "transition-all duration-300",
+                        "group-hover:bg-[color:var(--accent)]/20 group-hover:translate-x-1",
+                      ].join(" ")}>
+                        Read More
+                        <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                      </span>
+                    </div>
                   </div>
                 </Link>
               </RevealItem>
@@ -395,22 +477,26 @@ export default function HomePage() {
         </ul>
 
         <Reveal delay={0.06} y={6} variant="fade-up" duration={0.4}>
-          <div className="mt-10 flex flex-col sm:flex-row gap-3">
-            <Button asChild variant="cta">
+          <div className="mt-12 flex flex-col sm:flex-row gap-3">
+            <Button asChild variant="cta" className="sm:min-w-[160px]">
               <Link href="/start">Start a Project</Link>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="sm:min-w-[180px]">
               <Link href="/services">Explore Our Services</Link>
             </Button>
           </div>
         </Reveal>
+        </div>
       </section>
 
 
 
       {/* COMPANIES */}
-      <section aria-labelledby="companies-title" className="border-y border-border bg-card/40">
-        <div className="cstl-container py-16 sm:py-20">
+      <section aria-labelledby="companies-title" className="relative overflow-hidden border-y border-border bg-card/50">
+        {/* Subtle background pattern */}
+        <div className="absolute inset-0 cstl-grid opacity-10" aria-hidden="true" />
+        
+        <div className="relative cstl-container py-20 sm:py-24 md:py-28">
           <Reveal variant="fade" duration={0.32}>
             <SectionHeading
               id="companies-title"
@@ -420,31 +506,42 @@ export default function HomePage() {
             />
           </Reveal>
 
-          <ul role="list" className="mt-10 grid gap-4 lg:grid-cols-3">
+          <ul role="list" className="mt-12 grid gap-6 lg:grid-cols-3">
             {COMPANIES.map((c, idx) => (
               <RevealItem key={c.href} delay={0.04 + idx * 0.07} y={10} duration={0.45} className="h-full">
                 <Link
                   href={c.href}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-[color:var(--accent)]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className={[
+                    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-8",
+                    "transition-[transform,box-shadow,border-color] duration-300 ease-out",
+                    "hover:-translate-y-1 hover:shadow-lg hover:shadow-[color:var(--accent)]/5 hover:border-[color:var(--accent)]/40",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    "motion-reduce:transform-none motion-reduce:transition-none",
+                    // Premium glow overlay
+                    "before:content-[''] before:absolute before:inset-0 before:pointer-events-none",
+                    "before:bg-[radial-gradient(70%_60%_at_50%_0%,color-mix(in_oklab,var(--accent)_12%,transparent),transparent_65%)]",
+                    "before:opacity-0 before:transition-opacity before:duration-300",
+                    "group-hover:before:opacity-100",
+                  ].join(" ")}
                   aria-label={`View company profile: ${c.title}`}
                 >
-                  {/* Company logo watermark */}
+                  {/* Company logo watermark - enhanced */}
                   <div className="pointer-events-none absolute bottom-0 right-0 z-0">
-                    <div className="relative h-32 w-32 sm:h-40 sm:w-40 lg:h-48 lg:w-48">
+                    <div className="relative h-36 w-36 sm:h-44 sm:w-44 lg:h-56 lg:w-56">
                       <Image
                         src={c.logoSrc}
                         alt=""
                         fill
-                        className="object-contain opacity-[0.03] blur-[0.5px] transition-opacity duration-200 group-hover:opacity-[0.06]"
+                        className="object-contain opacity-[0.04] blur-[0.5px] transition-all duration-300 group-hover:opacity-[0.08] group-hover:blur-[0.3px]"
                         aria-hidden="true"
                         priority={false}
                       />
-                      {/* Fade gradient overlay - stronger fade from top-left */}
+                      {/* Enhanced fade gradient overlay */}
                       <div
-                        className="absolute inset-0"
+                        className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-80"
                         style={{
                           background:
-                            "radial-gradient(ellipse at top left, color-mix(in oklab, var(--card) 100%, transparent) 0%, color-mix(in oklab, var(--card) 60%, transparent) 40%, transparent 70%)",
+                            "radial-gradient(ellipse at top left, color-mix(in oklab, var(--card) 100%, transparent) 0%, color-mix(in oklab, var(--card) 70%, transparent) 35%, transparent 65%)",
                         }}
                       />
                     </div>
@@ -452,12 +549,23 @@ export default function HomePage() {
 
                   {/* Content layer */}
                   <div className="relative z-10 flex flex-1 flex-col">
-                    <h3 className="font-heading text-xl text-[color:var(--primary)]">{c.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{c.subtitle}</p>
+                    <h3 className="font-heading text-xl sm:text-2xl text-[color:var(--primary)] transition-colors duration-300 group-hover:text-[color:var(--primary)]/95">
+                      {c.title}
+                    </h3>
+                    <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed transition-opacity duration-300 group-hover:opacity-90">
+                      {c.subtitle}
+                    </p>
                   </div>
-                  <div className="relative z-10 mt-6 h-px w-full cstl-seal-line opacity-60" />
-                  <p className="relative z-10 mt-4 text-sm text-[color:var(--primary)] transition-colors duration-200 group-hover:text-[color:var(--accent)]">
-                    View profile <span aria-hidden="true">→</span>
+                  
+                  {/* Enhanced seal line with hover effect */}
+                  <div className="relative z-10 mt-8 h-px w-full cstl-seal-line opacity-40 transition-all duration-300 group-hover:opacity-80 group-hover:h-[1.5px]" />
+                  
+                  <p className={[
+                    "relative z-10 mt-5 text-sm font-medium text-[color:var(--primary)]",
+                    "transition-all duration-300",
+                    "group-hover:text-[color:var(--accent)] group-hover:translate-x-1",
+                  ].join(" ")}>
+                    View profile <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>
                   </p>
                 </Link>
               </RevealItem>
@@ -465,8 +573,8 @@ export default function HomePage() {
           </ul>
 
           <Reveal delay={0.06} variant="fade-up" y={6} duration={0.4}>
-            <div className="mt-10">
-              <Button asChild variant="outline">
+            <div className="mt-12">
+              <Button asChild variant="outline" className="min-w-[180px]">
                 <Link href="/companies">View All Companies</Link>
               </Button>
             </div>
@@ -477,34 +585,67 @@ export default function HomePage() {
 
 
       {/* HOW WE WORK */}
-      <section aria-labelledby="workflow-title" className="cstl-container py-16 sm:py-20">
-        <Reveal variant="fade" duration={0.32}>
-          <SectionHeading
-            id="workflow-title"
-            kicker="Operating rhythm"
-            title="A disciplined workflow—built for clarity"
-            description="Structured delivery is the product. We build systems that remain stable even as teams change."
-          />
-        </Reveal>
-
-        <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s, idx) => (
-            <RevealItem
-              key={s.title}
-              delay={0.05 + idx * 0.08}
-              y={10}
-              duration={0.45}
-              className="rounded-2xl border border-border bg-card p-6"
-            >
-              <div className="flex items-center justify-between">
-                <p className="text-xs tracking-widest text-muted-foreground uppercase">Step {idx + 1}</p>
-                <span className="h-2 w-2 rounded-full bg-[color:var(--accent)]" aria-hidden="true" />
+      <section aria-labelledby="workflow-title" className="border-y border-border bg-card/40">
+        <div className="cstl-container py-20 sm:py-24 md:py-28">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Left Column - Heading */}
+            <Reveal variant="fade" duration={0.32}>
+              <div className="max-w-2xl">
+                <p className="text-xs font-medium tracking-widest text-[color:var(--accent)] uppercase">
+                  Operating rhythm
+                </p>
+                <h2 id="workflow-title" className="mt-3 font-heading text-3xl sm:text-4xl md:text-5xl leading-tight text-[color:var(--primary)]">
+                  A disciplined workflow—built for clarity
+                </h2>
+                <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
+                  Structured delivery is the product. We build systems that remain stable even as teams change.
+                </p>
               </div>
-              <h3 className="mt-3 font-heading text-lg text-[color:var(--primary)]">{s.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.description}</p>
-            </RevealItem>
-          ))}
-        </ol>
+            </Reveal>
+
+            {/* Right Column - Timeline */}
+            <div className="relative">
+              {/* Vertical Timeline Line */}
+              <div className="absolute left-6 top-0 bottom-0 w-px bg-border/60" aria-hidden="true" />
+              
+              <ol className="relative space-y-8">
+                {STEPS.map((s, idx) => {
+                  const Icon = s.icon;
+                  return (
+                    <RevealItem
+                      key={s.title}
+                      delay={0.05 + idx * 0.08}
+                      y={10}
+                      duration={0.45}
+                      className="relative"
+                    >
+                      <div className="flex items-start gap-6">
+                        {/* Icon Badge */}
+                        <div className={[
+                          "relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl",
+                          "bg-card border border-border/50 shadow-sm",
+                          "transition-all duration-300",
+                        ].join(" ")}>
+                          <Icon className="h-6 w-6 text-[color:var(--primary)]" aria-hidden="true" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 pt-1">
+                          <h3 className="font-heading text-lg sm:text-xl font-semibold text-[color:var(--primary)]">
+                            {s.title}
+                          </h3>
+                          <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                            {s.description}
+                          </p>
+                        </div>
+                      </div>
+                    </RevealItem>
+                  );
+                })}
+              </ol>
+            </div>
+          </div>
+        </div>
       </section>
 
 
@@ -514,32 +655,49 @@ export default function HomePage() {
         <div className="absolute inset-0 cstl-hero-bg opacity-70" />
         <div className="absolute inset-0 cstl-grid opacity-25" />
 
-        <div className="relative cstl-container py-16 sm:py-20">
+        <div className="relative cstl-container py-20 sm:py-24 md:py-28">
           <Reveal y={10} duration={0.5}>
-            <div className="rounded-3xl border border-border bg-card/70 backdrop-blur p-8 sm:p-10">
-              <div className="max-w-2xl">
-                <p className="text-xs tracking-widest text-muted-foreground uppercase">Ready when you are</p>
-                <h2 id="cta-title" className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+            <div className={[
+              "group relative overflow-hidden rounded-3xl border border-border bg-card/80 backdrop-blur-sm",
+              "p-10 sm:p-12 md:p-14",
+              "transition-all duration-300",
+              "hover:border-[color:var(--accent)]/40 hover:shadow-xl hover:shadow-[color:var(--accent)]/5",
+              // Subtle glow on hover
+              "before:content-[''] before:absolute before:inset-0 before:pointer-events-none",
+              "before:bg-[radial-gradient(ellipse_at_center,color-mix(in_oklab,var(--accent)_8%,transparent),transparent_70%)]",
+              "before:opacity-0 before:transition-opacity before:duration-300",
+              "group-hover:before:opacity-100",
+            ].join(" ")}>
+              <div className="relative z-10 max-w-2xl">
+                <p className="text-xs font-medium tracking-widest text-muted-foreground uppercase">
+                  Ready when you are
+                </p>
+                <h2 id="cta-title" className="mt-3 font-heading text-3xl sm:text-4xl md:text-5xl leading-tight text-[color:var(--primary)]">
                   Bring the vision. We’ll bring the structure.
                 </h2>
                 <p className="mt-3 text-muted-foreground leading-relaxed">
                   If you’re building something serious—systems, governance, or filings—start with a clean intake so we can deliver with discipline from day one.
                 </p>
 
-                <div className="mt-7 flex flex-col sm:flex-row gap-3">
-                  <Button asChild variant="cta">
+                <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                  <Button asChild variant="cta" size="lg" className="sm:min-w-[180px]">
                     <Link href="/start">Start a Project</Link>
                   </Button>
-                  <Button asChild variant="outline">
+                  <Button asChild variant="outline" size="lg" className="sm:min-w-[160px]">
                     <Link href="/contact">Talk to Us</Link>
                   </Button>
                 </div>
               </div>
+              
+              {/* Decorative seal line */}
+              <div className="absolute bottom-0 left-0 right-0 h-px cstl-seal-line opacity-50" aria-hidden="true" />
             </div>
           </Reveal>
 
           <Reveal delay={0.08} variant="fade" duration={0.32}>
-            <p className="mt-6 text-xs text-muted-foreground">{SITE.signature}</p>
+            <p className="mt-8 text-xs font-medium tracking-wider text-muted-foreground text-center">
+              {SITE.signature}
+            </p>
           </Reveal>
         </div>
       </section>
