@@ -24,7 +24,7 @@ import Image from "next/image";
 
 const PAGE_URL = `${BASE_URL}/`;
 const OG_IMAGE = `${BASE_URL}/assets/og/home.webp`;
-const HERO_IMAGE = "/assets/hero/hero-panel.webp";
+const HERO_IMAGE = "/assets/home/hero/hero-panel.webp";
 
 export const metadata: Metadata = {
   title: "Home | Coast System and Technologies Limited (CSTL) — The Structure Behind Great Companies",
@@ -53,13 +53,13 @@ export const metadata: Metadata = {
   },
 };
 
-// Pillar image mapping (placeholder - can be replaced with actual images)
+// Pillar image mapping
 const PILLAR_IMAGES: Record<string, string> = {
-  "Governance & Structuring": "/assets/hero/hero-panel.webp", // Placeholder - replace with actual image
-  "LegalTech & Compliance Systems": "/assets/hero/hero-panel.webp",
-  "Data Protection & Privacy": "/assets/hero/hero-panel.webp",
-  "Trademark & IP": "/assets/hero/hero-panel.webp",
-  "CAC Registry": "/assets/hero/hero-panel.webp",
+  "Governance & Structuring": "/assets/home/what-we-do/governance-structuring.webp",
+  "LegalTech & Compliance Systems": "/assets/home/what-we-do/legaltech-compliance.webp",
+  "Data Protection & Privacy": "/assets/home/what-we-do/data-protection-privacy.webp",
+  "Trademark & IP": "/assets/home/what-we-do/trademark-ip.webp",
+  "CAC Registry": "/assets/home/what-we-do/cac-registry.webp",
 };
 
 const PILLARS = [
@@ -109,19 +109,19 @@ const COMPANIES = [
     title: "Coast Research Technology",
     href: "/companies/coast-research-technology",
     subtitle: "Software engineering • Product delivery • Maintenance • Talent development",
-    logoSrc: "/assets/companies/crt-mark.svg",
+    logoSrc: "/assets/home/companies/crt-mark.svg",
   },
   {
     title: "CoastLink24",
     href: "/companies/coastlink24",
     subtitle: "Fintech infrastructure • Integrated lending systems • Financial analysis",
-    logoSrc: "/assets/companies/coastLink24-mark.svg",
+    logoSrc: "/assets/home/companies/coastLink24-mark.svg",
   },
   {
     title: "Coast Infrastructure Systems",
     href: "/companies/coast-infrastructure-systems",
     subtitle: "Infrastructure systems • Power • Connectivity • Procurement",
-    logoSrc: "/assets/companies/coast-Infastructure-mark.svg",
+    logoSrc: "/assets/home/companies/coast-Infastructure-mark.svg",
   },
 ] as const;
 
