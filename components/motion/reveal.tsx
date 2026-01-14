@@ -7,7 +7,7 @@ import {
   type HTMLMotionProps,
 } from "motion/react";
 
-type Variant = "fade" | "fade-up" | "fade-down" | "fade-left" | "fade-right" | "scale";
+type Variant = "fade" | "fade-up" | "fade-down" | "fade-left" | "fade-right" | "scale" | "lift" | "liftScale";
 
 type BaseRevealProps = {
   delay?: number;     // seconds
@@ -67,6 +67,16 @@ function getVariant(
       return {
         initial: { opacity: 0, scale: reduce ? 1 : 0.985 },
         animate: { opacity: 1, scale: 1 },
+      };
+    case "lift":
+      return {
+        initial: { opacity: 0, y: reduce ? 0 : Math.abs(y) },
+        animate: { opacity: 1, y: 0 },
+      };
+    case "liftScale":
+      return {
+        initial: { opacity: 0, y: reduce ? 0 : Math.abs(y), scale: reduce ? 1 : 0.985 },
+        animate: { opacity: 1, y: 0, scale: 1 },
       };
     case "fade-up":
     default:

@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SITE } from "@/content/site";
 import Reveal, { RevealItem } from "@/components/motion/reveal";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -206,32 +207,55 @@ export default function ServicesPage() {
         <div className="absolute inset-0 cstl-grid opacity-25" />
 
         <div className="relative cstl-container py-16 sm:py-20">
-          <Reveal variant="fade" duration={0.35} y={6}>
-            <SectionHeading
-              kicker="Services"
-              title="Governance-led services built for real operations"
-              description="CSTL provides the structure, systems, and documentation standards that make execution consistent—across companies, teams, and time."
-            />
-          </Reveal>
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center lg:gap-12">
+            {/* Left Column: Content */}
+            <div className="lg:col-span-7">
+              <Reveal variant="fade" duration={0.35} y={6}>
+                <SectionHeading
+                  kicker="Services"
+                  title="Governance-led services built for real operations"
+                  description="CSTL provides the structure, systems, and documentation standards that make execution consistent—across companies, teams, and time."
+                />
+              </Reveal>
 
-          <Reveal delay={0.08} y={8} duration={0.45}>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
-                <Link href="/start">
-                  Start a Project <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <Reveal delay={0.08} y={8} duration={0.45}>
+                <div className="mt-8 flex flex-col sm:flex-row gap-3">
+                  <Button asChild className="bg-[color:var(--primary)] text-white hover:opacity-90">
+                    <Link href="/start">
+                      Start a Project <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
 
-              <Button asChild variant="outline">
-                <Link href="/contact">Contact CSTL</Link>
-              </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/contact">Contact CSTL</Link>
+                  </Button>
+                </div>
+              </Reveal>
 
-              <div className="sm:ml-auto inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
-                <ShieldCheck className="h-4 w-4 text-[color:var(--accent)]" />
-                RC: {SITE.trust.rc}
-              </div>
+              <Reveal delay={0.1} y={8} duration={0.45}>
+                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-4 py-2 text-xs text-muted-foreground backdrop-blur">
+                  <span className="h-2 w-2 rounded-full bg-red-500" />
+                  RC: {SITE.trust.rc}
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+
+            {/* Right Column: Image */}
+            <div className="relative lg:col-span-5">
+              <Reveal delay={0.12} variant="fade" duration={0.5}>
+                <div className="relative h-[400px] sm:h-[450px] lg:h-[500px] w-full overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200">
+                  <Image
+                    src="/assets/services/hero/services-hero.webp"
+                    alt=""
+                    fill
+                    className="object-cover object-center"
+                    priority
+                    aria-hidden="true"
+                  />
+                </div>
+              </Reveal>
+            </div>
+          </div>
 
           <Reveal delay={0.12} variant="fade" duration={0.35}>
             <div className="mt-10 h-px w-full cstl-seal-line opacity-70" />
