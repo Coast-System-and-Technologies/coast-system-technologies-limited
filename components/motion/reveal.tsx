@@ -101,7 +101,7 @@ export default function Reveal<T extends AsTag = "div">({
   style,
   ...rest
 }: RevealProps<T>) {
-  const reduce = useReducedMotion();
+  const reduce: boolean = useReducedMotion() ?? false;
   const Tag = (motion as any)[as ?? "div"] as React.ElementType;
 
   const v = getVariant(variant, reduce, x, y);
