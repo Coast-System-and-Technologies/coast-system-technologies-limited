@@ -2,7 +2,7 @@
 import { BASE_URL } from "@/lib/site-url";
 import type { PillarTag } from "@/components/insights/PillarChips";
 
-export type InsightType = "founders-corner" | "article";
+export type InsightType = "founders-corner" | "article" | "faq";
 
 export type FounderPost = {
   type: "founders-corner";
@@ -36,7 +36,19 @@ export type ArticlePost = {
   whatCstlDelivers: string[];
 };
 
-export type InsightPost = FounderPost | ArticlePost;
+export type FaqPost = {
+  type: "faq";
+  slug: string;
+  title: string;
+  excerpt: string;
+  pillarTags: PillarTag[];
+  publishedAtISO: string;
+  updatedAtISO?: string;
+  readingTimeMins: number;
+  ogImageUrl?: string;
+};
+
+export type InsightPost = FounderPost | ArticlePost | FaqPost;
 
 export const founderPosts: FounderPost[] = [
   {
