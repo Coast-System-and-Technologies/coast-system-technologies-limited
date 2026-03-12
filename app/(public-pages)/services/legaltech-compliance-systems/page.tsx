@@ -84,21 +84,25 @@ const WORKFLOW_STEPS = [
     title: "Intake & Classification",
     description:
       "Capture request details and classify the work to choose the correct workflow path.",
+    icon: FileText,
   },
   {
     title: "Checklist & Pack Build",
     description:
       "Generate the required pack: templates, forms, evidence, and structured folders.",
+    icon: ClipboardCheck,
   },
   {
     title: "Review & Approval",
     description:
       "Reviewer checks completeness, writes notes, and records approval decisions.",
+    icon: Bell,
   },
   {
     title: "Execution & Audit Trail",
     description:
       "Run the task with traceable actions, timestamps, and an always-ready report trail.",
+    icon: CheckCircle2,
   },
 ];
 
@@ -278,13 +282,13 @@ export default function LegalTechComplianceSystemsPage() {
 
       {/* DELIVERABLES */}
       <section className="border-y border-border bg-card/40">
-        <div className="cstl-container py-14 sm:py-16">
+        <div className="cstl-container py-20 sm:py-24 md:py-28">
           <Reveal variant="fade" duration={0.32} y={6}>
             <div className="max-w-2xl">
-              <div className="text-xs tracking-widest text-muted-foreground uppercase">
+              <p className="text-xs font-medium tracking-widest text-[color:var(--accent)] uppercase">
                 What you get
-              </div>
-              <h2 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
+              </p>
+              <h2 className="mt-3 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
                 Deliverables designed for daily use
               </h2>
               <p className="mt-3 text-muted-foreground leading-relaxed">
@@ -294,19 +298,34 @@ export default function LegalTechComplianceSystemsPage() {
             </div>
           </Reveal>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {DELIVERABLES.map((d, idx) => {
               const Icon = d.icon;
               return (
                 <Reveal key={d.title} delay={0.05 + idx * 0.07} y={10} duration={0.45}>
-                  <div className="rounded-2xl border border-border bg-card p-6">
-                    <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background">
-                      <Icon className="h-5 w-5 text-[color:var(--primary)]" />
+                  <div
+                    className={[
+                      "group relative rounded-2xl border border-border bg-card p-6 sm:p-7",
+                      "transition-all duration-300 ease-out",
+                      "hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[color:var(--accent)]/5 hover:border-[color:var(--accent)]/25",
+                      "before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:rounded-l-2xl before:bg-[color:var(--accent)] before:opacity-0 before:transition-opacity before:duration-300",
+                      "hover:before:opacity-100",
+                    ].join(" ")}
+                  >
+                    <div
+                      className={[
+                        "inline-flex h-12 w-12 items-center justify-center rounded-xl",
+                        "bg-[color:var(--accent)]/10 text-[color:var(--accent)]",
+                        "transition-all duration-300",
+                        "group-hover:bg-[color:var(--accent)]/20 group-hover:scale-105",
+                      ].join(" ")}
+                    >
+                      <Icon className="h-6 w-6" aria-hidden="true" />
                     </div>
-                    <div className="mt-4 font-heading text-xl text-[color:var(--primary)]">
+                    <h3 className="mt-5 font-heading text-lg sm:text-xl font-semibold text-[color:var(--primary)]">
                       {d.title}
-                    </div>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    </h3>
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                       {d.description}
                     </p>
                   </div>
@@ -317,41 +336,67 @@ export default function LegalTechComplianceSystemsPage() {
         </div>
       </section>
 
-      {/* WORKFLOW */}
-      <section className="cstl-container py-14 sm:py-16">
-        <Reveal variant="fade" duration={0.32} y={6}>
-          <div className="max-w-2xl">
-            <div className="text-xs tracking-widest text-muted-foreground uppercase">
-              How it works
-            </div>
-            <h2 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
-              A disciplined workflow—built for traceability
-            </h2>
-            <p className="mt-3 text-muted-foreground leading-relaxed">
-              Every step produces evidence: checklists, packs, reviewer notes, and logs.
-            </p>
-          </div>
-        </Reveal>
-
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {WORKFLOW_STEPS.map((s, i) => (
-            <Reveal key={s.title} delay={0.06 + i * 0.08} y={10} duration={0.45}>
-              <div className="rounded-2xl border border-border bg-card p-6">
-                <div className="flex items-center justify-between">
-                  <div className="text-xs tracking-widest text-muted-foreground uppercase">
-                    Step {i + 1}
-                  </div>
-                  <div className="h-2 w-2 rounded-full bg-[color:var(--accent)]" />
-                </div>
-                <div className="mt-3 font-heading text-lg text-[color:var(--primary)]">
-                  {s.title}
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {s.description}
+      {/* WORKFLOW - Same UI flow as Operating rhythm on homepage */}
+      <section aria-labelledby="workflow-title" className="border-y border-border bg-card/40">
+        <div className="cstl-container py-20 sm:py-24 md:py-28">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            {/* Left Column - Heading */}
+            <Reveal variant="fade" duration={0.32}>
+              <div className="max-w-2xl">
+                <p className="text-xs font-medium tracking-widest text-[color:var(--accent)] uppercase">
+                  How it works
+                </p>
+                <h2 id="workflow-title" className="mt-3 font-heading text-3xl sm:text-4xl md:text-5xl leading-tight text-[color:var(--primary)]">
+                  A disciplined workflow—built for traceability
+                </h2>
+                <p className="mt-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
+                  Every step produces evidence: checklists, packs, reviewer notes, and logs.
                 </p>
               </div>
             </Reveal>
-          ))}
+
+            {/* Right Column - Timeline */}
+            <div className="relative">
+              {/* Vertical Timeline Line */}
+              <div className="absolute left-6 top-0 bottom-0 w-px bg-border/60" aria-hidden="true" />
+
+              <ol className="relative space-y-8">
+                {WORKFLOW_STEPS.map((s, idx) => {
+                  const Icon = s.icon;
+                  return (
+                    <RevealItem
+                      key={s.title}
+                      delay={0.05 + idx * 0.08}
+                      y={10}
+                      duration={0.45}
+                      className="relative"
+                    >
+                      <div className="flex items-start gap-6">
+                        {/* Icon Badge */}
+                        <div className={[
+                          "relative z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl",
+                          "bg-card border border-border/50 shadow-sm",
+                          "transition-all duration-300",
+                        ].join(" ")}>
+                          <Icon className="h-6 w-6 text-[color:var(--primary)]" aria-hidden="true" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 pt-1">
+                          <h3 className="font-heading text-lg sm:text-xl font-semibold text-[color:var(--primary)]">
+                            {s.title}
+                          </h3>
+                          <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                            {s.description}
+                          </p>
+                        </div>
+                      </div>
+                    </RevealItem>
+                  );
+                })}
+              </ol>
+            </div>
+          </div>
         </div>
       </section>
 
