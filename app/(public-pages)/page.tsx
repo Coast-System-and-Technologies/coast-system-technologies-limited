@@ -53,15 +53,6 @@ export const metadata: Metadata = {
   },
 };
 
-// Pillar image mapping
-const PILLAR_IMAGES: Record<string, string> = {
-  "Governance & Structuring": "/assets/home/what-we-do/governance-structuring.webp",
-  "LegalTech & Compliance Systems": "/assets/home/what-we-do/legaltech-compliance.webp",
-  "Data Protection & Privacy": "/assets/home/what-we-do/data-protection-privacy.webp",
-  "Trademark & IP": "/assets/home/what-we-do/trademark-ip.webp",
-  "CAC Registry": "/assets/home/what-we-do/cac-registry.webp",
-};
-
 const PILLARS = [
   {
     title: "Governance & Structuring",
@@ -394,80 +385,52 @@ export default function HomePage() {
         <ul role="list" className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {PILLARS.map((p, idx) => {
             const Icon = p.icon;
-            const imageSrc = PILLAR_IMAGES[p.title] || "/assets/hero/hero-panel.webp";
             return (
               <RevealItem key={p.href} delay={0.04 + idx * 0.06} y={10} duration={0.45} className="h-full">
                 <Link
                   href={p.href}
                   className={[
                     "group relative flex h-full flex-col overflow-hidden rounded-2xl",
-                    "bg-[color:var(--card)] shadow-md",
-                    "transition-[transform,box-shadow,border-color] duration-300 ease-out",
-                    "hover:-translate-y-1 hover:shadow-xl hover:shadow-[color:var(--accent)]/10",
+                    "border border-border bg-[color:var(--card)]",
+                    "transition-all duration-300 ease-out",
+                    "hover:-translate-y-1.5 hover:shadow-xl hover:shadow-[color:var(--accent)]/8 hover:border-[color:var(--accent)]/30",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                     "motion-reduce:transform-none motion-reduce:transition-none",
+                    "before:absolute before:left-0 before:top-0 before:h-full before:w-1 before:rounded-l-2xl before:bg-[color:var(--accent)] before:opacity-0 before:transition-opacity before:duration-300",
+                    "group-hover:before:opacity-100",
                   ].join(" ")}
                   aria-label={`Open service: ${p.title}`}
                 >
-                  {/* Top Image Panel */}
-                  <div className="relative aspect-[16/10] w-full bg-[color:var(--muted)]">
-                    <div className="absolute inset-0 overflow-hidden rounded-t-2xl">
-                      <Image
-                        src={imageSrc}
-                        alt=""
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        aria-hidden="true"
-                        priority={idx < 3}
-                      />
-                      {/* Subtle overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[color:var(--card)]/10" />
-                    </div>
-                    
-                    {/* Floating Circular Badge */}
-                    <div className={[
-                      "absolute bottom-4 right-5 z-10",
-                      "flex h-14 w-14 items-center justify-center rounded-full",
-                      "bg-[color:var(--accent)] shadow-lg border-2 border-[color:var(--card)]",
-                      "transition-all duration-300",
-                      "group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-[color:var(--accent)]/40",
-                    ].join(" ")}>
-                      <Icon className={[
-                        "h-6 w-6 text-[color:var(--primary-foreground)]",
+                  <div className="relative flex flex-1 flex-col p-6 sm:p-8">
+                    {/* Icon + Category Row */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className={[
+                        "flex h-14 w-14 shrink-0 items-center justify-center rounded-xl",
+                        "bg-[color:var(--accent)]/15 text-[color:var(--accent)]",
                         "transition-all duration-300",
-                        "group-hover:drop-shadow-[0_0_6px_color-mix(in_oklab,var(--accent)_70%,transparent)]",
-                      ].join(" ")} aria-hidden="true" />
+                        "group-hover:bg-[color:var(--accent)]/25 group-hover:scale-105",
+                      ].join(" ")}>
+                        <Icon className="h-7 w-7" aria-hidden="true" />
+                      </div>
+                      <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[color:var(--accent)]/80">
+                        {(p as typeof PILLARS[number] & { category: string }).category}
+                      </span>
                     </div>
-                  </div>
 
-                  {/* Bottom Info Panel */}
-                  <div className="relative flex flex-1 flex-col rounded-b-2xl bg-[color:var(--card)] p-6 pt-10">
-                    {/* Category Label */}
-                    <p className="text-xs font-semibold tracking-widest uppercase text-[color:var(--accent)] mb-2">
-                      {(p as typeof PILLARS[number] & { category: string }).category}
-                    </p>
-                    
                     {/* Title */}
-                    <h3 className="font-heading text-xl sm:text-2xl font-bold text-[color:var(--primary)] transition-colors duration-300 group-hover:text-[color:var(--primary)]/95">
+                    <h3 className="mt-5 font-heading text-xl sm:text-2xl font-bold leading-tight text-[color:var(--primary)] transition-colors duration-300 group-hover:text-[color:var(--accent)]">
                       {p.title}
                     </h3>
-                    
+
                     {/* Description */}
-                    <p className="mt-3 text-sm sm:text-base text-muted-foreground leading-relaxed transition-opacity duration-300 group-hover:opacity-90 line-clamp-3">
+                    <p className="mt-4 text-sm sm:text-base text-muted-foreground leading-relaxed line-clamp-3">
                       {p.description}
                     </p>
-                    
-                    {/* Read More Button */}
-                    <div className="mt-6">
-                      <span className={[
-                        "inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium",
-                        "bg-[color:var(--accent)]/10 text-[color:var(--accent)]",
-                        "transition-all duration-300",
-                        "group-hover:bg-[color:var(--accent)]/20 group-hover:translate-x-1",
-                      ].join(" ")}>
-                        Read More
-                        <span aria-hidden="true" className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-                      </span>
+
+                    {/* Read More */}
+                    <div className="mt-8 flex items-center gap-2 text-sm font-semibold text-[color:var(--accent)]">
+                      <span>Learn more</span>
+                      <span className="inline-block transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
                     </div>
                   </div>
                 </Link>
