@@ -1,11 +1,13 @@
 // app/insights/faqs/page.tsx
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import JsonLd from "@/components/insights/JsonLd";
 import MicroDisclaimer from "@/components/insights/MicroDisclaimer";
 import FaqSearch, { type FaqGroup } from "@/components/insights/FaqSearch.client";
 import Reveal from "@/components/motion/reveal";
+import { Button } from "@/components/ui/button";
 
 import { BASE_URL } from "@/lib/site-url";
 
@@ -39,7 +41,7 @@ export default function FaqsPage() {
   const groups: FaqGroup[] = [
     {
       title: "Governance & Structuring",
-      ctaLabel: "Explore Governance & Structuring →",
+      ctaLabel: "Explore Governance & Structuring",
       ctaHref: "/services/governance-structuring",
       items: [
         {
@@ -47,7 +49,7 @@ export default function FaqsPage() {
           a: "Yes. Governance reduces confusion, protects decision-making, and prevents founder risk as the team grows. It installs clarity on roles, approvals, and authority before complexity increases.",
         },
         {
-          q: "What does ‘approval matrix’ mean in practice?",
+          q: "What does 'approval matrix' mean in practice?",
           a: "A simple rule-set that states who can approve what (and up to what limit), how approvals are routed, and where records are stored—so decisions are faster and auditable.",
         },
         {
@@ -58,15 +60,15 @@ export default function FaqsPage() {
     },
     {
       title: "Legal-Tech & Compliance Systems",
-      ctaLabel: "Explore Legal-Tech & Compliance Systems →",
+      ctaLabel: "Explore Legal-Tech & Compliance Systems",
       ctaHref: "/services/legaltech-compliance-systems",
       items: [
         {
-          q: "Is this ‘contract automation’?",
+          q: "Is this 'contract automation'?",
           a: "Not legal representation. This is internal document control + workflows: templates, routing, version control, ownership, audit trails, and obligation tracking—so your organisation can operate correctly.",
         },
         {
-          q: "What’s the difference between templates and a documentation system?",
+          q: "What's the difference between templates and a documentation system?",
           a: "Templates are files. A documentation system includes naming rules, storage structure, version control, approval routing, ownership, and change logs—so documents stay usable and controlled over time.",
         },
         {
@@ -77,11 +79,11 @@ export default function FaqsPage() {
     },
     {
       title: "Data Protection & Privacy (Nigeria)",
-      ctaLabel: "Explore Data Protection & Privacy →",
+      ctaLabel: "Explore Data Protection & Privacy",
       ctaHref: "/services/data-protection-privacy",
       items: [
         {
-          q: "Do we need NDPA/NDPR compliance if we’re small?",
+          q: "Do we need NDPA/NDPR compliance if we're small?",
           a: "If you collect or store personal data (staff, customers, vendors), you need privacy readiness. Small size does not remove risk—incidents, audits, and partner requirements can still apply.",
         },
         {
@@ -96,7 +98,7 @@ export default function FaqsPage() {
     },
     {
       title: "Trademark & IP Protection (NIPO)",
-      ctaLabel: "Explore Trademark & IP Protection →",
+      ctaLabel: "Explore Trademark & IP Protection",
       ctaHref: "/services/trademark-ip",
       items: [
         {
@@ -115,7 +117,7 @@ export default function FaqsPage() {
     },
     {
       title: "CAC Registry Services (Accredited Agent)",
-      ctaLabel: "Explore CAC Registry Services →",
+      ctaLabel: "Explore CAC Registry Services",
       ctaHref: "/services/cac-registry",
       items: [
         {
@@ -128,7 +130,7 @@ export default function FaqsPage() {
         },
         {
           q: "How long do CAC filings take?",
-          a: "Depends on filing type and CAC processing time. We focus on correctness, clean submissions, and status tracking—so avoidable rejections don’t create delays.",
+          a: "Depends on filing type and CAC processing time. We focus on correctness, clean submissions, and status tracking—so avoidable rejections don't create delays.",
         },
       ],
     },
@@ -139,7 +141,7 @@ export default function FaqsPage() {
       "@type": "Question",
       name: i.q,
       acceptedAnswer: { "@type": "Answer", text: i.a },
-    })),
+    }))
   );
 
   const jsonLd = [
@@ -185,75 +187,65 @@ export default function FaqsPage() {
   ];
 
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 py-14">
+    <main className="cstl-container py-16 sm:py-20 md:py-24">
       <JsonLd data={jsonLd} />
 
-      <header className="space-y-4">
-        <Reveal variant="liftScale" duration={0.4} y={10}>
-          <h1 className="text-4xl font-semibold tracking-tight text-gray-900">FAQs</h1>
+      <header className="w-full space-y-6">
+        <Reveal variant="fade" duration={0.32} y={6}>
+          <p className="text-xs font-medium tracking-widest text-[color:var(--accent)] uppercase">
+            Insights
+          </p>
+          <h1 className="mt-2 font-heading text-4xl sm:text-5xl font-bold tracking-tight text-[color:var(--primary)]">
+            FAQs
+          </h1>
         </Reveal>
 
-        <Reveal delay={0.05} variant="lift" duration={0.35} y={10}>
-          <p className="max-w-3xl text-base leading-relaxed text-gray-700">
+        <Reveal delay={0.05} variant="fade" duration={0.35} y={8}>
+          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
             Clear answers to common questions on governance, compliance systems, privacy (Nigeria),
             trademark/IP (NIPO), and CAC registry execution.
           </p>
         </Reveal>
 
-        <Reveal delay={0.08} variant="fade" duration={0.25} y={0}>
+        <Reveal delay={0.08} variant="fade" duration={0.3}>
           <div className="flex flex-wrap gap-3">
-            <Link
-              href="/start"
-              className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-90"
-            >
-              Start a Project
-            </Link>
-            <Link
-              href="/contact"
-              className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 transition-colors duration-200 hover:border-gray-900"
-            >
-              Contact CSTL
-            </Link>
+            <Button asChild>
+              <Link href="/start" className="gap-2">
+                Start a Project <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/contact">Contact CSTL</Link>
+            </Button>
           </div>
-        </Reveal>
-
-        <Reveal delay={0.1} variant="fade" duration={0.25} y={0}>
-          <p className="text-xs text-gray-500">Direct • Practical • Built for decision-making</p>
         </Reveal>
       </header>
 
-      {/* IMPORTANT: animate container only so we don't interfere with FaqSearch internal layout */}
-      <Reveal delay={0.06} variant="lift" duration={0.4} y={12}>
-        <div className="mt-8">
-          <FaqSearch groups={groups} />
-        </div>
+      <Reveal delay={0.06} variant="fade" duration={0.4} y={12} className="mt-12">
+        <FaqSearch groups={groups} />
       </Reveal>
 
-      <Reveal delay={0.08} variant="liftScale" duration={0.45} y={12}>
-        <section className="mt-14 rounded-2xl bg-gray-50 p-8">
-          <h2 className="text-xl font-semibold text-gray-900">Not sure which pillar applies?</h2>
-          <p className="mt-2 text-sm text-gray-700">
-            Send a short brief. We’ll route you to the right service and respond with next steps.
+      <Reveal delay={0.1} variant="fade" duration={0.35} y={8}>
+        <section className="mt-16 rounded-2xl border border-border bg-card/60 p-8 sm:p-10">
+          <h2 className="font-heading text-xl sm:text-2xl font-semibold text-[color:var(--primary)]">
+            Not sure which pillar applies?
+          </h2>
+          <p className="mt-3 text-muted-foreground leading-relaxed">
+            Send a short brief. We'll route you to the right service and respond with next steps.
           </p>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <Link
-              href="/start"
-              className="rounded-xl bg-gray-900 px-5 py-3 text-sm font-medium text-white transition-opacity duration-200 hover:opacity-90"
-            >
-              Start a Project
-            </Link>
-            <Link
-              href="/start?intent=quote"
-              className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-900 transition-colors duration-200 hover:border-gray-900"
-            >
-              Request a Quote
-            </Link>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button asChild>
+              <Link href="/start">Start a Project</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/start?intent=quote">Request a Quote</Link>
+            </Button>
           </div>
         </section>
       </Reveal>
 
-      <Reveal delay={0.1} variant="fade" duration={0.25} y={0}>
-        <div className="mt-10">
+      <Reveal delay={0.12} variant="fade" duration={0.25}>
+        <div className="mt-12">
           <MicroDisclaimer />
         </div>
       </Reveal>

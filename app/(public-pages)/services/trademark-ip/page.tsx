@@ -15,12 +15,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { FaqSection } from "@/components/sections/faq-section";
 
 import Reveal, { RevealItem } from "@/components/motion/reveal";
 import { SITE } from "@/content/site";
@@ -359,36 +354,7 @@ export default function TrademarkIpPage() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="border-y border-border bg-card/40">
-        <div className="cstl-container py-14 sm:py-16">
-          <Reveal variant="fade" duration={0.32} y={6}>
-            <div className="max-w-2xl">
-              <div className="text-xs tracking-widest text-muted-foreground uppercase">
-                FAQs
-              </div>
-              <h2 className="mt-2 font-heading text-2xl sm:text-3xl text-[color:var(--primary)]">
-                Common questions
-              </h2>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.08} y={10} duration={0.5} className="mt-8 max-w-3xl">
-            <Accordion type="single" collapsible className="w-full">
-              {FAQS.map((f, idx) => (
-                <AccordionItem key={f.q} value={`faq-${idx}`}>
-                  <AccordionTrigger className="text-left">
-                    {f.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground leading-relaxed">
-                    {f.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </Reveal>
-        </div>
-      </section>
+      <FaqSection faqs={FAQS} />
 
       {/* FINAL CTA */}
       <section className="relative overflow-hidden">
